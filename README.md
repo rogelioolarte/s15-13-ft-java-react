@@ -31,7 +31,7 @@ La Plataforma para el manejo de inventarios y ventas para pymes es una aplicaci√
 
 ## Tecnolog√≠as
 - React
-- Java
+- Spring
 
 ## Enlaces del Proyecto
 - Repositorio en GitHub: [Enlace](https://github.com/No-Country/s15-13-ft-java-react)
