@@ -2,8 +2,8 @@ import { createRoot } from 'react-dom/client'
 import App from './src/App'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from './src/pages/HomePage'
-import NotFoundPage from './src/pages/NotFoundPage'
 import ProductsPage from './src/pages/ProductsPage'
+import NotFoundPage from './src/pages/NotFoundPage'
 
 const router = createBrowserRouter([
   {
