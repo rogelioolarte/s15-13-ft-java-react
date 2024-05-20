@@ -17,13 +17,13 @@ CREATE TABLE user (
 CREATE TABLE taxes (
 	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) UNIQUE NOT NULL,
-    percentage double NOT NULL
+    percentage DECIMAL(18,2) NOT NULL
 );
 
 CREATE TABLE customer (
   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(255) NOT NULL UNIQUE,
-personalcode INT NOT NULL UNIQUE,
+personalcode varchar(100) UNIQUE NOT NULL,
 customer_type ENUM('PHYSICAL', 'LEGAL') NOT NULL DEFAULT 'PHYSICAL'
 ); 
 
@@ -35,8 +35,8 @@ CREATE TABLE products (
     barcode VARCHAR(255) UNIQUE,
     description VARCHAR(255),
     sale_price DECIMAL(18,2) NOT NULL,
-    minimal INT,
-    stock INT,
+    minimal INT DEFAULT 0,
+    stock INT DEFAULT 0,
    active BOOLEAN DEFAULT TRUE
 ); 
 
