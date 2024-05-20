@@ -7,7 +7,8 @@ USE stockmaster;
 
 CREATE TABLE user (
 	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(100) UNIQUE NOT NULL,
+    name varchar(100)  NOT NULL,
+    lastname varchar(100)  NOT NULL,
     password VARCHAR(250) NOT NULL
 );
 
