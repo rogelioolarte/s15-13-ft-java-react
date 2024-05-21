@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-05-20T23:44:16.619Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="yOh0jyka7WxiXzDh37eU" version="24.3.1" type="device">
+<mxfile host="app.diagrams.net" modified="2024-05-21T15:58:35.206Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="9hA1hASZfRy887Jvnzfp" version="24.3.1" type="device">
   <diagram name="Página-1" id="rZ6r67mJLrOPYYvWsc2z">
-    <mxGraphModel dx="2587" dy="1554" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2082" dy="1549" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -294,7 +294,7 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-12" target="UunuTz7GS6xkf7UFXNVD-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-12" value="restController: api/buy&lt;div&gt;pedido: PUT&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;arr[&lt;/div&gt;&lt;div&gt;{&lt;span style=&quot;background-color: initial;&quot;&gt;id: 1,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(32, 33, 36); font-family: Roboto, arial, sans-serif; font-size: 13px; text-align: left; white-space-collapse: preserve;&quot;&gt;discount: %,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;quantity: 10},&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;{&lt;span style=&quot;background-color: initial;&quot;&gt;id: 2,&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(32, 33, 36); font-family: Roboto, arial, sans-serif; font-size: 13px; text-align: left; white-space-collapse: preserve;&quot;&gt;discount: %,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;quantity: 1},&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-12" value="restController: api/sale&lt;div&gt;pedido: PUT&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;arr[&lt;/div&gt;&lt;div&gt;{&lt;span style=&quot;background-color: initial;&quot;&gt;id: 1,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(32, 33, 36); font-family: Roboto, arial, sans-serif; font-size: 13px; text-align: left; white-space-collapse: preserve;&quot;&gt;discount: %,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;quantity: 10},&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;{&lt;span style=&quot;background-color: initial;&quot;&gt;id: 2,&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(32, 33, 36); font-family: Roboto, arial, sans-serif; font-size: 13px; text-align: left; white-space-collapse: preserve;&quot;&gt;discount: %,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;quantity: 1},&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="910" y="240" width="200" height="210" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-14" target="UunuTz7GS6xkf7UFXNVD-16" edge="1">
@@ -598,8 +598,8 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-146" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-142" target="UunuTz7GS6xkf7UFXNVD-145" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-142" value="restController: api/product/buy&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;pedido: POST&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;fecha: string,&lt;/div&gt;&lt;div&gt;supplier: number,&lt;/div&gt;&lt;div&gt;factura:string&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;product:&amp;nbsp;&amp;nbsp;&lt;/span&gt;arr [&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;id: number,&lt;/div&gt;&lt;div&gt;quantity: number}&lt;/div&gt;&lt;div&gt;]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="-1380" y="608" width="240" height="232" as="geometry" />
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-142" value="restController: api/purchase&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;pedido: POST&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;date: string,&lt;/div&gt;&lt;div&gt;supplierId: number,&lt;/div&gt;&lt;div&gt;bill:string&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;product:&amp;nbsp;&amp;nbsp;&lt;/span&gt;arr [&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;idProduct: number,&lt;/div&gt;&lt;div&gt;quantity: number}&lt;/div&gt;&lt;div&gt;]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="-1380" y="560" width="270" height="280" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-145" value="response&lt;div&gt;buy&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1330" y="900" width="120" height="60" as="geometry" />
@@ -607,7 +607,7 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-150" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-147" target="UunuTz7GS6xkf7UFXNVD-149" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-147" value="restController: api/transaction&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;desde: fecha,&lt;/div&gt;&lt;div&gt;hasta: fecha&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-147" value="restController: api/purchase&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;method: get&lt;/p&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;from: fecha,&lt;/div&gt;&lt;div&gt;to: fecha&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry y="-100" width="190" height="120" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-149" value="response&lt;div&gt;List&amp;lt;transaction&amp;gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -616,8 +616,8 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-154" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-151" target="UunuTz7GS6xkf7UFXNVD-153" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-151" value="restController: api/transaction/products&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;fecha: string&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="-210" y="300" width="160" height="110" as="geometry" />
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-151" value="restController: api/purchase/products&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;body:&lt;/div&gt;&lt;div&gt;&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;dtoDate: string&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="-230" y="310" width="180" height="130" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-156" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-153" target="UunuTz7GS6xkf7UFXNVD-155" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -631,7 +631,7 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-160" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-157" target="UunuTz7GS6xkf7UFXNVD-159" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-157" value="restController: api/transaction/products/topsales&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-157" value="restController: api/products/topsales&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="-440" y="-230" width="190" height="90" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-162" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-159" target="UunuTz7GS6xkf7UFXNVD-161" edge="1">
@@ -646,7 +646,7 @@
         <mxCell id="UunuTz7GS6xkf7UFXNVD-167" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-163" target="UunuTz7GS6xkf7UFXNVD-165" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UunuTz7GS6xkf7UFXNVD-163" value="restController: api/transaction/products/minorsales&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+        <mxCell id="UunuTz7GS6xkf7UFXNVD-163" value="restController: api/products/minorsales&lt;div&gt;method: get&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="-660" y="-220" width="210" height="100" as="geometry" />
         </mxCell>
         <mxCell id="UunuTz7GS6xkf7UFXNVD-168" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="UunuTz7GS6xkf7UFXNVD-165" target="UunuTz7GS6xkf7UFXNVD-166" edge="1">
