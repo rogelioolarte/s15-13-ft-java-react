@@ -2,7 +2,7 @@
 
 function perProduct (props) {
   return (
-    <div>perProduct </div>
+    <div>perProduct</div>
   )
 }
 
