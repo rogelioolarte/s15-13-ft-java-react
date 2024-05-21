@@ -84,7 +84,7 @@ CREATE TABLE sales_products (
 
 CREATE TABLE purchase (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    bill INT NOT NULL,
+    bill VARCHAR(250) NOT NULL,
     date DATE,
     id_supplier BIGINT,
     total DECIMAL(18,2) NOT NULL,
