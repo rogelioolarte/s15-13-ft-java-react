@@ -3,28 +3,32 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../../services/authService'
 
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid Email Format')
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required')
+})
+
 export default function LoginFormik () {
   const navigate = useNavigate()
 
-  const loginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    password: Yup.string()
-      .required('Password is required')
-  })
-
-  const handleSubmit = async (values) => {
-    const user = await login(values.email, values.password)
-    if (user) {
-      navigate('/home')
-      console.log(user)
-    }
+  const sendError = (error) => {
+    navigate(`/error?message=${encodeURIComponent(error)}`)
   }
 
   const initialCredentials = {
     email: '',
     password: ''
+  }
+
+  const handleSubmit = async (values) => {
+    const user = await login(values.email, values.password, sendError)
+    if (user) {
+      navigate('/home')
+      console.log(user)
+    }
   }
 
   return (

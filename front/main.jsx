@@ -5,6 +5,7 @@ import HomePage from './src/pages/HomePage'
 import ProductsPage from './src/pages/ProductsPage'
 import NotFoundPage from './src/pages/NotFoundPage'
 import LoginPage from './src/pages/LoginPage'
+import ErrorPage from './src/pages/ErrorPage'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     ]
   },
   { path: '/login', element: <LoginPage /> },
+  { path: '/error', element: <ErrorPage /> },
   { path: '*', element: <NotFoundPage /> }
 ])
 
