@@ -1,0 +1,6 @@
+usuario{
+name: "Pepe",
+lastname: "Guayabas", 
+email: "PepenGuayabas@gmail.com",
+password: "1234"
+}
