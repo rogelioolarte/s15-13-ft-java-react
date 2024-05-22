@@ -1,40 +1,52 @@
-const loginSchema = Yup.object().shape({
-    searhc: Yup.string()
-      .required('Email is required')
-  })
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 
-export default function SearchBar() {
-    const initialCredentials = {
-        search: '',
-      }
-    
-      const handleSubmit = async (values) => {
-        const search = await search(values.search)
-        if (search) {
-          console.log(search)
-        }
-    }
+const loginSchema = Yup.object().shape({
+  search: Yup.string()
+    .required('Search term is required')
+})
+
+export default function SearchBar () {
+  const initialCredentials = {
+    search: ''
+  }
+
+  const handleSubmit = async (values) => {
+    /* const search = await search(values.search)
+    if (search) {
+      console.log(search)
+    } */
+    console.log(values.search)
+  }
 
   return (
     <div>
-        <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
+      <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
-          <Form className='grid justify-items-center bg-black mb-[15vh]'>
+          <Form className='grid grid-flow-row auto-rows-max md:grid-flow-col
+            md:auto-cols-max items-center justify-between justify-items-center '
+          >
+            {/* Email Errors */}
+            {errors.search && touched.search &&
+              (<ErrorMessage
+                className='text-[0.8rem] h-[50%] mr-[0.5rem] '
+                name='search'
+                component='div'
+               />)}
             <Field
               id='search'
-              type='search'
+              type='text'
               name='search'
-              placeholder='search'
-              className='p-[0.4rem] rounded-[0.2rem]'
+              placeholder='Search'
+              className='p-[0.4rem] rounded-[0.3rem]
+              border-2 border-solid border-[#D6D6D6]'
             />
-            {/* Search Errors */}
-            {errors.search && touched.search && (<ErrorMessage name='search' component='div' />)}
             <button
               type='submit'
-              className='bg-[#6C757D] text-white
-                text-[0.9rem] font-bold p-[0.5rem] mt-[5%] rounded-[0.2rem] w-[80%]'
+              className='bg-[#85A7BF] text-black text-[0.9rem] font-bold
+              rounded-[0.3rem] p-[0.5rem] md:w-[100%] w-[40%]'
             >
-              Sign in!
+              {'>>'}
             </button>
           </Form>
         )}

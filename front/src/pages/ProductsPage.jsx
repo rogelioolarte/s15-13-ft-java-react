@@ -1,6 +1,6 @@
 import ProductsSection from '../components/container/ProductsSection'
 
-export default function ProductsPage() {
+export default function ProductsPage () {
   return (
     <div>
       <ProductsSection />

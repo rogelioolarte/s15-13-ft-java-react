@@ -1,4 +1,4 @@
-export default function ProductsSection() {
+export default function ProductsSection () {
   return (
     <div className='w-96 h-96'>
       <div className='w-96 h-96 left-[39px] top-[101px] absolute'>
