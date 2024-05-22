@@ -33,12 +33,12 @@ export default function LoginFormik () {
   }
 
   return (
-    <div className='w-[50%] h-[100%] bg-black text-white grid justify-items-center'>
-      <img src={LogoMedium} alt='logo-md' className='w-[41%] mt-[2%]' />
+    <div className='w-[100%] lg:w-[50%] h-[100%] bg-black text-white grid justify-items-center'>
+      <img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' />
       <h2 className='text-[1.9rem] font-bold'>Log in to  Stock Master!</h2>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
-          <Form className='grid justify-items-center bg-black mb-[17%]'>
+          <Form className='grid justify-items-center bg-black mb-[15vh]'>
             <Field
               id='email'
               type='email'

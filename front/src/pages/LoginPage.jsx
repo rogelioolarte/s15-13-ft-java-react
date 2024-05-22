@@ -3,7 +3,7 @@ import LoginFormik from '../components/pure/forms/LoginFormik'
 
 export default function LoginPage () {
   return (
-    <div className='flex flex-row h-[100vh]'>
+    <div className='flex h-[100vh] flex-col lg:flex-row'>
       <LoginLateral />
       <LoginFormik />
     </div>
