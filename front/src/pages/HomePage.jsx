@@ -1,5 +1,7 @@
+import HomeSection from "../components/container/HomeSection";
+
 export default function HomePage() {
   return (
-    <div>HomePage</div>
+    <div><HomeSection /></div>
   )
 }
