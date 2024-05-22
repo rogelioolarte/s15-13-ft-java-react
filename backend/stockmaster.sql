@@ -100,4 +100,4 @@ CREATE TABLE products_purchase (
     FOREIGN KEY (id_purchase) REFERENCES purchase(id)
 ); 
 
-INSERT INTO user (name, lastname, email, password) VALUES ("admin", "adminLstname", "admin@gmail.com", "1234");
+INSERT INTO user (name, lastname, email, password) VALUES ("Pepe", "Guayabas", "PepenGuayabas@gmail.com", "1234");
