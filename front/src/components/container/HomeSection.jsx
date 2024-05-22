@@ -5,9 +5,9 @@ import LogoMedium from '../../assets/logo-md.svg'
 
 export default function HomeSection () {
   return (
-    <div className='flex flex-col justify-items-center w-[90%] h-[90%] '>
+    <div className='flex flex-col items-center justify-items-center w-[90%] h-[90%] '>
       <div className='flex flex-col md:flex-row items-center justify-between w-[80%]
-        rounded-[0.5rem] border-[0.1rem] border-black mt-[2%] px-[2%] h-[35%]'
+        rounded-[0.5rem] border-[0.1rem] border-black mt-[2%] px-[2%] h-[20%] mb-[3%]'
       >
         <ActualDate /><SearchBar />
       </div>
