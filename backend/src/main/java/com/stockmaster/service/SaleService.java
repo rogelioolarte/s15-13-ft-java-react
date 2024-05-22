@@ -21,6 +21,9 @@ public class SaleService {
     @Autowired
     private SalesProductRepository salesProductRepository;
 
+    //Tiene que tener en cuenta que el cutomer va en la creacion de la venta.
+    //Si este es null tiene que enviarse el cliente por default y si tiene datos, crear el nuevo cliente.
+
     @Transactional
     public Sale createSale(SaleDTO saleDTO) {
         Sale sale = new Sale();

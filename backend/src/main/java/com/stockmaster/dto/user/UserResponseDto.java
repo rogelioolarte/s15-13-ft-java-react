@@ -1,4 +1,4 @@
-package com.stockmaster.dto;
+package com.stockmaster.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

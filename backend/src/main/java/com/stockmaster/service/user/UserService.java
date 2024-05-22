@@ -1,6 +1,6 @@
-package com.stockmaster.service;
+package com.stockmaster.service.user;
 
-import com.stockmaster.dto.LoginRequestDto;
+import com.stockmaster.dto.user.LoginRequestDto;
 import com.stockmaster.entity.User;
 import com.stockmaster.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

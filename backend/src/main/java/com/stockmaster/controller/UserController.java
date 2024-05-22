@@ -1,9 +1,9 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.LoginRequestDto;
-import com.stockmaster.dto.UserResponseDto;
+import com.stockmaster.dto.user.LoginRequestDto;
+import com.stockmaster.dto.user.UserResponseDto;
 import com.stockmaster.entity.User;
-import com.stockmaster.service.UserService;
+import com.stockmaster.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,8 @@ public class UserController {
         if (authenticatedUser != null) {
             UserResponseDto userResponseDto = new UserResponseDto();
             userResponseDto.setId(String.valueOf(authenticatedUser.getId()));
-            userResponseDto.setFirst_name(authenticatedUser.getFirst_name());
-            userResponseDto.setLast_name(authenticatedUser.getLast_name());
+            userResponseDto.setFirst_name(authenticatedUser.getFirstName());
+            userResponseDto.setLast_name(authenticatedUser.getLastName());
             userResponseDto.setEmail(authenticatedUser.getEmail());
             return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
         } else {
