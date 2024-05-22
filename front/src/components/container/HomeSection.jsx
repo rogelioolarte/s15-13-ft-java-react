@@ -19,7 +19,7 @@ export default function HomeSection () {
         <ShowUserData />
       </div>
       <div className='h-[90%] w-[80%] mt-[5%] border border-black border-solid'>
-        Area de graficas
+        Area de graficas u otros
       </div>
     </div>
   )
