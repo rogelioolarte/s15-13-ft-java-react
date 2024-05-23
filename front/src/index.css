@@ -57,3 +57,17 @@ body {
   min-height: 100vh;
 }
 
+.sidebar {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 10px;
+  }
+}
