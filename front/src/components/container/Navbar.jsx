@@ -13,8 +13,8 @@ export default function Navbar ({ openSidebar, setOpenSidebar }) {
         onClick={() => handleSidebarToggle()}
       >
         {openSidebar
-          ? <MdOutlineClose fill='#111827' size={26} />
-          : <TfiMenu fill='#111827' size={26} />}
+          ? <TfiMenu fill='#111827' size={26} />
+          : <MdOutlineClose fill='#111827' size={26} />}
       </button>
     </nav>
   )
