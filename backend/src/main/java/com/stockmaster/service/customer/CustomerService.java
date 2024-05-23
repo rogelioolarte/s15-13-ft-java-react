@@ -45,7 +45,6 @@ public class CustomerService {
     public CustomerResponse update(CustomerUpdateRequest customerRequest) throws BadRequestException {
         Customer customer = customerRepository.findById(customerRequest.getId()).orElseThrow(() -> new RuntimeException("Customer id doesn´t exist.!."));
         customer.setName(customerRequest.getName());
-        customer.setPersonalCode(customerRequest.getPersonalcode());
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
     }
 

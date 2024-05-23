@@ -1,6 +1,6 @@
 package com.stockmaster.service.user;
 
-import com.stockmaster.dto.user.LoginRequestDto;
+import com.stockmaster.dto.user.LoginRequestDTO;
 import com.stockmaster.entity.User;
 import com.stockmaster.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +13,19 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    public User login(LoginRequestDTO loginRequestDto) {
 
-    public User login(LoginRequestDto loginRequestDto) {
         Optional<User> optionalUser = userRepository.findByEmail(loginRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getPassword().equals(loginRequestDto.getPassword())) {
                 return user;
             }
+            else{
+                throw  new RuntimeException("Invalid credentials. Wrong Password!");
+            }
         }
-        return null;
+        throw  new RuntimeException("Invalid credentials. Incorrect Email!");
     }
+
 }

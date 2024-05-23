@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("api/customer")
 @RequiredArgsConstructor
 @CrossOrigin
 public class CustomerController {
