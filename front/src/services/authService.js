@@ -14,7 +14,8 @@ export const login = async (email, password, sendError) => {
     if (response.ok) {
       return await response.json()
     } else {
-      const errorResponse = await response.json()
+      /** Temporal variable until new feature of backend */
+      const errorResponse = await response
       if (response.status === 401) {
         sendError('Invalid Credentials')
       } else if (errorResponse.error) {
