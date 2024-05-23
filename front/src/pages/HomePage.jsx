@@ -2,8 +2,7 @@ import HomeSection from '../components/container/HomeSection'
 
 export default function HomePage () {
   return (
-    <div className='h-[100vh] flex flex-row'>
-      <div className='w-[10%] bg-white text-black'>B</div>
+    <div className='flex h-[100vh] w-full'>
       <HomeSection />
     </div>
   )

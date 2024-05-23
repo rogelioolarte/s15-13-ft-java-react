@@ -11,6 +11,7 @@ import {
   Input,
   Button
 } from '@material-tailwind/react'
+import { useEffect, useState } from 'react'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,10 +23,17 @@ const loginSchema = Yup.object().shape({
 
 export default function LoginFormik () {
   const navigate = useNavigate()
+  const [CommonError, setError] = useState('')
 
   const sendError = (error) => {
-    navigate(`/error?message=${encodeURIComponent(error)}`)
+    setError(error)
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError('')
+    }, 4000)
+  }, [CommonError])
 
   const initialCredentials = {
     email: '',
@@ -61,13 +69,14 @@ export default function LoginFormik () {
                 </Field>
                 {/* Email Errors */}
                 {errors.email && touched.email &&
-                (<ErrorMessage className='text-white grow-0 flex-shrink' name='email' component='p' />)}
+                (<ErrorMessage className='text-white text-sm' name='email' component='div' />)}
                 {/* Password Errors */}
                 {errors.password && touched.password &&
-                (<ErrorMessage className='text-white grow-0 flex-shrink' name='password' component='p' />)}
+                (<ErrorMessage className='text-white text-sm' name='password' component='div' />)}
+                <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div>
               </CardBody>
               <CardFooter className='pt-0 mt-5'>
-                <Button type='submit' fullWidth color='black'>
+                <Button type='submit' variant='filled' fullWidth color='black'>
                   Sign in!
                 </Button>
               </CardFooter>
