@@ -7,7 +7,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Inter"),
-    url("./assets/fonts/Inter-Regular.ttf") format("truetype");
+    local("./assets/fonts/Inter-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -15,7 +15,7 @@
   font-style: normal;
   font-weight: 300;
   src: local("Inter Light"),
-    url("./assets/fonts/Inter-Light.ttf") format("truetype");
+    local("./assets/fonts/Inter-Light.ttf") format("truetype");
 }
 
 @font-face {
@@ -23,7 +23,7 @@
   font-style: normal;
   font-weight: 500;
   src: local("Inter Medium"),
-    url("./assets/fonts/Inter-Medium.ttf") format("truetype");
+    local("./assets/fonts/Inter-Medium.ttf") format("truetype");
 }
 
 @font-face {
@@ -31,7 +31,7 @@
   font-style: normal;
   font-weight: 600;
   src: local("Inter SemiBold"),
-    url("./assets/fonts/Inter-SemiBold.ttf") format("truetype");
+    local("./assets/fonts/Inter-SemiBold.ttf") format("truetype");
 }
 
 @font-face {
@@ -39,7 +39,7 @@
   font-style: normal;
   font-weight: 700;
   src: local("Inter Bold"),
-    url("./assets/fonts/Inter-Bold.ttf") format("truetype");
+    local("./assets/fonts/Inter-Bold.ttf") format("truetype");
 }
 
 @font-face {
@@ -47,11 +47,11 @@
   font-style: normal;
   font-weight: 800;
   src: local("Inter ExtraBold"),
-    url("./assets/fonts/Inter-ExtraBold.ttf") format("truetype");
+    local("./assets/fonts/Inter-ExtraBold.ttf") format("truetype");
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", Roboto,
+  font-family: "Inter", "Roboto",
     "Helvetica Neue", Arial, sans-serif, system-ui;
   background-color: #fff8f8;
   min-height: 100vh;

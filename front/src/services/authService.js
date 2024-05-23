@@ -10,9 +10,14 @@ export const login = async (email, password, sendError) => {
     })
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Error en la solicitud: ' + response.status)
+        sendError('Request error: ' + response.status)
+      } else if (response.status === '401') {
+        sendError('Invalid Credentials')
       }
       return response.json()
     })
-    .catch((error) => { sendError(error.message) })
+    .catch((error) => {
+      sendError('Invalid Credentials')
+      console.error(error)
+    })
 }

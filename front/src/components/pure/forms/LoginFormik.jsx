@@ -33,12 +33,12 @@ export default function LoginFormik () {
   }
 
   return (
-    <div className='w-[50%] h-[100%] bg-black text-white grid justify-items-center'>
-      <img src={LogoMedium} alt='logo-md' className='w-[41%] mt-[2%]' />
-      <h2 className='text-[1.9rem] font-bold'>Log in to  Stock Master!</h2>
+    <div className='w-[100%] md:w-[50%] h-[100%] bg-black grid justify-items-center'>
+      <img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' />
+      <h2 className='text-[1.9rem] font-bold text-white'>Log in to  Stock Master!</h2>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
-          <Form className='grid justify-items-center bg-black mb-[17%]'>
+          <Form className='grid justify-items-center bg-black mb-[15vh]'>
             <Field
               id='email'
               type='email'
@@ -47,7 +47,8 @@ export default function LoginFormik () {
               className='p-[0.4rem] rounded-[0.2rem]'
             />
             {/* Email Errors */}
-            {errors.email && touched.email && (<ErrorMessage name='email' component='div' />)}
+            {errors.email && touched.email &&
+            (<ErrorMessage className='text-white' name='email' component='div' />)}
             <Field
               id='password'
               name='password'
@@ -56,7 +57,8 @@ export default function LoginFormik () {
               className='p-[0.4rem] rounded-[0.2rem] mt-[5%]'
             />
             {/* Password Errors */}
-            {errors.password && touched.password && (<ErrorMessage name='password' component='div' />)}
+            {errors.password && touched.password &&
+            (<ErrorMessage className='text-white' name='password' component='div' />)}
             <button
               type='submit'
               className='bg-[#6C757D] text-white
