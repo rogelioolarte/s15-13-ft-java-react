@@ -47,7 +47,8 @@ export default function LoginFormik () {
               className='p-[0.4rem] rounded-[0.2rem]'
             />
             {/* Email Errors */}
-            {errors.email && touched.email && (<ErrorMessage name='email' component='div' />)}
+            {errors.email && touched.email &&
+            (<ErrorMessage className='text-white' name='email' component='div' />)}
             <Field
               id='password'
               name='password'
@@ -56,7 +57,8 @@ export default function LoginFormik () {
               className='p-[0.4rem] rounded-[0.2rem] mt-[5%]'
             />
             {/* Password Errors */}
-            {errors.password && touched.password && (<ErrorMessage name='password' component='div' />)}
+            {errors.password && touched.password &&
+            (<ErrorMessage className='text-white' name='password' component='div' />)}
             <button
               type='submit'
               className='bg-[#6C757D] text-white
