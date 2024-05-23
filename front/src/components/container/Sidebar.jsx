@@ -75,7 +75,7 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
           <button
             className='w-full text-white px-6 py-2 flex items-center gap-2'
             onClick={() => {
-              resetAllSlices(), navigate('/')
+              // resetAllSlices(), navigate('/')
             }}
           >
             <BsBoxArrowRight className='text-2xl' />Cerrar sesión
