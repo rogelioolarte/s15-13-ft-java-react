@@ -4,8 +4,8 @@ import './index.css'
 import Navbar from './components/container/Navbar'
 import Sidebar from './components/container/Sidebar'
 
-export default function App() {
-  const [openSidebar, setOpenSidebar] = useState(false);
+export default function App () {
+  const [openSidebar, setOpenSidebar] = useState(false)
 
   return (
     <div className='flex'>
