@@ -55,6 +55,9 @@ public class CustomerService {
         }
         customerRepository.deleteById(id);
     }
+
+    public void delete(Long id){customerRepository.deleteById(id);}//el delete es logico, tiene que ser un patch
+
     public List<CustomerResponse>findByAll(){
         return customerRepository.findAll().stream()
                 .map(customerMapper::toCustomerResponse).toList();

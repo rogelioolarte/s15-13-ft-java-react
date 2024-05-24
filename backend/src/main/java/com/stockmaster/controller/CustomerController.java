@@ -68,11 +68,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.update(customer));
     }
     //Metodo Delete
+    /*
     @DeleteMapping("/deleteCustomer/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
-    }
+    }*/
 
 
 }
