@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class TaxesRepositoryImpl {
 
+
     @Lazy
     @Autowired
     private  TaxesRepository taxesRepository;
