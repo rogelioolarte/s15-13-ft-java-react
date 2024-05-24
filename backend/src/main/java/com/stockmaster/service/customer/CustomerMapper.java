@@ -17,6 +17,7 @@ public class CustomerMapper {
                 .name(customer.getName())
                 .personalCode(customer.getPersonalCode())
                 .customerType(customer.getCustomerType())
+                .active(customer.isActive())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class CustomerMapper {
                 .name(customer.getName())
                 .personalCode(customer.getPersonalCode())
                 .customerType(customer.getCustomerType())
+                .active(customer.isActive())
                 .build();
     }
 }

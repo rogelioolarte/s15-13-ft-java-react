@@ -15,4 +15,5 @@ public class CustomerResponse {
     private String name;
     private String personalCode;
     private CustomerType customerType;
+    private boolean active;
 }
