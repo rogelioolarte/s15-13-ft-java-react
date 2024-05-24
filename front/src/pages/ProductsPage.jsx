@@ -1,7 +1,7 @@
+import ProductsSection from '../components/container/ProductsSection'
+
 export default function ProductsPage () {
   return (
-    <div>
-      <h1>Products</h1>
-    </div>
+    <ProductsSection />
   )
 }
