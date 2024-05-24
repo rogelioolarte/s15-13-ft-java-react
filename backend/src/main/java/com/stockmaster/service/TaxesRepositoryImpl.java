@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TaxesRepositoryImpl {
@@ -32,7 +34,8 @@ public class TaxesRepositoryImpl {
         }
     }
 
-    public Object findById(Long id) {
-        return taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Professional Not Found"));
+    public List<DtoTaxesResponse> findAll() {
+        return taxesRepository.findAll().stream().map(DtoTaxesResponse::new).toList();
+
     }
 }

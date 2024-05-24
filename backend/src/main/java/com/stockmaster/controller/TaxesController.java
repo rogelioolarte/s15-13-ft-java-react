@@ -32,10 +32,10 @@ public class TaxesController {
     }
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> register(@PathVariable @Valid Long id) {
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<?> getAll() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findById(id));
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAll());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
         }

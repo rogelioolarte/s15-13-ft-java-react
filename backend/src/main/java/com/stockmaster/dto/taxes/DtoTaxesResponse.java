@@ -10,4 +10,6 @@ public record DtoTaxesResponse(@NotBlank Long id,@NotBlank String name, @NotNull
     public DtoTaxesResponse(Taxes tax) {
         this(tax.getId(), tax.getName(),tax.getPercentage());
     }
+
+
 }
