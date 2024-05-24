@@ -16,12 +16,10 @@ public class TaxesController {
     @Autowired
     private TaxesRepositoryImpl taxesRepositoryImpl;
 
+
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest){
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
-        } catch (Exception e) {
-            return  ResponseEntity.status(HttpStatus.CONFLICT).body("the tax already exists");
-        }
+    public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
+
     }
 }
