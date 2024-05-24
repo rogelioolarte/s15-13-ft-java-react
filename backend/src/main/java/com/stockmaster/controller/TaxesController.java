@@ -4,6 +4,7 @@ import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.service.TaxesRepositoryImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class TaxesController {
 
+
+    private final TaxesRepositoryImpl taxesRepositoryImpl;
+
     @Autowired
-    private TaxesRepositoryImpl taxesRepositoryImpl;
+    public TaxesController(@Lazy TaxesRepositoryImpl taxesRepositoryImpl) {
+        this.taxesRepositoryImpl = taxesRepositoryImpl;
+    }
 
 
     @PostMapping(produces = "application/json")
