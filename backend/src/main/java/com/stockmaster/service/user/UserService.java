@@ -2,6 +2,7 @@ package com.stockmaster.service.user;
 
 import com.stockmaster.dto.user.LoginRequestDTO;
 import com.stockmaster.entity.User;
+import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,10 @@ public class UserService {
                 return user;
             }
             else{
-                throw  new RuntimeException("Invalid credentials. Wrong Password!");
+                throw  new RequestException("Invalid credentials. Wrong Password!");
             }
         }
-        throw  new RuntimeException("Invalid credentials. Incorrect Email!");
+        throw  new RequestException("Invalid credentials. Incorrect Email!");
     }
 
 }

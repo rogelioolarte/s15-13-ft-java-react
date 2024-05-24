@@ -3,6 +3,7 @@ package com.stockmaster.controller;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
+import com.stockmaster.exception.RequestException;
 import com.stockmaster.service.customer.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerBySalesId(@PathVariable Long id){
         return ResponseEntity.ok(customerService.findBySaleId(id));
     }*/
-    @GetMapping("/customer/{id}")
+    @GetMapping("/fin-by/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
     }
@@ -58,15 +59,8 @@ public class CustomerController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        try {
-            return ResponseEntity.ok(customerService.save(customer));
-        } catch (DataIntegrityViolationException e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("El valor personalcode está duplicado. Por favor, proporcione un valor único.");
-            }
-            throw e;
-        }
+        customerService.save(customer);  // Aquí se lanzará la CustomRequestException si hay un error
+        return ResponseEntity.ok("Customer saved successfully");
     }
     //Metodos Put
     @PutMapping("/update-customer")
