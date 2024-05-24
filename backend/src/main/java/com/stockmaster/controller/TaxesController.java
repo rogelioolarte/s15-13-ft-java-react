@@ -32,7 +32,7 @@ public class TaxesController {
     }
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public ResponseEntity<?> getAll() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAll());

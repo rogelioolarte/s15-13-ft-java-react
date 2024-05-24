@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,7 +37,7 @@ public class TaxesRepositoryImpl {
     }
 
     public List<DtoTaxesResponse> findAll() {
-        return taxesRepository.findAll().stream().map(DtoTaxesResponse::new).toList();
-
+        List<Taxes> list = taxesRepository2.findAll();
+        return list.stream().map(DtoTaxesResponse::new).toList();
     }
 }
