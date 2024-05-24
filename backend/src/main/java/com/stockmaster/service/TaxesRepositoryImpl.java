@@ -31,4 +31,8 @@ public class TaxesRepositoryImpl {
             throw new EntityNotFoundException("Try again, the order has not been saved");
         }
     }
+
+    public Object findById(Long id) {
+        return taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Professional Not Found"));
+    }
 }

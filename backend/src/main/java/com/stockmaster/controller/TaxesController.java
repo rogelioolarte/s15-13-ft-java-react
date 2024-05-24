@@ -25,7 +25,20 @@ public class TaxesController {
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest) {
+        try{
         return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
+    } catch (Exception e) {
+        return  ResponseEntity.status(HttpStatus.CONFLICT).body("tax already exists");
+    }
+    }
+
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<?> register(@PathVariable @Valid Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+        }
 
     }
 }
