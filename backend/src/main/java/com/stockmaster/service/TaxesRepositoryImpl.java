@@ -18,13 +18,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class TaxesRepositoryImpl {
 
-
-    private final TaxesRepository taxesRepository;
-
+    @Lazy
     @Autowired
-    public TaxesRepositoryImpl(@Lazy TaxesRepository taxesRepository) {
-        this.taxesRepository = taxesRepository;
-    }
+    private  TaxesRepository taxesRepository;
 
 
     public DtoTaxesResponse taxRegister(DtoTaxesRquest dtoTaxesRquest) {
@@ -36,8 +32,8 @@ public class TaxesRepositoryImpl {
         }
     }
 
-    public List<DtoTaxesResponse> findAll() {
-        List<Taxes> list = taxesRepository2.findAll();
+    public List<DtoTaxesResponse> findAllTaxes() {
+        List<Taxes> list = taxesRepository.findAll();
         return list.stream().map(DtoTaxesResponse::new).toList();
     }
 }

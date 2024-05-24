@@ -1,6 +1,7 @@
 package com.stockmaster.controller;
 
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
+import com.stockmaster.repository.TaxesRepository;
 import com.stockmaster.service.TaxesRepositoryImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class TaxesController {
 
 
-    private final TaxesRepositoryImpl taxesRepositoryImpl;
+    @Lazy
+    @Autowired
+    private  TaxesRepositoryImpl taxesRepositoryImpl;
 
     @Autowired
-    public TaxesController(@Lazy TaxesRepositoryImpl taxesRepositoryImpl) {
-        this.taxesRepositoryImpl = taxesRepositoryImpl;
-    }
-
+    private TaxesRepository taxesRepository;
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest) {
@@ -35,7 +35,7 @@ public class TaxesController {
     @GetMapping
     public ResponseEntity<?> getAll() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAll());
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAllTaxes());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
         }
