@@ -3,6 +3,15 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../../services/authService'
 import LogoMedium from '../../../assets/logo-md.svg'
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Button
+} from '@material-tailwind/react'
+import { useEffect, useState } from 'react'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -14,10 +23,17 @@ const loginSchema = Yup.object().shape({
 
 export default function LoginFormik () {
   const navigate = useNavigate()
+  const [CommonError, setError] = useState('')
 
   const sendError = (error) => {
-    navigate(`/error?message=${encodeURIComponent(error)}`)
+    setError(error)
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError('')
+    }, 4000)
+  }, [CommonError])
 
   const initialCredentials = {
     email: '',
@@ -33,38 +49,38 @@ export default function LoginFormik () {
   }
 
   return (
-    <div className='w-[100%] md:w-[50%] h-[100%] bg-black grid justify-items-center'>
+    <div className='w-[100%] md:w-[50%] md:h-[100%] bg-black grid justify-items-center'>
       <img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' />
-      <h2 className='text-[1.9rem] font-bold text-white'>Log in to  Stock Master!</h2>
+      <Typography variant='h3' color='white'>Log in to  Stock Master!</Typography>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
           <Form className='grid justify-items-center bg-black mb-[15vh]'>
-            <Field
-              id='email'
-              type='email'
-              name='email'
-              placeholder='Email'
-              className='p-[0.4rem] rounded-[0.2rem]'
-            />
-            {/* Email Errors */}
-            {errors.email && touched.email && (<ErrorMessage name='email' component='div' />)}
-            <Field
-              id='password'
-              name='password'
-              placeholder='Password'
-              type='password'
-              className='p-[0.4rem] rounded-[0.2rem] mt-[5%]'
-            />
-            {/* Password Errors */}
-            {errors.password && touched.password && (<ErrorMessage name='password' component='div' />)}
-            <button
-              type='submit'
-              className='bg-[#6C757D] text-white
-                text-[0.9rem] font-bold p-[0.5rem] mt-[5%] rounded-[0.2rem] w-[80%]'
-            >
-              Sign in!
-            </button>
-            {/* {isSubmitting ? (<p>Login your credentials...</p>) : null} */}
+            <Card className='w-96 bg-black text-white'>
+              <CardBody className='flex flex-col gap-2 h-40 '>
+                <Field name='email'>
+                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                    <Input {...field} type='email' placeholder='Email' label='Email' size='lg' />
+                  )}
+                </Field>
+                <Field name='password'>
+                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                    <Input {...field} type='password' placeholder='Password' label='Password' size='lg' />
+                  )}
+                </Field>
+                {/* Email Errors */}
+                {errors.email && touched.email &&
+                (<ErrorMessage className='text-white text-sm' name='email' component='div' />)}
+                {/* Password Errors */}
+                {errors.password && touched.password &&
+                (<ErrorMessage className='text-white text-sm' name='password' component='div' />)}
+                <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div>
+              </CardBody>
+              <CardFooter className='pt-0 mt-5'>
+                <Button type='submit' variant='filled' fullWidth color='black'>
+                  Sign in!
+                </Button>
+              </CardFooter>
+            </Card>
           </Form>
         )}
       </Formik>
