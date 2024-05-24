@@ -4,7 +4,7 @@ import {
   Button,
   Input
 } from '@material-tailwind/react'
-import LensIcon from '../pure/LensIcon'
+import LensIcon from '../LensIcon'
 import { useEffect, useState } from 'react'
 
 const loginSchema = Yup.object().shape({

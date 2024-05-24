@@ -75,7 +75,7 @@ const TABLE_ROWS = [
   }
 ]
 
-export function ProductPageTable () {
+export function SalesTable () {
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
 
   const handleCheckAll = () => {

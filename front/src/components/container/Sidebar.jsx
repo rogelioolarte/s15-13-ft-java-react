@@ -15,7 +15,7 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
     },
     {
       name: 'Ventas',
-      url: '/ventas',
+      url: '/sales',
       icon: <BsReceipt className='text-2xl' />
     },
     {
@@ -35,7 +35,7 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
     },
     {
       name: 'Consultas',
-      url: '/consultas',
+      url: '/queries',
       icon: <BsCalendarDate className='text-2xl' />
     },
     {
@@ -51,7 +51,7 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
 
   return (
     <div
-      className={`${openSidebar ? 'w-0' : 'w-60 sm:w-80'} h-full transition-all duration-500 ease-in-out`}
+      className={`${openSidebar ? 'w-0' : 'w-60 sm:w-80'} min-h-screen transition-all duration-500 ease-in-out`}
     >
       <div className='sidebar flex h-full min-h-svh gap-2 flex-col bg-black overflow-y-scroll'>
         <header className='px-6 pt-10 pb-5'>

@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client'
 import App from './src/App'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomePage from './src/pages/HomePage'
-import ProductsPage from './src/pages/ProductsPage'
-import ConsultsPage from './src/pages/ConsultsPage'
+import DashboardPage from './src/pages/DashboardPage'
+import SalesPage from './src/pages/SalesPage'
+import QueriesPage from './src/pages/QueriesPage'
 import NotFoundPage from './src/pages/NotFoundPage'
 import LoginPage from './src/pages/LoginPage'
 import ErrorPage from './src/pages/ErrorPage'
@@ -16,9 +16,9 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Navigate to='/login' /> },
       { path: '/login', element: <LoginPage /> },
-      { path: '/home', element: <HomePage /> },
-      { path: '/products', element: <ProductsPage /> },
-      { path: '/consults', element: <ConsultsPage /> }
+      { path: '/dashboard', element: <DashboardPage /> },
+      { path: '/sales', element: <SalesPage /> },
+      { path: '/queries', element: <QueriesPage /> }
     ]
   },
   { path: '/error', element: <ErrorPage /> },

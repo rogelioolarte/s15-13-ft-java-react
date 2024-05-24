@@ -108,7 +108,7 @@ function MenuCustomAnimation () {
   )
 }
 
-export default function ConsultsSection () {
+export default function QueriesSection () {
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
