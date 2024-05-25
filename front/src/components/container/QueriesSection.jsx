@@ -72,7 +72,7 @@ const TABLE_ROWS = [
   }
 ]
 
-function MenuCustomAnimation() {
+function MenuCustomAnimation () {
   return (
     <Menu
       placement='left'
@@ -95,7 +95,7 @@ function MenuCustomAnimation() {
   )
 }
 
-function PaginationGroup({ active, setActive }) {
+function PaginationGroup ({ active, setActive }) {
   const getItemProps = (index) => ({
     className: active === index ? 'bg-gray-100 text-gray-900' : '',
     onClick: () => setActive(index)
@@ -130,7 +130,7 @@ function PaginationGroup({ active, setActive }) {
   )
 }
 
-function SimplePagination({ active, setActive }) {
+function SimplePagination ({ active, setActive }) {
   const next = () => {
     if (active === 10) return
 
@@ -169,7 +169,7 @@ function SimplePagination({ active, setActive }) {
   )
 }
 
-export default function QueriesSection() {
+export default function QueriesSection () {
   const [active, setActive] = useState(1)
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
