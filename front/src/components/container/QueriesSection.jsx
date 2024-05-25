@@ -1,4 +1,5 @@
-import { FaMagnifyingGlass } from 'react-icons/fa6'
+import { useState } from 'react'
+import { FaMagnifyingGlass, FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { LuChevronsUpDown } from 'react-icons/lu'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import {
@@ -6,13 +7,9 @@ import {
   CardHeader,
   Input,
   Typography,
-  Button,
+  ButtonGroup,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
   IconButton,
   Menu,
   MenuHandler,
@@ -20,72 +17,62 @@ import {
   MenuItem
 } from '@material-tailwind/react'
 
-const TABS = [
-  {
-    label: 'All',
-    value: 'all'
-  },
-  {
-    label: 'Monitored',
-    value: 'monitored'
-  },
-  {
-    label: 'Unmonitored',
-    value: 'unmonitored'
-  }
-]
-
-const TABLE_HEAD = ['Cliente', 'Producto', 'Código', 'Fecha de Venta', 'Factura Nº', 'Fecha de Factura', '']
+const TABLE_HEAD = ['Customer', 'Product', 'Code', 'Sale Date', 'Invoice No.', 'Invoice Date', 'Total Sold', 'TOTAL', '']
 
 const TABLE_ROWS = [
   {
-    // img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
     name: 'John Michael',
     product: 'john@creative-tim.com',
     code: 'Manager',
-    fechaVenta: '23/04/18',
-    numFactura: true,
-    fechaFactura: '23/04/18'
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    // img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
     name: 'Alexa Liras',
     product: 'alexa@creative-tim.com',
     code: 'Programator',
-    fechaVenta: '23/04/18',
-    numFactura: false,
-    fechaFactura: '23/04/18'
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    // img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
     name: 'Laurent Perrier',
     product: 'laurent@creative-tim.com',
     code: 'Executive',
-    fechaVenta: '23/04/18',
-    numFactura: false,
-    fechaFactura: '19/09/17'
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    // img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
     name: 'Michael Levi',
     product: 'michael@creative-tim.com',
     code: 'Programator',
-    fechaVenta: '23/04/18',
-    numFactura: true,
-    fechaFactura: '24/12/08'
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    // img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
     name: 'Richard Gran',
     product: 'richard@creative-tim.com',
     code: 'Manager',
-    fechaVenta: '23/04/18',
-    numFactura: false,
-    fechaFactura: '04/10/21'
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   }
 ]
 
-function MenuCustomAnimation () {
+function MenuCustomAnimation() {
   return (
     <Menu
       placement='left'
@@ -100,43 +87,108 @@ function MenuCustomAnimation () {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Menu Item 1</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-        <MenuItem>Menu Item 3</MenuItem>
+        <MenuItem>Delete</MenuItem>
+        <MenuItem>Edit</MenuItem>
+        <MenuItem>Order from supplier</MenuItem>
       </MenuList>
     </Menu>
   )
 }
 
-export default function QueriesSection () {
+function PaginationGroup({ active, setActive }) {
+  const getItemProps = (index) => ({
+    className: active === index ? 'bg-gray-100 text-gray-900' : '',
+    onClick: () => setActive(index)
+  })
+
+  const next = () => {
+    if (active === 5) return
+
+    setActive(active + 1)
+  }
+
+  const prev = () => {
+    if (active === 1) return
+
+    setActive(active - 1)
+  }
+
+  return (
+    <ButtonGroup variant='outlined' className='hidden sm:block'>
+      <IconButton onClick={prev}>
+        <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
+      </IconButton>
+      <IconButton {...getItemProps(1)}>1</IconButton>
+      <IconButton {...getItemProps(2)}>2</IconButton>
+      <IconButton {...getItemProps(3)}>3</IconButton>
+      <IconButton {...getItemProps(4)}>4</IconButton>
+      <IconButton {...getItemProps(5)}>5</IconButton>
+      <IconButton onClick={next}>
+        <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
+      </IconButton>
+    </ButtonGroup>
+  )
+}
+
+function SimplePagination({ active, setActive }) {
+  const next = () => {
+    if (active === 10) return
+
+    setActive(active + 1)
+  }
+
+  const prev = () => {
+    if (active === 1) return
+
+    setActive(active - 1)
+  }
+
+  return (
+    <div className='sm:hidden flex items-center gap-8'>
+      <IconButton
+        size='sm'
+        variant='outlined'
+        onClick={prev}
+        disabled={active === 1}
+      >
+        <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
+      </IconButton>
+      <Typography color='gray' className='font-normal'>
+        Page <strong className='text-gray-900'>{active}</strong> of{' '}
+        <strong className='text-gray-900'>10</strong>
+      </Typography>
+      <IconButton
+        size='sm'
+        variant='outlined'
+        onClick={next}
+        disabled={active === 10}
+      >
+        <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
+      </IconButton>
+    </div>
+  )
+}
+
+export default function QueriesSection() {
+  const [active, setActive] = useState(1)
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-8 m-0 mb-4'>
           <div className='w-full text-center'>
             <Typography variant='h1' color='black'>
-              Consultas
+              Queries
             </Typography>
           </div>
-          <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-            <Tabs value='all' className='w-full md:w-max'>
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
-            <div className='w-full md:w-72'>
-              <Input
-                label='Search'
-                icon={<FaMagnifyingGlass className='h-5 w-5' />}
-              />
-            </div>
+          <div className='w-full md:w-72'>
+            <Input
+              className='bg-white'
+              label='Search'
+              icon={<FaMagnifyingGlass className='h-5 w-5' />}
+            />
           </div>
         </CardHeader>
-        <CardBody className='overflow-scroll p-0'>
+        <CardBody className='overflow-x-scroll p-0 shadow-lg'>
           <table className='w-full min-w-max table-auto text-left'>
             <thead>
               <tr>
@@ -160,10 +212,11 @@ export default function QueriesSection () {
             </thead>
             <tbody>
               {TABLE_ROWS.map(
-                ({ name, product, code, fechaVenta, numFactura, fechaFactura }, index) => {
+                ({ name, product, code, saleDate, invoiceNo, invoiceDate, totalSold, total }, index) => {
                   const classes = 'p-4 text-[#1D2433]'
                   return (
                     <tr key={name} className='even:bg-[#F8F9FC]'>
+                      {/* name */}
                       <td className={classes}>
                         <div className='flex items-center gap-3'>
                           <div className='flex flex-col'>
@@ -176,6 +229,7 @@ export default function QueriesSection () {
                           </div>
                         </div>
                       </td>
+                      {/* product */}
                       <td className={classes}>
                         <Typography
                           variant='small'
@@ -184,6 +238,7 @@ export default function QueriesSection () {
                           {product}
                         </Typography>
                       </td>
+                      {/* code */}
                       <td className={classes}>
                         <Typography
                           variant='small'
@@ -192,32 +247,52 @@ export default function QueriesSection () {
                           {code}
                         </Typography>
                       </td>
+                      {/* saleDate */}
                       <td className={classes}>
                         <Typography
                           variant='small'
                           className='font-normal'
                         >
-                          {fechaVenta}
+                          {saleDate}
                         </Typography>
                       </td>
-                      <td className={classes}>
-                        <div className='w-max'>
-                          <Chip
-                            variant='ghost'
-                            size='sm'
-                            value={numFactura ? 'online' : 'offline'}
-                            color={numFactura ? 'green' : 'blue-gray'}
-                          />
-                        </div>
-                      </td>
+                      {/* invoiceNo */}
                       <td className={classes}>
                         <Typography
                           variant='small'
                           className='font-normal'
                         >
-                          {fechaFactura}
+                          {invoiceNo}
                         </Typography>
                       </td>
+                      {/* invoiceDate */}
+                      <td className={classes}>
+                        <Typography
+                          variant='small'
+                          className='font-normal'
+                        >
+                          {invoiceDate}
+                        </Typography>
+                      </td>
+                      {/* totalSold */}
+                      <td className={classes}>
+                        <Typography
+                          variant='small'
+                          className='font-normal'
+                        >
+                          {totalSold}
+                        </Typography>
+                      </td>
+                      {/* total */}
+                      <td className={classes}>
+                        <Typography
+                          variant='small'
+                          className='font-normal'
+                        >
+                          {total}
+                        </Typography>
+                      </td>
+                      {/* edit */}
                       <td className={classes}>
                         <MenuCustomAnimation />
                       </td>
@@ -228,18 +303,12 @@ export default function QueriesSection () {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className='flex items-center bg-white justify-between border-t border-blue-gray-50 p-4'>
-          <Typography variant='small' color='blue-gray' className='font-normal'>
+        <CardFooter className='flex items-center bg-white justify-center sm:justify-between border-t border-blue-gray-50 p-4'>
+          <Typography variant='small' color='blue-gray' className='font-normal hidden sm:block'>
             Page 1 of 10
           </Typography>
-          <div className='flex gap-2'>
-            <Button variant='outlined' size='sm'>
-              Previous
-            </Button>
-            <Button variant='outlined' size='sm'>
-              Next
-            </Button>
-          </div>
+          <PaginationGroup active={active} setActive={setActive} />
+          <SimplePagination active={active} setActive={setActive} />
         </CardFooter>
       </Card>
     </main>

@@ -24,8 +24,8 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
       icon: <BsCartCheck className='text-2xl' />
     },
     {
-      name: 'Proovedores',
-      url: '/proovedores',
+      name: 'Proveedores',
+      url: '/proveedores',
       icon: <BsTruck className='text-2xl' />
     },
     {
