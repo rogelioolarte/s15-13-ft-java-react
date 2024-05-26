@@ -1,7 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useNavigate } from 'react-router-dom'
-import { login } from '../../../services/authService'
+import { Link, useNavigate } from 'react-router-dom'
 import LogoMedium from '../../../assets/logo-md.svg'
 import {
   Card,
@@ -12,6 +11,8 @@ import {
   Button
 } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
+import { useLoginMutation } from '../../../store/apiSlice'
+import { useUserActions } from '../../../hooks/useUserActions'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,6 +25,8 @@ const loginSchema = Yup.object().shape({
 export default function LoginFormik () {
   const navigate = useNavigate()
   const [CommonError, setError] = useState('')
+  const [login, { isSuccess }] = useLoginMutation()
+  const { useCheckRealUser, useSetUser } = useUserActions()
 
   const sendError = (error) => {
     setError(error)
@@ -41,21 +44,23 @@ export default function LoginFormik () {
   }
 
   const handleSubmit = async (values) => {
-    const user = await login(values.email, values.password, sendError)
-    if (user) {
-      navigate('/home')
-      console.log(user)
-    }
+    await login(values).unwrap()
+      .then((res) => {
+        if (isSuccess && useCheckRealUser(res)) {
+          useSetUser(res)
+          navigate('/dashboard')
+        }
+      }).catch((error) => sendError(error))
   }
 
   return (
-    <div className='w-[100%] md:w-[50%] md:h-[100%] bg-black grid justify-items-center'>
-      <img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' />
+    <div className='w-full md:w-[50%] h-[100%] bg-black grid justify-items-center'>
+      <Link to='/home'><img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' /></Link>
       <Typography variant='h3' color='white'>Log in to  Stock Master!</Typography>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
         {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
           <Form className='grid justify-items-center bg-black mb-[15vh]'>
-            <Card className='w-96 bg-black text-white'>
+            <Card className='w-96 bg-black text-white h-[100%]'>
               <CardBody className='flex flex-col gap-2 h-40 '>
                 <Field name='email'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (

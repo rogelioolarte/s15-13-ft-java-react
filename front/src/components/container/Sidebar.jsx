@@ -14,33 +14,33 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
       icon: <AiOutlineDashboard className='text-2xl' />
     },
     {
-      name: 'Ventas',
+      name: 'Sales',
       url: '/sales',
       icon: <BsReceipt className='text-2xl' />
     },
     {
-      name: 'Compras',
-      url: '/compras',
+      name: 'Purchases',
+      url: '/purchases',
       icon: <BsCartCheck className='text-2xl' />
     },
     {
-      name: 'Proveedores',
-      url: '/proveedores',
+      name: 'Suppliers',
+      url: '/suppliers',
       icon: <BsTruck className='text-2xl' />
     },
     {
       name: 'Analíticas',
-      url: '/analiticas',
+      url: '/analytics',
       icon: <TbPresentationAnalytics className='text-2xl' />
     },
     {
-      name: 'Consultas',
+      name: 'Queries',
       url: '/queries',
       icon: <BsCalendarDate className='text-2xl' />
     },
     {
-      name: 'Ajustes',
-      url: '/ajustes',
+      name: 'Settings',
+      url: '/settings',
       icon: <AiOutlineSetting className='text-2xl' />
     }
   ]
@@ -75,10 +75,11 @@ export default function Sidebar ({ openSidebar, setOpenSidebar }) {
           <button
             className='w-full text-white px-6 py-2 flex items-center gap-2'
             onClick={() => {
-              // resetAllSlices(), navigate('/')
+              // resetAllSlices(),
+              navigate('/home')
             }}
           >
-            <BsBoxArrowRight className='text-2xl' />Cerrar sesión
+            <BsBoxArrowRight className='text-2xl' />Log out
           </button>
         </div>
       </div>
