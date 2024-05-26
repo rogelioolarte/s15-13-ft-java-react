@@ -5,12 +5,12 @@ import Navbar from './components/container/Navbar'
 import Sidebar from './components/container/Sidebar'
 
 export default function App () {
-  const [openSidebar, setOpenSidebar] = useState(true)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
-    <div className='flex'>
-      <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
-      <Navbar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
+    <div className='flex relative'>
+      <Sidebar isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
+      <Navbar isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       <Outlet />
     </div>
   )

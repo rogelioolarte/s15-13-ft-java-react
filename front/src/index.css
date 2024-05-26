@@ -51,13 +51,13 @@
 }
 
 body {
-  font-family: "Inter", "Roboto",
-    "Helvetica Neue", Arial, sans-serif, system-ui;
+  font-family: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif, system-ui;
   background-color: #fff8f8;
   min-height: 100vh;
 }
 
 .sidebar {
+  max-width: 250px !important;
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -70,4 +70,14 @@ body {
     background: #374151;
     border-radius: 10px;
   }
+}
+
+@media (min-width: 540px) {
+  .sidebar {
+    max-width: 300px !important;
+  }
+}
+
+.menu {
+  position: sticky !important;
 }
