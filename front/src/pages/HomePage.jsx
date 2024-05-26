@@ -3,7 +3,7 @@ import NavBarHome from '../components/pure/NavBarHome'
 
 export default function HomePage () {
   return (
-    <div className='flex flex-col w-full h-[100vh]'>
+    <div className='flex flex-col w-[100%] h-[100vh]'>
       <NavBarHome />
       <HomeSection />
     </div>
