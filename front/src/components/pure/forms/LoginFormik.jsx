@@ -25,7 +25,7 @@ const loginSchema = Yup.object().shape({
 export default function LoginFormik () {
   const navigate = useNavigate()
   const [CommonError, setError] = useState('')
-  const [login, { isSuccess }] = useLoginMutation()
+  const [login] = useLoginMutation()
   const { useCheckRealUser, useSetUser } = useUserActions()
 
   const sendError = (error) => {
@@ -46,7 +46,7 @@ export default function LoginFormik () {
   const handleSubmit = async (values) => {
     await login(values).unwrap()
       .then((res) => {
-        if (isSuccess && useCheckRealUser(res)) {
+        if (useCheckRealUser(res)) {
           useSetUser(res)
           navigate('/dashboard')
         }

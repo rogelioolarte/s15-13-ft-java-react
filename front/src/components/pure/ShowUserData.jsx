@@ -16,7 +16,7 @@ export default function ShowUserData () {
       <img src={LogoMedium} alt='profile-picture' className='bg-black size-30 rounded-full h-full' />
       <CardBody className='text-center justify-items-center content-center ml-5'>
         <Typography variant='h4' color='blue-gray' className='mb-2'>
-          Welcome, {user.name} {user.lastName}
+          Welcome, {user.first_name} {user.last_name}
         </Typography>
       </CardBody>
     </Card>

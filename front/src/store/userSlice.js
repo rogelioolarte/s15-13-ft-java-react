@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const DEFAULT_STATE = {
   id: '',
-  name: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
   email: ''
 }
 

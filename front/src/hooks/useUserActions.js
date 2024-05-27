@@ -10,7 +10,7 @@ export const useUserActions = () => {
    * This method check a real User in the Context
    */
   const useCheckRealUser = (user) => {
-    return !!(user.id && user.name && user.lastName && user.email)
+    return (user.id && user.first_name && user.last_name && user.email)
   }
 
   /**
