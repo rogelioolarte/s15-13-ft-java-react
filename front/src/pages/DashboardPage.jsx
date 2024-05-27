@@ -1,5 +1,5 @@
 import DashboardSection from '../components/container/DashboardSection'
-import useProtectedRoutes from '../hooks/useProtectedRoutes'
+// import useProtectedRoutes from '../hooks/useProtectedRoutes'
 
 export default function DashboardPage () {
   /* useProtectedRoutes() */

@@ -169,7 +169,7 @@ function SimplePagination ({ active, setActive }) {
   )
 }
 
-export default function QueriesSection () {
+export default function PurchasesSection () {
   const [active, setActive] = useState(1)
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
@@ -177,7 +177,7 @@ export default function QueriesSection () {
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-8 m-0 mb-4'>
           <div className='w-full text-center'>
             <Typography variant='h1' color='black'>
-              Queries
+              Purchases
             </Typography>
           </div>
           <div className='w-full md:w-72'>

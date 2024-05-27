@@ -3,7 +3,9 @@ import App from './src/App'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import DashboardPage from './src/pages/DashboardPage'
 import SalesPage from './src/pages/SalesPage'
-import QueriesPage from './src/pages/QueriesPage'
+import InquiriesPage from './src/pages/InquiriesPage'
+import SuppliersPage from './src/pages/SuppliersPage'
+import PurchasesPage from './src/pages/PurchasesPage'
 import NotFoundPage from './src/pages/NotFoundPage'
 import LoginPage from './src/pages/LoginPage'
 import ErrorPage from './src/pages/ErrorPage'
@@ -20,7 +22,9 @@ const router = createBrowserRouter([
       { path: '/', element: <Navigate to='/home' /> },
       { path: '/dashboard', element: <DashboardPage /> },
       { path: '/sales', element: <SalesPage /> },
-      { path: '/queries', element: <QueriesPage /> }
+      { path: '/inquiries', element: <InquiriesPage /> },
+      { path: '/suppliers', element: <SuppliersPage /> },
+      { path: '/purchases', element: <PurchasesPage /> }
     ]
   },
   { path: '/home', element: <HomePage /> },

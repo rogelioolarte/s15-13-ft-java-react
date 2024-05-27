@@ -40,8 +40,8 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       icon: <TbPresentationAnalytics className='h-5 w-5' />
     },
     {
-      name: 'Queries',
-      url: '/queries',
+      name: 'Inquiries',
+      url: '/inquiries',
       icon: <BsCalendarDate className='h-5 w-5' />
     },
     {
