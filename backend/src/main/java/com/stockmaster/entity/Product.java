@@ -2,15 +2,16 @@ package com.stockmaster.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "product")
-@Getter
-@Setter
+@Table(name = "products")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
