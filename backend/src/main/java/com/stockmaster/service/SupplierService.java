@@ -3,6 +3,15 @@ package com.stockmaster.service;
 import com.stockmaster.dto.SupplierRequestDTO;
 import com.stockmaster.dto.SupplierResponseDTO;
 import com.stockmaster.entity.Supplier;
+import com.stockmaster.entity.SupplierProduct;
+import com.stockmaster.repository.SupplierProductRepository;
+import com.stockmaster.repository.SupplierRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.stockmaster.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,41 +22,57 @@ import java.util.stream.Collectors;
 
 @Service
 public class SupplierService {
-    private final SupplierRepository supplierRepository;
 
     @Autowired
-    public SupplierService(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
+    private SupplierRepository supplierRepository;
+
+    @Autowired
+    private SupplierProductRepository supplierProductRepository;
+
+    private SupplierResponseDTO mapToResponseDTO(Supplier supplier) {
+        if (supplier == null) {
+            return null;
+        }
+
+        return SupplierResponseDTO.builder()
+                .id(supplier.getId())
+                .name(supplier.getName())
+                .companyCode(supplier.getCompanyCode())
+                .active(supplier.isActive())
+                .build();
+    }
+
+    private Supplier mapToEntity(SupplierRequestDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return Supplier.builder()
+                .name(dto.getName())
+                .companyCode(dto.getCompanyCode())
+                .active(true) // Default to active when creating
+                .build();
     }
 
     public SupplierResponseDTO createSupplier(SupplierRequestDTO supplierRequestDTO) {
         Supplier supplier = mapToEntity(supplierRequestDTO);
-        supplier.setActive(true);
-
-        return mapToResponseDTO(supplierRepository.save(supplier));
+        supplier = supplierRepository.save(supplier);
+        return mapToResponseDTO(supplier);
     }
 
     public SupplierResponseDTO updateSupplier(Long id, SupplierRequestDTO supplierRequestDTO) {
         Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found"));
-        updateEntity(supplier, supplierRequestDTO);
-
-        return mapToResponseDTO(supplierRepository.save(supplier));
+        supplier.setName(supplierRequestDTO.getName());
+        supplier.setCompanyCode(supplierRequestDTO.getCompanyCode());
+        supplier = supplierRepository.save(supplier);
+        return mapToResponseDTO(supplier);
     }
 
     public SupplierResponseDTO getSupplierById(Long id) {
         Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found"));
-
         return mapToResponseDTO(supplier);
-    }
-
-    public List<SupplierResponseDTO> getSuppliersByName(String name) {
-        List<Supplier> suppliers = supplierRepository.findByName(name);
-
-        return suppliers.stream()
-                .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
     }
 
     public List<SupplierResponseDTO> getAllSuppliers() {
@@ -60,28 +85,24 @@ public class SupplierService {
         Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found"));
         supplier.setActive(false);
-
-        return mapToResponseDTO(supplierRepository.save(supplier));
+        supplier = supplierRepository.save(supplier);
+        return mapToResponseDTO(supplier);
     }
 
-    private Supplier mapToEntity(SupplierRequestDTO dto) {
-        Supplier supplier = new Supplier();
-        supplier.setName(dto.getName());
-        supplier.setCompanyCode(dto.getCompanyCode());
-        return supplier;
+    public List<SupplierResponseDTO> findSuppliersByName(String name) {
+        return supplierRepository.findByName(name).stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
     }
 
-    private void updateEntity(Supplier supplier, SupplierRequestDTO dto) {
-        supplier.setName(dto.getName());
-        supplier.setCompanyCode(dto.getCompanyCode());
-    }
+    public SupplierResponseDTO addProductsToSupplier(Long supplierId, List<Long> productIds) {
+        Supplier supplier = supplierRepository.findById(supplierId)
+                .orElseThrow(() -> new RuntimeException("Supplier not found"));
 
-    private SupplierResponseDTO mapToResponseDTO(Supplier supplier) {
-        SupplierResponseDTO dto = new SupplierResponseDTO();
-        dto.setId(supplier.getId());
-        dto.setName(supplier.getName());
-        dto.setCompanyCode(supplier.getCompanyCode());
-        dto.setActive(supplier.getActive());
-        return dto;
+        List<SupplierProduct> products = supplierProductRepository.findAllById(productIds);
+        supplier.setProducts(products);
+        supplier = supplierRepository.save(supplier);
+
+        return mapToResponseDTO(supplier);
     }
 }

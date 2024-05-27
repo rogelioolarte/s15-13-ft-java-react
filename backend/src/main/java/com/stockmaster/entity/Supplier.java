@@ -1,61 +1,37 @@
 package com.stockmaster.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Table(name= "Supplier")
+@Table(name = "Supplier")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 @Builder
 public class Supplier {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "company_code", unique = true, nullable = false)
     private String companyCode;
 
     @Column(nullable = false)
-    private Boolean active = true;
+    private boolean active = true;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
+    @ManyToMany
+    @JoinTable(name = "supplier_product",
+            joinColumns = @JoinColumn(name = "supplier_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_product_id"))
+    private List<SupplierProduct> products;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }

@@ -14,12 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierController {
-    private final SupplierService supplierService;
 
     @Autowired
-    public SupplierController(SupplierService supplierService) {
-        this.supplierService = supplierService;
-    }
+    private SupplierService supplierService;
 
     @PostMapping
     public SupplierResponseDTO createSupplier(@RequestBody SupplierRequestDTO supplierRequestDTO) {
@@ -37,8 +34,8 @@ public class SupplierController {
     }
 
     @GetMapping
-    public List<SupplierResponseDTO> getSuppliersByName(@RequestParam String name) {
-        return supplierService.getSuppliersByName(name);
+    public List<SupplierResponseDTO> findSuppliersByName(@RequestParam String name) {
+        return supplierService.findSuppliersByName(name);
     }
 
     @GetMapping("/all")
@@ -49,5 +46,10 @@ public class SupplierController {
     @PatchMapping("/{id}")
     public SupplierResponseDTO deactivateSupplier(@PathVariable Long id) {
         return supplierService.deactivateSupplier(id);
+    }
+
+    @PostMapping("/product")
+    public SupplierResponseDTO addProductsToSupplier(@RequestParam Long supplierId, @RequestBody List<Long> productIds) {
+        return supplierService.addProductsToSupplier(supplierId, productIds);
     }
 }
