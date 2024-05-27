@@ -1,5 +1,6 @@
 package com.stockmaster.entity;
 
+import com.stockmaster.entity.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
 

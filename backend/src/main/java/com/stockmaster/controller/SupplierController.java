@@ -1,5 +1,7 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.SupplierRequestDTO;
+import com.stockmaster.dto.SupplierResponseDTO;
 import com.stockmaster.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
