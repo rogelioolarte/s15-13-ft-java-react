@@ -48,8 +48,12 @@ public class SupplierController {
         return supplierService.deactivateSupplier(id);
     }
 
+    //fondbyname
+
+
     @PostMapping("/product")
     public SupplierResponseDTO addProductsToSupplier(@RequestParam Long supplierId, @RequestBody List<Long> productIds) {
         return supplierService.addProductsToSupplier(supplierId, productIds);
     }
+
 }
