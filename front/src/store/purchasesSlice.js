@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const DEFAULT_STATE = []
 
 const initialState = (() => {
-  const persistedState = window.sessionStorage.getItem('session__state')
+  const persistedState = window.sessionStorage.getItem('session_state')
   return persistedState ? JSON.parse(persistedState).purchases : DEFAULT_STATE
 })()
 
@@ -17,7 +17,7 @@ export const purchasesSlice = createSlice({
     addPurchase: (state, action) => {
       return [...state, { ...action.payload }]
     },
-    updateProductById: (state, action) => {
+    updatePurchaseById: (state, action) => {
       const { id, newData } = action.payload
       return state.map(purchase => (purchase.id === id ? { ...purchase, ...newData } : purchase))
     },
@@ -34,7 +34,7 @@ export default purchasesSlice.reducer
 export const {
   initPurchases,
   addPurchase,
-  updateProductById,
+  updatePurchaseById: updateProductById,
   deletePurchaseById,
   resetPurchases
 } = purchasesSlice.actions

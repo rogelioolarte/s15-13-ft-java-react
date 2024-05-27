@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const DEFAULT_STATE = []
 
 const initialState = (() => {
-  const persistedState = window.sessionStorage.getItem('session__state')
+  const persistedState = window.sessionStorage.getItem('session_state')
   return persistedState ? JSON.parse(persistedState).customers : DEFAULT_STATE
 })()
 

@@ -1,6 +1,11 @@
 import { useAppDispatch, useAppSelector } from './store'
 import { resetUser, setUser } from '../store/userSlice'
 import { resetSales } from '../store/salesSlice'
+import { resetTaxes } from '../store/taxesSlice'
+import { resetSuppliers } from '../store/suppliersSlice'
+import { resetPurchases } from '../store/purchasesSlice'
+import { resetProducts } from '../store/productsSlice'
+import { resetCustomers } from '../store/customersSlice'
 
 export const useUserActions = () => {
   const user = useAppSelector(state => state.user)
@@ -19,6 +24,11 @@ export const useUserActions = () => {
   const useResetUser = () => {
     dispatch(resetUser())
     dispatch(resetSales())
+    dispatch(resetTaxes())
+    dispatch(resetSuppliers())
+    dispatch(resetPurchases())
+    dispatch(resetProducts())
+    dispatch(resetCustomers())
   }
 
   /**

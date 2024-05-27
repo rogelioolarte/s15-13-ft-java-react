@@ -38,7 +38,7 @@ export const useSalesActions = () => {
   }
 
   /**
-   * This method reset the List of Customers
+   * This method reset the List of Sales
    */
   const useResetSales = () => {
     dispatch(resetSales())

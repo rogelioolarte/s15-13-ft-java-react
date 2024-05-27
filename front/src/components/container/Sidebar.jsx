@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/logo-md.svg'
 import { AiOutlineDashboard, AiOutlineSetting } from 'react-icons/ai'
 import { BsReceipt, BsCartCheck, BsTruck, BsCalendarDate, BsBoxArrowRight } from 'react-icons/bs'
@@ -10,8 +10,10 @@ import {
   Drawer,
   Card
 } from '@material-tailwind/react'
+import { useUserActions } from '../../hooks/useUserActions'
 
 export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
+  const { useResetUser } = useUserActions()
   const navigate = useNavigate()
   const propertiesProfile = [
     {
@@ -35,7 +37,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       icon: <BsTruck className='h-5 w-5' />
     },
     {
-      name: 'Analíticas',
+      name: 'Analytics',
       url: '/analytics',
       icon: <TbPresentationAnalytics className='h-5 w-5' />
     },
@@ -89,7 +91,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
               <ListItemPrefix>
                 <BsBoxArrowRight className='h-5 w-5' />
               </ListItemPrefix>
-              Log Out
+              <Link to='/login' onClick={() => useResetUser()}>Log Out</Link>
             </ListItem>
           </List>
         </Card>

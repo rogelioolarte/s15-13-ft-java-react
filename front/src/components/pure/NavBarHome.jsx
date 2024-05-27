@@ -20,7 +20,7 @@ export default function NavBarHome () {
           <div className='flex items-center'>
             <Link to='/login'>
               <Button
-                variant=''
+                variant='filled'
                 size='sm'
                 className='bg-white text-black'
               >
