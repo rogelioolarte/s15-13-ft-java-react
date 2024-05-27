@@ -28,37 +28,40 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
 
     //Metodos Get
-    @GetMapping("/all-customer")
+    @GetMapping("/allcustomer")
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.findByAll());
     }
-    @GetMapping("/active-customer")
+    @GetMapping("/allactive")
     public ResponseEntity<?> getActiveCustomers() {
         List<Customer> customers = customerRepository.findAllActive();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
-    //Para traer el customer por el sale
+    //    @PatchMapping("/active/{id}")
+    //    public ResponseEntity<?> getActiveCustomers() {
+    //Para traer el customer por el sale all List<sale>,
+    // traer un sale por date mes/dia/año
     /*
     @GetMapping("/sale/{id}")
     public ResponseEntity<?> getCustomerBySalesId(@PathVariable Long id){
         return ResponseEntity.ok(customerService.findBySaleId(id));
     }*/
-    @GetMapping("/find-by/{id}")
+    @GetMapping("/findby/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
     }
-    @GetMapping("/searchByCustomerName/")
+    @GetMapping("/searchbyname/")
     public ResponseEntity<?> searchByCustomerName(@RequestParam("searchName") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByName(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
-    @GetMapping("/searchByCustomerPersonalCode/")
+    @GetMapping("/searchbycustomerpersonalcode/")
     public ResponseEntity<?> searchByCustomerPersonalCode(@RequestParam("searchPersonalCode") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByPersonalCode(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
     //Metodos Post
-    @PostMapping("/save-customer")
+    @PostMapping("/savecustomer")
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerSavingRequest customer, BindingResult result){
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors()
@@ -71,12 +74,12 @@ public class CustomerController {
         return ResponseEntity.ok(Map.of("message", "Customer saved successfully"));
     }
     //Metodos Put
-    @PutMapping("/update-customer")
+    @PutMapping("/updatecustomer")
     public ResponseEntity<?> updateCustomer(@Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
         return ResponseEntity.ok(customerService.update(customer));
     }
     //Metodo Delete
-    @PatchMapping("/delete-customer/{id}")
+    @PatchMapping("/deletecustomer/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);

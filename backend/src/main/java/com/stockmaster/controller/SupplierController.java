@@ -50,4 +50,5 @@ public class SupplierController {
     public SupplierResponseDTO deactivateSupplier(@PathVariable Long id) {
         return supplierService.deactivateSupplier(id);
     }
+    //fondbyname
 }
