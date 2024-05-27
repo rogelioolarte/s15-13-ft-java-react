@@ -25,5 +25,5 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware(persistanceSessionStorageMiddleware).concat(apiSlice.middleware)
+    getDefaultMiddleware().concat(apiSlice.middleware).concat(persistanceSessionStorageMiddleware)
 })

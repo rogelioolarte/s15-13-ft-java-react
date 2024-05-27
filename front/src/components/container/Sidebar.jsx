@@ -87,12 +87,14 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
                 {properties.name}
               </ListItem>
             ))}
-            <ListItem className='text-white hover:text-black'>
-              <ListItemPrefix>
-                <BsBoxArrowRight className='h-5 w-5' />
-              </ListItemPrefix>
-              <Link to='/login' onClick={() => useResetUser()}>Log Out</Link>
-            </ListItem>
+            <Link to='/login' onClick={() => useResetUser()}>
+              <ListItem className='text-white hover:text-black'>
+                <ListItemPrefix>
+                  <BsBoxArrowRight className='h-5 w-5' />
+                </ListItemPrefix>
+                Log Out
+              </ListItem>
+            </Link>
           </List>
         </Card>
       </Drawer>
