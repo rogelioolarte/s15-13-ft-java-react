@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FaMagnifyingGlass, FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
+import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { LuChevronsUpDown } from 'react-icons/lu'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import {
@@ -7,7 +7,6 @@ import {
   CardHeader,
   Input,
   Typography,
-  ButtonGroup,
   CardBody,
   CardFooter,
   IconButton,
@@ -16,6 +15,8 @@ import {
   MenuList,
   MenuItem
 } from '@material-tailwind/react'
+import SimplePagination from '../pure/pagination/SimplePagination'
+import PaginationGroup from '../pure/pagination/PaginationGroup'
 
 const TABLE_HEAD = ['Customer', 'Product', 'Code', 'Sale Date', 'Invoice No.', 'Invoice Date', 'Total Sold', 'TOTAL', '']
 
@@ -95,80 +96,6 @@ function MenuCustomAnimation () {
   )
 }
 
-function PaginationGroup ({ active, setActive }) {
-  const getItemProps = (index) => ({
-    className: active === index ? 'bg-gray-100 text-gray-900' : '',
-    onClick: () => setActive(index)
-  })
-
-  const next = () => {
-    if (active === 5) return
-
-    setActive(active + 1)
-  }
-
-  const prev = () => {
-    if (active === 1) return
-
-    setActive(active - 1)
-  }
-
-  return (
-    <ButtonGroup variant='outlined' className='hidden sm:block'>
-      <IconButton onClick={prev}>
-        <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
-      </IconButton>
-      <IconButton {...getItemProps(1)}>1</IconButton>
-      <IconButton {...getItemProps(2)}>2</IconButton>
-      <IconButton {...getItemProps(3)}>3</IconButton>
-      <IconButton {...getItemProps(4)}>4</IconButton>
-      <IconButton {...getItemProps(5)}>5</IconButton>
-      <IconButton onClick={next}>
-        <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
-      </IconButton>
-    </ButtonGroup>
-  )
-}
-
-function SimplePagination ({ active, setActive }) {
-  const next = () => {
-    if (active === 10) return
-
-    setActive(active + 1)
-  }
-
-  const prev = () => {
-    if (active === 1) return
-
-    setActive(active - 1)
-  }
-
-  return (
-    <div className='sm:hidden flex items-center gap-8'>
-      <IconButton
-        size='sm'
-        variant='outlined'
-        onClick={prev}
-        disabled={active === 1}
-      >
-        <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
-      </IconButton>
-      <Typography color='gray' className='font-normal'>
-        Page <strong className='text-gray-900'>{active}</strong> of{' '}
-        <strong className='text-gray-900'>10</strong>
-      </Typography>
-      <IconButton
-        size='sm'
-        variant='outlined'
-        onClick={next}
-        disabled={active === 10}
-      >
-        <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
-      </IconButton>
-    </div>
-  )
-}
-
 export default function PurchasesSection () {
   const [active, setActive] = useState(1)
   return (
@@ -188,7 +115,7 @@ export default function PurchasesSection () {
             />
           </div>
         </CardHeader>
-        <CardBody className='overflow-x-scroll p-0 shadow-lg'>
+        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
           <table className='w-full min-w-max table-auto text-left'>
             <thead>
               <tr>
@@ -215,7 +142,7 @@ export default function PurchasesSection () {
                 ({ name, product, code, saleDate, invoiceNo, invoiceDate, totalSold, total }, index) => {
                   const classes = 'p-4 text-[#1D2433]'
                   return (
-                    <tr key={name} className='even:bg-[#F8F9FC]'>
+                    <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                       {/* name */}
                       <td className={classes}>
                         <div className='flex items-center gap-3'>
@@ -303,10 +230,7 @@ export default function PurchasesSection () {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className='flex items-center bg-white justify-center sm:justify-between border-t border-blue-gray-50 p-4'>
-          <Typography variant='small' color='blue-gray' className='font-normal hidden sm:block'>
-            Page 1 of 10
-          </Typography>
+        <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between p-4'>
           <PaginationGroup active={active} setActive={setActive} />
           <SimplePagination active={active} setActive={setActive} />
         </CardFooter>

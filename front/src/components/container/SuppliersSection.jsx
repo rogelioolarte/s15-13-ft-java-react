@@ -101,7 +101,7 @@ export default function SuppliersSection () {
             <Button className='bg-[#D9D9D9] text-gray-900 shadow-none hover:shadow-none hover:bg-gray-300 transition-all duration-300 ease-in-out'>NEW SUPPLIER</Button>
           </div>
         </CardHeader>
-        <CardBody className='overflow-x-scroll p-0 shadow-lg'>
+        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
           <table className='w-full min-w-max table-auto text-left'>
             <thead>
               <tr>
@@ -128,7 +128,7 @@ export default function SuppliersSection () {
                 ({ name, cuit }, index) => {
                   const classes = 'p-4 text-[#1D2433]'
                   return (
-                    <tr key={index} className='even:bg-[#F8F9FC]'>
+                    <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                       {/* name */}
                       <td className={classes}>
                         <div className='flex items-center gap-3'>
@@ -162,10 +162,7 @@ export default function SuppliersSection () {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className='flex items-center bg-white justify-center sm:justify-between border-t border-blue-gray-50 p-4'>
-          <Typography variant='small' color='blue-gray' className='font-normal hidden sm:block'>
-            Page 1 of 10
-          </Typography>
+        <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between p-4'>
           <PaginationGroup active={active} setActive={setActive} />
           <SimplePagination active={active} setActive={setActive} />
         </CardFooter>

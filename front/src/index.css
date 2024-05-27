@@ -78,6 +78,22 @@ body {
   }
 }
 
+.tableBody {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #eaedf7;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #698abe;
+    border-radius: 10px;
+  }
+}
+
 .menu {
   position: sticky !important;
 }
