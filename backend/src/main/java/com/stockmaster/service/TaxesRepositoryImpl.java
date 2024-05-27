@@ -21,7 +21,7 @@ public class TaxesRepositoryImpl {
 
     @Lazy
     @Autowired
-    private  TaxesRepository taxesRepository;
+    private TaxesRepository taxesRepository;
 
 
     public DtoTaxesResponse taxRegister(DtoTaxesRquest dtoTaxesRquest) {
@@ -36,5 +36,13 @@ public class TaxesRepositoryImpl {
     public List<DtoTaxesResponse> findAllTaxes() {
         List<Taxes> list = taxesRepository.findAll();
         return list.stream().map(DtoTaxesResponse::new).toList();
+    }
+
+    public DtoTaxesResponse updateById(Long id) {
+
+
+        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
+        return new DtoTaxesResponse(tax);
+
     }
 }

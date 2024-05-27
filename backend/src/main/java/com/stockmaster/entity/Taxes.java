@@ -25,7 +25,8 @@ public class Taxes {
     private String name;
     @Column(name = "percentage", unique = true, nullable = true)
     private BigDecimal percentage;
-
+    @Column(name = "active")
+    private Boolean active;
 
 
     public Taxes(DtoTaxesRquest dtoTaxesRquest) {

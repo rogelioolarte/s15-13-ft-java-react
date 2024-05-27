@@ -17,7 +17,8 @@ CREATE TABLE user (
 CREATE TABLE taxes (
 	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) UNIQUE NOT NULL,
-    percentage DECIMAL(18,2) NOT NULL
+    percentage DECIMAL(18,2) NOT NULL,
+    active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE customer (

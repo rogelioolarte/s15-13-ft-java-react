@@ -44,5 +44,14 @@ public class TaxesController {
     }
 
     //put
+    @PutMapping(name = "/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.updateById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+        }
+
+    }
     //delete agregar un campo active
 }
