@@ -1,19 +1,21 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
+import com.stockmaster.repository.CustomerRepository;
 import com.stockmaster.service.customer.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,10 +25,17 @@ import java.util.stream.Collectors;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
+
     //Metodos Get
     @GetMapping("/all-customer")
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.findByAll());
+    }
+    @GetMapping("/active-customer")
+    public ResponseEntity<?> getActiveCustomers() {
+        List<Customer> customers = customerRepository.findAllActive();
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
     //Para traer el customer por el sale
     /*
@@ -34,16 +43,16 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerBySalesId(@PathVariable Long id){
         return ResponseEntity.ok(customerService.findBySaleId(id));
     }*/
-    @GetMapping("/customer/{id}")
+    @GetMapping("/find-by/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
     }
-    @GetMapping("/searchByCustomerName")
+    @GetMapping("/searchByCustomerName/")
     public ResponseEntity<?> searchByCustomerName(@RequestParam("searchName") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByName(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
-    @GetMapping("/searchByCustomerPersonalCode")
+    @GetMapping("/searchByCustomerPersonalCode/")
     public ResponseEntity<?> searchByCustomerPersonalCode(@RequestParam("searchPersonalCode") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByPersonalCode(searchTerm);
         return ResponseEntity.ok(searchResult);
@@ -58,15 +67,8 @@ public class CustomerController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        try {
-            return ResponseEntity.ok(customerService.save(customer));
-        } catch (DataIntegrityViolationException e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("El valor personalcode está duplicado. Por favor, proporcione un valor único.");
-            }
-            throw e;
-        }
+        customerService.save(customer);  // Aquí se lanzará la CustomRequestException si hay un error
+        return ResponseEntity.ok(Map.of("message", "Customer saved successfully"));
     }
     //Metodos Put
     @PutMapping("/update-customer")
@@ -74,7 +76,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.update(customer));
     }
     //Metodo Delete
-    @DeleteMapping("/deleteCustomer/{id}")
+    @PatchMapping("/delete-customer/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);

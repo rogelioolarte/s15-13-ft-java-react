@@ -17,9 +17,13 @@ import lombok.NoArgsConstructor;
 public class CustomerSavingRequest {
     @NotBlank
     private String name;
+
     @NotBlank
     private String personalCode;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
+
+    private boolean active = true;
 }

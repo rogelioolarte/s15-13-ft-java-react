@@ -16,5 +16,7 @@ public class CustomerUpdateRequest {
     private Long id;
     @NotBlank
     private String name;
-    //falta el personalcode
+    @NotBlank
+    private String personalCode;
+    private boolean active;
 }
