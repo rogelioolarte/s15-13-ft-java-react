@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-05-27T15:05:24.580Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="WFd8zi9U5fSuznxZDBLM" version="24.4.9" type="device">
+<mxfile host="app.diagrams.net" modified="2024-05-27T15:25:15.437Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="DCK4jA1ASfU0yVLbAumx" version="24.4.9" type="device">
   <diagram name="Page-1" id="dTon7C1wlRxbVaWyikY0">
-    <mxGraphModel dx="428" dy="307" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+    <mxGraphModel dx="443" dy="318" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -861,6 +861,18 @@
         </mxCell>
         <mxCell id="3wmjxjHrMDwIHZGy_9lG-169" value="customer" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2272.5" y="1030" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3wmjxjHrMDwIHZGy_9lG-172" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3wmjxjHrMDwIHZGy_9lG-171" target="SY82mL4uzIX1fNqr7_6c-116">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3wmjxjHrMDwIHZGy_9lG-174" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3wmjxjHrMDwIHZGy_9lG-171" target="3wmjxjHrMDwIHZGy_9lG-173">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3wmjxjHrMDwIHZGy_9lG-171" value="&lt;div&gt;agregar productos al suplier&lt;br&gt;&lt;/div&gt;&lt;div&gt;api/supplier/product&lt;/div&gt;&lt;div&gt;=&amp;gt; POST&lt;/div&gt;&lt;div&gt;body =&amp;gt; &lt;br&gt;&lt;/div&gt;&lt;div style=&quot;background-color:#1e1f22;color:#bcbec4&quot;&gt;&lt;pre style=&quot;font-family:&#39;JetBrains Mono&#39;,monospace;font-size:9,8pt;&quot;&gt;Long supplierId,&lt;br&gt;&lt;span style=&quot;color:#b3ae60;&quot;&gt; &lt;/span&gt;List&amp;lt;Long&amp;gt; productIds&lt;/pre&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1527.5" y="770" width="172.5" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="3wmjxjHrMDwIHZGy_9lG-173" value="response&amp;nbsp; supplier" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="770" width="160" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
