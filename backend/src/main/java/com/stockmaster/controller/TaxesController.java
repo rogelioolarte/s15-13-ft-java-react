@@ -32,6 +32,7 @@ public class TaxesController {
     }
     }
 
+
     @GetMapping
     public ResponseEntity<?> getAll() {
         try {
