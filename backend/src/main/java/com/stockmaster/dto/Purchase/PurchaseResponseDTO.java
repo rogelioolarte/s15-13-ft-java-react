@@ -1,6 +1,7 @@
 package com.stockmaster.dto.Purchase;
 
 
+import com.stockmaster.dto.SupplierResponseDTO;
 import lombok.Getter;
 import lombok.Setter;
 

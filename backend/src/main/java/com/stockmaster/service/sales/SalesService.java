@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -30,7 +31,7 @@ public class SalesService {
     }
 
     public SalesResponse save(SalesSavingRequest salesSavingRequest){
-        if (salesSavingRequest.getTotal() == null || salesSavingRequest.getTotal().isEmpty()) {
+        if (salesSavingRequest.getTotal() == null || salesSavingRequest.getTotal().compareTo(BigDecimal.ZERO) == 0){
             throw new RequestException("Total cant be null or empty");
         }
         Sales sales = salesMapper.salesRequestToPost(salesSavingRequest);

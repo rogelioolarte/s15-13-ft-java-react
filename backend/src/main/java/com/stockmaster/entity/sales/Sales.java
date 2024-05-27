@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name= "sale")
+@Table(name= "sales")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -32,8 +33,12 @@ public class Sales {
     private Customer customer;
 
     @ManyToMany
-    @JoinColumn(name = "id_taxes", nullable = false, referencedColumnName = "id")
-    private Taxes taxes;
+    @JoinTable(
+            name = "sales_taxes",
+            joinColumns = @JoinColumn(name = "sales_id"),
+            inverseJoinColumns = @JoinColumn(name = "tax_id")
+    )
+    private Set<Taxes> taxes;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
@@ -45,6 +50,11 @@ public class Sales {
     @Column(name = "total")
     private BigDecimal total;
 
-    @ManyToMany(mappedBy = "sale")
+    @ManyToMany
+    @JoinTable(
+            name = "sales_products",
+            joinColumns = @JoinColumn(name = "id_sales"),
+            inverseJoinColumns = @JoinColumn(name = "id_product")
+    )
     private List<SalesProduct> products;
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/sales")
+@RequestMapping("/api/sale")
 @RequiredArgsConstructor
 @CrossOrigin
 public class SaleController {
@@ -23,13 +23,13 @@ public class SaleController {
     private final SalesRepository salesRepository;
 
     //Get Method
-    @GetMapping("")
+    @GetMapping("/getAll")
     public ResponseEntity<?>getAllSales(){
         return ResponseEntity.ok(salesService.findByAll());
     }
 
     //Post Method
-    @PostMapping("")
+    @PostMapping("/save")
     public ResponseEntity<?>saveSale(@Valid @RequestBody SalesSavingRequest savingRequest, BindingResult result){
         if (result.hasErrors()){
             List<String> errorMessages = result.getAllErrors()

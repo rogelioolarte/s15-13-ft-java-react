@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "sales_products")
 @AllArgsConstructor
@@ -18,14 +20,19 @@ public class SalesProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "id_sales", nullable = false)
     private Sales sales;
 
     @ManyToMany
-    @JoinColumn(name = "id_product", nullable = false)
-    private Product product;
+    @JoinTable(
+            name = "sales_product_mapping",
+            joinColumns = @JoinColumn(name = "id_sales_product"),
+            inverseJoinColumns = @JoinColumn(name = "id_product")
+    )
+    private List<Product> products;
 
     @Column(nullable = false)
     private Integer quantity;
+
 }

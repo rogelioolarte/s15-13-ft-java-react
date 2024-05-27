@@ -14,20 +14,21 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SalesSavingRequest {
-    @NotBlank
+    @NotNull
     private Customer id_customer;
-    @NotBlank
-    private Taxes id_taxes;
-    @NotBlank
+    @NotNull
+    private Set<Taxes> id_taxes;
+    @NotNull
     private Date date;
     @NotNull
     private BigDecimal discount;
-    @NotBlank
+    @NotNull
     private BigDecimal total;
 }
