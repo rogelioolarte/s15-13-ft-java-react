@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class TaxesController {
 
 
+
     @Lazy
     @Autowired
     private  TaxesRepositoryImpl taxesRepositoryImpl;
 
-    @Autowired
-    private TaxesRepository taxesRepository;
+
 
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest) {
@@ -32,6 +32,7 @@ public class TaxesController {
     }
     }
 
+
     @GetMapping
     public ResponseEntity<?> getAll() {
         try {
@@ -41,4 +42,7 @@ public class TaxesController {
         }
 
     }
+
+    //put
+    //delete agregar un campo active
 }

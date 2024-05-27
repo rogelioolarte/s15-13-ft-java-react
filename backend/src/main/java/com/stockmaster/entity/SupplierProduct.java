@@ -23,7 +23,7 @@ public class SupplierProduct {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Products products;
+    private Product product;
 
     @Column(name = "price_cost", nullable = false)
     private double priceCost;

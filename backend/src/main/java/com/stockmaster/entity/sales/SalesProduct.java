@@ -1,6 +1,6 @@
 package com.stockmaster.entity.sales;
 
-import com.stockmaster.entity.Products;
+import com.stockmaster.entity.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +24,7 @@ public class SalesProduct {
 
     @ManyToMany
     @JoinColumn(name = "id_product", nullable = false)
-    private Products products;
+    private Product product;
 
     @Column(nullable = false)
     private Integer quantity;
