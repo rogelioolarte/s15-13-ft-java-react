@@ -1,17 +1,8 @@
 package com.stockmaster.service;
 
-import com.stockmaster.dto.SupplierRequestDTO;
-import com.stockmaster.dto.SupplierResponseDTO;
 import com.stockmaster.entity.Supplier;
 import com.stockmaster.entity.SupplierProduct;
 import com.stockmaster.repository.SupplierProductRepository;
-import com.stockmaster.repository.SupplierRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.stockmaster.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

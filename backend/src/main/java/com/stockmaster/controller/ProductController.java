@@ -1,7 +1,7 @@
 package com.stockmaster.controller;
 
 import com.stockmaster.dto.ProductDTO;
-import com.stockmaster.entity.Product;
+import com.stockmaster.entity.Products;
 import com.stockmaster.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +21,14 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
         try {
-            Product product = new Product();
-            product.setName(productDTO.getName());
-            product.setBarcode(productDTO.getBarcode());
-            product.setDescription(productDTO.getDescription());
-            product.setSalePrice(productDTO.getSalePrice());
-            product.setMinimal(productDTO.getMinimal());
-            Product savedProduct = productService.saveProduct(product);
-            return new ResponseEntity<>(mapToDTO(savedProduct), HttpStatus.CREATED);
+            Products products = new Products();
+            products.setName(productDTO.getName());
+            products.setBarcode(productDTO.getBarcode());
+            products.setDescription(productDTO.getDescription());
+            products.setSalePrice(productDTO.getSalePrice());
+            products.setMinimal(productDTO.getMinimal());
+            Products savedProducts = productService.saveProduct(products);
+            return new ResponseEntity<>(mapToDTO(savedProducts), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -37,15 +37,15 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
         try {
-            Product existingProduct = productService.getProductById(id);
-            if (existingProduct != null) {
-                existingProduct.setName(productDTO.getName());
-                existingProduct.setBarcode(productDTO.getBarcode());
-                existingProduct.setDescription(productDTO.getDescription());
-                existingProduct.setSalePrice(productDTO.getSalePrice());
-                existingProduct.setMinimal(productDTO.getMinimal());
-                Product updatedProduct = productService.updateProduct(existingProduct);
-                return ResponseEntity.ok(mapToDTO(updatedProduct));
+            Products existingProducts = productService.getProductById(id);
+            if (existingProducts != null) {
+                existingProducts.setName(productDTO.getName());
+                existingProducts.setBarcode(productDTO.getBarcode());
+                existingProducts.setDescription(productDTO.getDescription());
+                existingProducts.setSalePrice(productDTO.getSalePrice());
+                existingProducts.setMinimal(productDTO.getMinimal());
+                Products updatedProducts = productService.updateProduct(existingProducts);
+                return ResponseEntity.ok(mapToDTO(updatedProducts));
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -67,7 +67,7 @@ public class ProductController {
     @GetMapping("/all")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         try {
-            List<Product> products = productService.getAllProducts();
+            List<Products> products = productService.getAllProducts();
             if (!products.isEmpty()) {
                 return ResponseEntity.ok(mapToDTOList(products));
             } else {
@@ -81,9 +81,9 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         try {
-            Product product = productService.getProductById(id);
-            if (product != null) {
-                return ResponseEntity.ok(mapToDTO(product));
+            Products products = productService.getProductById(id);
+            if (products != null) {
+                return ResponseEntity.ok(mapToDTO(products));
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -92,20 +92,20 @@ public class ProductController {
         }
     }
 
-    private ProductDTO mapToDTO(Product product) {
+    private ProductDTO mapToDTO(Products products) {
         ProductDTO dto = new ProductDTO();
-        dto.setId(product.getId());
-        dto.setName(product.getName());
-        dto.setBarcode(product.getBarcode());
-        dto.setDescription(product.getDescription());
-        dto.setSalePrice(product.getSalePrice());
-        dto.setMinimal(product.getMinimal());
-        dto.setStock(product.getStock());
-        dto.setActive(product.isActive());
+        dto.setId(products.getId());
+        dto.setName(products.getName());
+        dto.setBarcode(products.getBarcode());
+        dto.setDescription(products.getDescription());
+        dto.setSalePrice(products.getSalePrice());
+        dto.setMinimal(products.getMinimal());
+        dto.setStock(products.getStock());
+        dto.setActive(products.isActive());
         return dto;
     }
 
-    private List<ProductDTO> mapToDTOList(List<Product> products) {
+    private List<ProductDTO> mapToDTOList(List<Products> products) {
         return products.stream().map(this::mapToDTO).toList();
     }
 }

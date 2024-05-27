@@ -1,6 +1,5 @@
 package com.stockmaster.entity;
 
-import com.stockmaster.entity.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +23,7 @@ public class SupplierProduct {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private Products products;
 
     @Column(name = "price_cost", nullable = false)
     private double priceCost;
