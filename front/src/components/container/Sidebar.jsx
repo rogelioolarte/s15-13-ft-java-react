@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/logo-md.svg'
-import { AiOutlineDashboard, AiOutlineSetting } from 'react-icons/ai'
+import { AiOutlineDashboard, AiOutlineProduct, AiOutlineSetting } from 'react-icons/ai'
 import { BsReceipt, BsCartCheck, BsTruck, BsCalendarDate, BsBoxArrowRight } from 'react-icons/bs'
 import { TbPresentationAnalytics } from 'react-icons/tb'
 import {
@@ -20,6 +20,11 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       name: 'Dashboard',
       url: '/dashboard',
       icon: <AiOutlineDashboard className='h-5 w-5' />
+    },
+    {
+      name: 'Products',
+      url: '/products',
+      icon: <AiOutlineProduct  className='h-5 w-5' />
     },
     {
       name: 'Sales',
@@ -50,7 +55,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       name: 'Settings',
       url: '/settings',
       icon: <AiOutlineSetting className='h-5 w-5' />
-    }
+    },
   ]
   const navigateRoutes = (url) => {
     navigate(url)

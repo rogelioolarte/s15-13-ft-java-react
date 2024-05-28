@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES } from '../config/api_routes'
-
+import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT } from '../config/api_routes'
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: MAIN_API.length !== 0 ? MAIN_API : 'https://reqres.in' }),
@@ -22,8 +21,35 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         body: data
       })
+    }),
+    productCreate: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
+    }),
+    productUpdate: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
+        method: 'PUT',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
+    }),
+    productDelete: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
+        method: 'PATCH',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        param: data
+      })
     })
   })
 })
 
-export const { useLoginMutation, usePurchasesMutation } = apiSlice
+export const { useLoginMutation, useProductCreateMutation, useProductUpdateMutation, useProductDeleteMutation, usePurchasesMutation } = apiSlice

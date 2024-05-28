@@ -13,6 +13,7 @@ import { ThemeProvider } from '@material-tailwind/react'
 import { Provider } from 'react-redux'
 import { store } from './src/store'
 import HomePage from './src/pages/HomePage'
+import ProductsPage from './src/pages/ProductsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
       { path: '/sales', element: <SalesPage /> },
       { path: '/inquiries', element: <InquiriesPage /> },
       { path: '/suppliers', element: <SuppliersPage /> },
-      { path: '/purchases', element: <PurchasesPage /> }
+      { path: '/purchases', element: <PurchasesPage /> },
+      { path: '/products', element: <ProductsPage /> }
     ]
   },
   { path: '/home', element: <HomePage /> },
