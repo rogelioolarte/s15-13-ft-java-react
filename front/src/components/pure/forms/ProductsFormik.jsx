@@ -7,10 +7,9 @@ export function ProductsFormik({ setOpen }) {
 
   const productSchema = Yup.object().shape({
     name: Yup.string()
-      .email('Invalid Email Format')
-      .required('Email is required'),
+      .required('Name is required'),
     quantity: Yup.string()
-      .required('Password is required'),
+      .required('quantity is required'),
     provider: Yup.string(),
     price: Yup.string(),
 
@@ -37,8 +36,8 @@ export function ProductsFormik({ setOpen }) {
   return (
     <Formik initialValues={initialValues} validationSchema={productSchema} onSubmit={handleSubmit}>
       {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
-        <Form className='grid justify-items-center'>
-          <Card className='w-full text-white'>
+        <Form className='grid justify-items-center p-8'>
+          <Card className='w-full text-white shadow-none'>
             <CardBody className='flex flex-col gap-6'>
               <h1 className={'text-black font-bold text-2xl'}>New Product</h1>
               <div className={'flex flex-col gap-10 '}><Field name="name">
@@ -61,12 +60,14 @@ export function ProductsFormik({ setOpen }) {
                     <Input {...field} type="text" placeholder="Quantity" label="Quantity" size="lg"/>
                   )}
                 </Field>
-                {/* Email Errors */}
-                {errors.email && touched.email &&
-                  (<ErrorMessage className="text-white text-sm" name="email" component="div"/>)}
-                {/* Password Errors */}
-                {errors.password && touched.password &&
-                  (<ErrorMessage className="text-white text-sm" name="password" component="div"/>)}
+                {errors.name && touched.name &&
+                  (<ErrorMessage className="text-black text-sm" name="name" component="div"/>)}
+                {errors.price && touched.price &&
+                  (<ErrorMessage className="text-black text-sm" name="price" component="div"/>)}
+                {errors.provider && touched.provider &&
+                  (<ErrorMessage className="text-black text-sm" name="provider" component="div"/>)}
+                {errors.quantity && touched.quantity &&
+                  (<ErrorMessage className="text-black text-sm" name="quantity" component="div"/>)}
                 {/*<div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div>*/}</div>
             </CardBody>
             <CardFooter className={'flex justify-center gap-20'}>
