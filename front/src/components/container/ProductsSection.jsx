@@ -13,91 +13,91 @@ export function ProductsSection () {
       id: '1',
       name: 'Producto 6',
       description: 'La descripcion',
-      cantidad: 15,
-      proveedor: 'Proveedor F',
-      codigo: 'F006',
-      precioDeVenta: '$180'
+      supplier: 'Proveedor F',
+      barCode: 'F006',
+      precioVenta: '$180',
+      stockMinimo: 15
     },
     {
       id: '2',
       name: 'Producto 7',
       description: 'La descripcion',
-      cantidad: 8,
-      proveedor: 'Proveedor G',
-      codigo: 'G007',
-      precioDeVenta: '$220'
+      supplier: 'Proveedor G',
+      barCode: 'G007',
+      precioVenta: '$220',
+      stockMinimo: 8
     },
     {
       id: '3',
       name: 'Producto 8',
       description: 'La descripcion',
-      cantidad: 25,
-      proveedor: 'Proveedor H',
-      codigo: 'H008',
-      precioDeVenta: '$120'
+      supplier: 'Proveedor H',
+      barCode: 'H008',
+      precioVenta: '$120',
+      stockMinimo: 25
     },
     {
       id: '4',
       name: 'Producto 9',
       description: 'La descripcion',
-      cantidad: 3,
-      proveedor: 'Proveedor I',
-      codigo: 'I009',
-      precioDeVenta: '$350'
+      supplier: 'Proveedor I',
+      barCode: 'I009',
+      precioVenta: '$350',
+      stockMinimo: 3
     },
     {
       id: '5',
       name: 'Producto 10',
       description: 'La descripcion',
-      cantidad: 18,
-      proveedor: 'Proveedor J',
-      codigo: 'J010',
-      precioDeVenta: '$280'
+      supplier: 'Proveedor J',
+      barCode: 'J010',
+      precioVenta: '$280',
+      stockMinimo: 18
     },
     {
       id: '6',
       name: 'Producto 11',
       description: 'La descripcion',
-      cantidad: 11,
-      proveedor: 'Proveedor K',
-      codigo: 'K011',
-      precioDeVenta: '$200'
+      supplier: 'Proveedor K',
+      barCode: 'K011',
+      precioVenta: '$200',
+      stockMinimo: 11
     },
     {
       id: '7',
       name: 'Producto 12',
       description: 'La descripcion',
-      cantidad: 6,
-      proveedor: 'Proveedor L',
-      codigo: 'L012',
-      precioDeVenta: '$320'
+      supplier: 'Proveedor L',
+      barCode: 'L012',
+      precioVenta: '$320',
+      stockMinimo: 6
     },
     {
       id: '8',
       name: 'Producto 13',
       description: 'La descripcion',
-      cantidad: 22,
-      proveedor: 'Proveedor M',
-      codigo: 'M013',
-      precioDeVenta: '$140'
+      supplier: 'Proveedor M',
+      barCode: 'M013',
+      precioVenta: '$140',
+      stockMinimo: 22
     },
     {
       id: '9',
       name: 'Producto 14',
       description: 'La descripcion',
-      cantidad: 9,
-      proveedor: 'Proveedor N',
-      codigo: 'N014',
-      precioDeVenta: '$270'
+      supplier: 'Proveedor N',
+      barCode: 'N014',
+      precioVenta: '$270',
+      stockMinimo: 9
     },
     {
       id: '10',
       name: 'Producto 15',
       description: 'La descripcion',
-      cantidad: 14,
-      proveedor: 'Proveedor O',
-      codigo: 'O015',
-      precioDeVenta: '$190'
+      supplier: 'Proveedor O',
+      barCode: 'O015',
+      precioVenta: '$190',
+      stockMinimo: 14
     }
   ]
 

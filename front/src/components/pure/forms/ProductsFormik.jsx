@@ -26,9 +26,9 @@ export function ProductsFormik({ setOpen, action, productToEdit }) {
     name: productToEdit?.name ?? '',
     description: productToEdit?.description ?? '',
     supplier: productToEdit?.supplier ?? '',
-    barcode: productToEdit?.barcode ?? '',
-    price: productToEdit?.price ?? '',
-    quantity: productToEdit?.quantity ?? '',
+    barcode: productToEdit?.barCode ?? '',
+    price: productToEdit?.precioVenta ?? '',
+    quantity: productToEdit?.stockMinimo ?? '',
   }
 
   const createProduct = async (values) => {

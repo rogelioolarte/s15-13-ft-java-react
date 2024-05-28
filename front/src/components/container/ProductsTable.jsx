@@ -36,8 +36,8 @@ export function ProductsTable ({TABLE_ROWS, TABLE_HEAD, checkedItems, setChecked
         </tr>
         </thead>
         <tbody className='bg-primary-30'>
-        {TABLE_ROWS.map(({ name, description, cantidad, proveedor, codigo, precioDeVenta }, index) => (
-            <tr key={codigo} className='even:bg-secondary-20'>
+        {TABLE_ROWS.map(({ name, description, stockMinimo, supplier, barCode, precioVenta }, index) => (
+            <tr key={barCode} className='even:bg-secondary-20'>
               <td className='p-4'>
                 <input type='checkbox' checked={checkedItems[index]} onChange={() => handleCheckItem(index)}/>
               </td>
@@ -53,22 +53,22 @@ export function ProductsTable ({TABLE_ROWS, TABLE_HEAD, checkedItems, setChecked
               </td>
               <td className='p-4'>
                 <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {cantidad}
+                  {stockMinimo}
                 </Typography>
               </td>
               <td className='p-4'>
                 <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {proveedor}
+                  {supplier}
                 </Typography>
               </td>
               <td className='p-4'>
                 <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {codigo}
+                  {barCode}
                 </Typography>
               </td>
               <td className='p-4'>
                 <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {precioDeVenta}
+                  {precioVenta}
                 </Typography>
               </td>
             </tr>
