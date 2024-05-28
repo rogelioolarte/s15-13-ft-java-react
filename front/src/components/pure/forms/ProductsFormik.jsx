@@ -1,11 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Card, CardBody, CardFooter, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
-import { useProductMutation } from "../../../store/apiSlice.js";
+import { useProductCreateMutation, useProductUpdateMutation } from "../../../store/apiSlice.js";
 import { useProductsActions } from "../../../hooks/useProductsActions.js";
 
-export function ProductsFormik({ setOpen }) {
-  const [product] = useProductMutation();
+export function ProductsFormik({ setOpen, action, productToEdit }) {
+  const [productCreate] = useProductCreateMutation();
+  const [productUpdate] = useProductUpdateMutation();
+
   const { useAddProduct } = useProductsActions();
 
   const productSchema = Yup.object().shape({
@@ -21,23 +23,38 @@ export function ProductsFormik({ setOpen }) {
   })
 
   const initialValues = {
-    name: '',
-    description: '',
-    supplier: '',
-    barcode: '',
-    price: '',
-    quantity: '',
+    name: productToEdit?.name ?? '',
+    description: productToEdit?.description ?? '',
+    supplier: productToEdit?.supplier ?? '',
+    barcode: productToEdit?.barcode ?? '',
+    price: productToEdit?.price ?? '',
+    quantity: productToEdit?.quantity ?? '',
+  }
+
+  const createProduct = async (values) => {
+    await productCreate(values).unwrap()
+        .then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            useAddProduct(res.data)
+          }
+        }).catch((error) => console.log(error))
+  }
+
+  const editProduct = async (values) => {
+    await productUpdate(values).unwrap()
+        .then((res) => {
+          console.log(res)
+          if (res.status === 201) {
+            useAddProduct(res.data)
+          }
+        }).catch((error) => console.log(error))
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    await product(values).unwrap()
-      .then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          useAddProduct(res.data)
-        }
-      }).catch((error) => console.log(error))
+    console.log(values);
+    action === 'create' && await createProduct(values);
+    action === 'edit' && await editProduct(values);
   }
 
   return (

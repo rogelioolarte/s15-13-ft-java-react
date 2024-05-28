@@ -1,93 +1,7 @@
 import { Card, Typography } from '@material-tailwind/react'
 import { useState } from 'react'
-const TABLE_HEAD = ['checkbox', 'Producto', 'Descripcion', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
 
-const TABLE_ROWS = [
-  {
-    producto: 'Producto 6',
-    description: 'La descripcion',
-    cantidad: 15,
-    proveedor: 'Proveedor F',
-    codigo: 'F006',
-    precioDeVenta: '$180'
-  },
-  {
-    producto: 'Producto 7',
-    description: 'La descripcion',
-    cantidad: 8,
-    proveedor: 'Proveedor G',
-    codigo: 'G007',
-    precioDeVenta: '$220'
-  },
-  {
-    producto: 'Producto 8',
-    description: 'La descripcion',
-    cantidad: 25,
-    proveedor: 'Proveedor H',
-    codigo: 'H008',
-    precioDeVenta: '$120'
-  },
-  {
-    producto: 'Producto 9',
-    description: 'La descripcion',
-    cantidad: 3,
-    proveedor: 'Proveedor I',
-    codigo: 'I009',
-    precioDeVenta: '$350'
-  },
-  {
-    producto: 'Producto 10',
-    description: 'La descripcion',
-    cantidad: 18,
-    proveedor: 'Proveedor J',
-    codigo: 'J010',
-    precioDeVenta: '$280'
-  },
-  {
-    producto: 'Producto 11',
-    description: 'La descripcion',
-    cantidad: 11,
-    proveedor: 'Proveedor K',
-    codigo: 'K011',
-    precioDeVenta: '$200'
-  },
-  {
-    producto: 'Producto 12',
-    description: 'La descripcion',
-    cantidad: 6,
-    proveedor: 'Proveedor L',
-    codigo: 'L012',
-    precioDeVenta: '$320'
-  },
-  {
-    producto: 'Producto 13',
-    description: 'La descripcion',
-    cantidad: 22,
-    proveedor: 'Proveedor M',
-    codigo: 'M013',
-    precioDeVenta: '$140'
-  },
-  {
-    producto: 'Producto 14',
-    description: 'La descripcion',
-    cantidad: 9,
-    proveedor: 'Proveedor N',
-    codigo: 'N014',
-    precioDeVenta: '$270'
-  },
-  {
-    producto: 'Producto 15',
-    description: 'La descripcion',
-    cantidad: 14,
-    proveedor: 'Proveedor O',
-    codigo: 'O015',
-    precioDeVenta: '$190'
-  }
-]
-
-export function ProductsTable () {
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
-
+export function ProductsTable ({TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems}) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
@@ -122,14 +36,14 @@ export function ProductsTable () {
         </tr>
         </thead>
         <tbody className='bg-primary-30'>
-        {TABLE_ROWS.map(({ producto, description, cantidad, proveedor, codigo, precioDeVenta }, index) => (
+        {TABLE_ROWS.map(({ name, description, cantidad, proveedor, codigo, precioDeVenta }, index) => (
             <tr key={codigo} className='even:bg-secondary-20'>
               <td className='p-4'>
                 <input type='checkbox' checked={checkedItems[index]} onChange={() => handleCheckItem(index)}/>
               </td>
               <td className='p-4'>
                 <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {producto}
+                  {name}
                 </Typography>
               </td>
               <td className='p-4'>

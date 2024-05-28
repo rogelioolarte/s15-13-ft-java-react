@@ -14,7 +14,7 @@ export const apiSlice = createApi({
         body: data
       })
     }),
-    product: build.mutation({
+    productCreate: build.mutation({
       query: (data) => ({
         url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
         method: 'POST',
@@ -22,8 +22,26 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         body: data
       })
+    }),
+    productUpdate: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
+        method: 'PUT',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
+    }),
+    productDelete: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
+        method: 'PATCH',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        param: data
+      })
     })
   })
 })
 
-export const { useLoginMutation, useProductMutation } = apiSlice
+export const { useLoginMutation, useProductCreateMutation, useProductUpdateMutation, useProductDeleteMutation } = apiSlice
