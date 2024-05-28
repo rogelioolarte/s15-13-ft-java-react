@@ -3,7 +3,7 @@ import { IconButton, ButtonGroup, Typography } from '@material-tailwind/react'
 
 export default function PaginationGroup ({ active, setActive }) {
   const getItemProps = (index) => ({
-    className: active === index ? 'bg-gray-100 text-gray-900' : '',
+    className: active === index ? 'bg-white text-gray-900' : '',
     onClick: () => setActive(index)
   })
 

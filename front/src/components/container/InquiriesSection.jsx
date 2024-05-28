@@ -17,6 +17,7 @@ import {
 } from '@material-tailwind/react'
 import SimplePagination from '../pure/pagination/SimplePagination'
 import PaginationGroup from '../pure/pagination/PaginationGroup'
+import ModalConfirmationDelete from '../pure/ModalConfirmationDelete'
 
 const TABLE_HEAD = ['Customer', 'Product', 'Code', 'Sale Date', 'Invoice No.', 'Invoice Date', 'Total Sold', 'TOTAL', '']
 
@@ -73,7 +74,7 @@ const TABLE_ROWS = [
   }
 ]
 
-function MenuCustomAnimation () {
+function MenuCustomAnimation ({ handleOpen }) {
   return (
     <Menu
       placement='left'
@@ -88,7 +89,7 @@ function MenuCustomAnimation () {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Delete</MenuItem>
+        <MenuItem onClick={() => handleOpen('sm')}>Delete</MenuItem>
         <MenuItem>Edit</MenuItem>
         <MenuItem>Order from supplier</MenuItem>
       </MenuList>
@@ -98,6 +99,9 @@ function MenuCustomAnimation () {
 
 export default function InquiriesSection () {
   const [active, setActive] = useState(1)
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(!open)
+
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
@@ -221,7 +225,7 @@ export default function InquiriesSection () {
                       </td>
                       {/* edit */}
                       <td className={classes}>
-                        <MenuCustomAnimation />
+                        <MenuCustomAnimation handleOpen={handleOpen} />
                       </td>
                     </tr>
                   )
@@ -235,6 +239,7 @@ export default function InquiriesSection () {
           <SimplePagination active={active} setActive={setActive} />
         </CardFooter>
       </Card>
+      <ModalConfirmationDelete handleOpen={handleOpen} open={open} />
     </main>
   )
 }
