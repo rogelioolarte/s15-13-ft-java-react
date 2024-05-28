@@ -4,6 +4,7 @@ import {
   CardBody,
   Typography
 } from '@material-tailwind/react'
+import { toast } from 'sonner'
 import LogoMedium from '../../assets/logo-md.svg'
 import { useUserActions } from '../../hooks/useUserActions'
 
@@ -18,6 +19,7 @@ export default function ShowUserData () {
         <Typography variant='h4' color='blue-gray' className='mb-2'>
           Welcome, {user.first_name} {user.last_name}
         </Typography>
+        <button onClick={() => toast.success('This is a sonner toast')}>Render my toast</button>
       </CardBody>
     </Card>
   )
