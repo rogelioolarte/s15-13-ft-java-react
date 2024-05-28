@@ -16,7 +16,7 @@ export function ProductsFormModal() {
   return (
     <>
       <Button onClick={handleOpen}  className='bg-secondary-40 py-4 text-black'>Add New</Button>
-      <Dialog open={open} handler={handleOpen} size={'xs'}>
+      <Dialog open={open} handler={handleOpen} size={'sm'}>
         <DialogBody className={'p-0'}>
           <ProductsFormik setOpen={setOpen}/>
         </DialogBody>

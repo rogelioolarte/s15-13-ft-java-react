@@ -1,10 +1,11 @@
 import { Card, Typography } from '@material-tailwind/react'
 import { useState } from 'react'
-const TABLE_HEAD = ['checkbox', 'Producto', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
+const TABLE_HEAD = ['checkbox', 'Producto', 'Descripcion', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
 
 const TABLE_ROWS = [
   {
     producto: 'Producto 6',
+    description: 'La descripcion',
     cantidad: 15,
     proveedor: 'Proveedor F',
     codigo: 'F006',
@@ -12,6 +13,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 7',
+    description: 'La descripcion',
     cantidad: 8,
     proveedor: 'Proveedor G',
     codigo: 'G007',
@@ -19,6 +21,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 8',
+    description: 'La descripcion',
     cantidad: 25,
     proveedor: 'Proveedor H',
     codigo: 'H008',
@@ -26,6 +29,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 9',
+    description: 'La descripcion',
     cantidad: 3,
     proveedor: 'Proveedor I',
     codigo: 'I009',
@@ -33,6 +37,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 10',
+    description: 'La descripcion',
     cantidad: 18,
     proveedor: 'Proveedor J',
     codigo: 'J010',
@@ -40,6 +45,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 11',
+    description: 'La descripcion',
     cantidad: 11,
     proveedor: 'Proveedor K',
     codigo: 'K011',
@@ -47,6 +53,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 12',
+    description: 'La descripcion',
     cantidad: 6,
     proveedor: 'Proveedor L',
     codigo: 'L012',
@@ -54,6 +61,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 13',
+    description: 'La descripcion',
     cantidad: 22,
     proveedor: 'Proveedor M',
     codigo: 'M013',
@@ -61,6 +69,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 14',
+    description: 'La descripcion',
     cantidad: 9,
     proveedor: 'Proveedor N',
     codigo: 'N014',
@@ -68,6 +77,7 @@ const TABLE_ROWS = [
   },
   {
     producto: 'Producto 15',
+    description: 'La descripcion',
     cantidad: 14,
     proveedor: 'Proveedor O',
     codigo: 'O015',
@@ -112,37 +122,42 @@ export function ProductsTable () {
         </tr>
         </thead>
         <tbody className='bg-primary-30'>
-        {TABLE_ROWS.map(({ producto, cantidad, proveedor, codigo, precioDeVenta }, index) => (
-          <tr key={codigo} className='even:bg-secondary-20'>
-            <td className='p-4'>
-              <input type='checkbox' checked={checkedItems[index]} onChange={() => handleCheckItem(index)} />
-            </td>
-            <td className='p-4'>
-              <Typography variant='small' color='blue-gray' className='font-normal'>
-                {producto}
-              </Typography>
-            </td>
-            <td className='p-4'>
-              <Typography variant='small' color='blue-gray' className='font-normal'>
-                {cantidad}
-              </Typography>
-            </td>
-            <td className='p-4'>
-              <Typography variant='small' color='blue-gray' className='font-normal'>
-                {proveedor}
-              </Typography>
-            </td>
-            <td className='p-4'>
-              <Typography variant='small' color='blue-gray' className='font-normal'>
-                {codigo}
-              </Typography>
-            </td>
-            <td className='p-4'>
-              <Typography variant='small' color='blue-gray' className='font-normal'>
-                {precioDeVenta}
-              </Typography>
-            </td>
-          </tr>
+        {TABLE_ROWS.map(({ producto, description, cantidad, proveedor, codigo, precioDeVenta }, index) => (
+            <tr key={codigo} className='even:bg-secondary-20'>
+              <td className='p-4'>
+                <input type='checkbox' checked={checkedItems[index]} onChange={() => handleCheckItem(index)}/>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {producto}
+                </Typography>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {description}
+                </Typography>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {cantidad}
+                </Typography>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {proveedor}
+                </Typography>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {codigo}
+                </Typography>
+              </td>
+              <td className='p-4'>
+                <Typography variant='small' color='blue-gray' className='font-normal'>
+                  {precioDeVenta}
+                </Typography>
+              </td>
+            </tr>
         ))}
         </tbody>
       </table>

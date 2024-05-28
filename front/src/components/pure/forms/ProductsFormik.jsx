@@ -1,34 +1,43 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Card, CardBody, CardFooter, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
+import { useProductMutation } from "../../../store/apiSlice.js";
+import { useProductsActions } from "../../../hooks/useProductsActions.js";
 
 export function ProductsFormik({ setOpen }) {
+  const [product] = useProductMutation();
+  const { useAddProduct } = useProductsActions();
+
   const productSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required'),
+    description: Yup.string(),
+    supplier: Yup.string().required('Supplier is required'),
+    barcode: Yup.string().required('Barcode is required'),
+    price: Yup.string().required('Price is required'),
     quantity: Yup.string()
       .required('quantity is required'),
-    provider: Yup.string(),
-    price: Yup.string(),
 
   })
 
   const initialValues = {
     name: '',
-    quantity: '',
-    provider: '',
+    description: '',
+    supplier: '',
+    barcode: '',
     price: '',
+    quantity: '',
   }
 
   const handleSubmit = async (values) => {
     console.log(values)
-    // await login(values).unwrap()
-    //   .then((res) => {
-    //     if (useCheckRealUser(res)) {
-    //       useSetUser(res)
-    //       navigate('/dashboard')
-    //     }
-    //   }).catch((error) => sendError(error))
+    await product(values).unwrap()
+      .then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          useAddProduct(res.data)
+        }
+      }).catch((error) => console.log(error))
   }
 
   return (
@@ -38,24 +47,35 @@ export function ProductsFormik({ setOpen }) {
           <Card className='w-full text-white shadow-none'>
             <CardBody className='flex flex-col gap-6'>
               <h1 className={'text-black font-bold text-2xl'}>New Product</h1>
-              <div className={'flex flex-col gap-10 '}><Field name="name">
+              <div className={'flex flex-col gap-10 '}>
+                <Field name="name">
                 {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type="text" placeholder="Name" label="Name" size="lg"/>
+                  <Input {...field} type="text" placeholder="Name" label="Name" size="lg" className={'bg-primary'}/>
                 )}
-              </Field>
-                <Field name="price">
+                </Field>
+                <Field name="description">
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type="text" placeholder="Price" label="Price" size="lg"/>
+                      <Input {...field} type="text" placeholder="Description" label="Description" size="lg" className={'bg-primary'}/>
                   )}
                 </Field>
-                <Field name="provider">
+                <Field name="supplier">
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type="text" placeholder="Provider" label="Provider" size="lg"/>
+                      <Input {...field} type="text" placeholder="Supplier" label="Supplier" size="lg" className={'bg-primary'}/>
+                  )}
+                </Field>
+                <Field name="barcode">
+                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                      <Input {...field} type="text" placeholder="Barcode" label="Barcode" size="lg" className={'bg-primary'}/>
+                  )}
+                </Field>
+                <Field name="price">
+                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                    <Input {...field} type="text" placeholder="Price" label="Price" size="lg" className={'bg-primary'}/>
                   )}
                 </Field>
                 <Field name="quantity">
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type="text" placeholder="Quantity" label="Quantity" size="lg"/>
+                    <Input {...field} type="text" placeholder="Quantity" label="Quantity" size="lg" className={'bg-primary'}/>
                   )}
                 </Field>
                 {errors.name && touched.name &&
