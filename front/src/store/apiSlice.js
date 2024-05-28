@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MAIN_API, ROUTE_LOGIN } from '../config/api_routes'
+import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES } from '../config/api_routes'
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -13,8 +13,17 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         body: data
       })
+    }),
+    purchases: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PURCHASES : '/api/purchases',
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
     })
   })
 })
 
-export const { useLoginMutation } = apiSlice
+export const { useLoginMutation, usePurchasesMutation } = apiSlice
