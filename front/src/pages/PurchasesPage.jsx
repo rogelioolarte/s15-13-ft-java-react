@@ -5,10 +5,9 @@ import { usePurchasesMutation } from '../store/apiSlice'
 import PurchasesSection from '../components/container/PurchasesSection'
 // import useProtectedRoutes from '../hooks/useProtectedRoutes'
 
-
 export const useAppSelector = useSelector
 export const useAppDispatch = useDispatch
-export default function PurchasesPage() {
+export default function PurchasesPage () {
   /* useProtectedRoutes() */
   const dispatch = useAppDispatch()
   const purchases = useAppSelector(state => state.purchases)
