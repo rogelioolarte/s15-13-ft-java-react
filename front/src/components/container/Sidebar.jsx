@@ -24,7 +24,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
     {
       name: 'Products',
       url: '/products',
-      icon: <AiOutlineProduct  className='h-5 w-5' />
+      icon: <AiOutlineProduct className='h-5 w-5' />
     },
     {
       name: 'Sales',
@@ -55,7 +55,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       name: 'Settings',
       url: '/settings',
       icon: <AiOutlineSetting className='h-5 w-5' />
-    },
+    }
   ]
   const navigateRoutes = (url) => {
     navigate(url)

@@ -1,9 +1,9 @@
 import { Button, Typography } from '@material-tailwind/react'
 import { ProductsTable } from './ProductsTable.jsx'
 import { ProductsFormModal } from './ProductsFormModal.jsx'
-import { useState } from "react";
-import { useProductDeleteMutation } from "../../store/apiSlice.js";
-import { useProductsActions } from "../../hooks/useProductsActions.js";
+import { useState } from 'react'
+import { useProductDeleteMutation } from '../../store/apiSlice.js'
+import { useProductsActions } from '../../hooks/useProductsActions.js'
 
 export function ProductsSection () {
   const TABLE_HEAD = ['checkbox', 'Nombre', 'Descripcion', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
@@ -101,25 +101,27 @@ export function ProductsSection () {
     }
   ]
 
-  const [productDelete] = useProductDeleteMutation();
-  const { useDeleteProductById } = useProductsActions();
+  const [productDelete] = useProductDeleteMutation()
+  const { useDeleteProductById } = useProductsActions()
 
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
   const selectedItems = checkedItems.filter((value) => value === true)
 
   const findProduct = () => {
-    const index = checkedItems.findIndex((value) => value === true);
+    const index = checkedItems.findIndex((value) => value === true)
     return TABLE_ROWS[index]
   }
 
   const handleDelete = async () => {
-    const productId = findProduct().id;
+    const productId = findProduct().id
     if (productId) {
-      await productDelete(productId).then((res) => {console.log(res)
-      if (res.status === 201) {
-        useDeleteProductById(productId)
-      }}).catch((error) => {
-        console.log(error);
+      await productDelete(productId).then((res) => {
+        console.log(res)
+        if (res.status === 201) {
+          useDeleteProductById(productId)
+        }
+      }).catch((error) => {
+        console.log(error)
       })
     }
   }
@@ -133,11 +135,11 @@ export function ProductsSection () {
       <main className='text-center p-12 md:p-12 w-full flex flex-col items-center'>
         <Typography className='font-bold' variant='h1'>Products</Typography>
         <div className='gap-10 flex my-12'>
-          <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-black'>Add New</Button>} action='create'/>
-          <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-black'>Modify</Button>} action='edit' productToEdit={productToEdit}/>
+          <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-black'>Add New</Button>} action='create' />
+          <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-black'>Modify</Button>} action='edit' productToEdit={productToEdit} />
           <Button disabled={selectedItems.length !== 1} onClick={handleDelete} className='bg-warning-40 py-4 text-black'>Eliminar</Button>
         </div>
-        <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems}/>
+        <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
       </main>
     </>
   )

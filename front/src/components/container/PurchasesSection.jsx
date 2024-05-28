@@ -96,7 +96,8 @@ function MenuCustomAnimation () {
   )
 }
 
-export default function PurchasesSection () {
+export default function PurchasesSection ({ purchases }) {
+  console.log('Purchases:', purchases)
   const [active, setActive] = useState(1)
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
