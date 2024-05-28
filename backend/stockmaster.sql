@@ -30,7 +30,7 @@ customer_type ENUM('PHYSICAL', 'LEGAL') NOT NULL DEFAULT 'PHYSICAL'
 
 
 
-CREATE TABLE products (
+CREATE TABLE product (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     barcode VARCHAR(255) UNIQUE,
@@ -54,7 +54,7 @@ CREATE TABLE supplier_product (
     id_product BIGINT,
     id_supplier BIGINT,
     price_cost DECIMAL(18,2) NOT NULL,
-    FOREIGN KEY (id_product) REFERENCES products(id),
+    FOREIGN KEY (id_product) REFERENCES product(id),
     FOREIGN KEY (id_supplier) REFERENCES supplier(id)
 ); 
 
@@ -97,7 +97,7 @@ CREATE TABLE products_purchase (
     id_product BIGINT,
     id_purchase BIGINT,
     quantity INT,
-    FOREIGN KEY (id_product) REFERENCES products(id),
+    FOREIGN KEY (id_product) REFERENCES product(id),
     FOREIGN KEY (id_purchase) REFERENCES purchase(id)
 ); 
 

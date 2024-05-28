@@ -56,6 +56,7 @@ public class CustomerService {
             throw new RequestException("An error occurred while saving the customer");
         }
     }
+
     //Update
     public CustomerResponse update(CustomerUpdateRequest customerRequest) throws BadRequestException {
         Long id = customerRequest.getId();
