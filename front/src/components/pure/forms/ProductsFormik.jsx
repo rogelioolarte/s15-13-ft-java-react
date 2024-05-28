@@ -3,8 +3,6 @@ import { Button, Card, CardBody, CardFooter, Input } from '@material-tailwind/re
 import * as Yup from 'yup'
 
 export function ProductsFormik({ setOpen }) {
-  let initialCredentials
-
   const productSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required'),
