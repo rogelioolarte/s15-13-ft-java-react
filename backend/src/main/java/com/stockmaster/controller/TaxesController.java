@@ -1,9 +1,9 @@
 package com.stockmaster.controller;
 
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
-import com.stockmaster.repository.TaxesRepository;
 import com.stockmaster.service.TaxesRepositoryImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -43,15 +43,34 @@ public class TaxesController {
 
     }
 
-    //put
-    @PutMapping(name = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id) {
+
+    @PutMapping(name = "/{id}",produces = "application/json")
+    public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody  DtoTaxesRquest dtoTaxesRquest) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.updateById(id));
+            return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.updateById(id,dtoTaxesRquest));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
         }
 
     }
-    //delete agregar un campo active
+
+    @PatchMapping(name = "/disable/{id}",produces = "application/json")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.delete(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+        }
+
+    }
+
+    @PatchMapping(name = "/enable/{id}")
+    public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+        }
+
+    }
 }

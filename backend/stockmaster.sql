@@ -69,7 +69,6 @@ CREATE TABLE sales (
 id_customer BIGINT,
 id_taxes BIGINT,
 date DATE NOT NULL,
-discount DECIMAL(18,2),
 total DECIMAL(18,2) NOT NULL,
 FOREIGN KEY (id_customer) REFERENCES customer(id),
 FOREIGN KEY (id_taxes) REFERENCES taxes(id)
@@ -79,6 +78,7 @@ CREATE TABLE sales_products (
     id_sales BIGINT,
 	 id_product BIGINT,
     quantity INT,
+    discount DECIMAL(18,2),
     FOREIGN KEY (id_product) REFERENCES products(id),
     FOREIGN KEY (id_sales) REFERENCES sales(id)
 ); 

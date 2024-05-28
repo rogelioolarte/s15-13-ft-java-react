@@ -10,9 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,11 +37,25 @@ public class TaxesRepositoryImpl {
         return list.stream().map(DtoTaxesResponse::new).toList();
     }
 
-    public DtoTaxesResponse updateById(Long id) {
+    public DtoTaxesResponse updateById(Long id, DtoTaxesRquest dtoTaxesRquest) {
 
 
         Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
-        return new DtoTaxesResponse(tax);
+        if(!dtoTaxesRquest.name().isBlank()) tax.setName(dtoTaxesRquest.name());
+        if(dtoTaxesRquest.percentage().compareTo(BigDecimal.ZERO)>0) tax.setPercentage(dtoTaxesRquest.percentage());
+        return new DtoTaxesResponse(taxesRepository.save(tax));
 
+    }
+
+    public DtoTaxesResponse delete(Long id) {
+        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
+        tax.setActive(false);
+        return new DtoTaxesResponse(taxesRepository.save(tax) );
+    }
+
+    public DtoTaxesResponse activeTax(Long id) {
+        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
+        tax.setActive(true);
+        return new DtoTaxesResponse(taxesRepository.save(tax) );
     }
 }
