@@ -6,7 +6,7 @@ import {
   DialogFooter
 } from '@material-tailwind/react'
 
-export default function ModalConfirmationDelete({ handleOpen, open, message, callback }) {
+export default function ModalConfirmationDelete ({ handleOpen, open, message, callback }) {
   return (
     <Dialog open={open} size='xs' handler={handleOpen} className='flex flex-col justify-center gap-4 py-5'>
       <DialogHeader className='justify-center p-0'>

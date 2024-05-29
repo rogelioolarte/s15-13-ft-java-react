@@ -8,7 +8,7 @@ import PaginationGroup from '../pure/pagination/PaginationGroup.jsx'
 import SimplePagination from '../pure/pagination/SimplePagination.jsx'
 import ModalConfirmationDelete from '../pure/ModalConfirmationDelete.jsx'
 
-export function ProductsSection() {
+export function ProductsSection () {
   const TABLE_HEAD = ['checkbox', 'Product', 'Description', 'Quantity', 'Supplier', 'Code', 'Sell Price']
 
   const TABLE_ROWS = [
