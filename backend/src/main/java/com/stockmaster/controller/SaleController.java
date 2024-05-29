@@ -1,7 +1,6 @@
 package com.stockmaster.controller;
 
 import com.stockmaster.dto.sales.SalesSavingRequest;
-import com.stockmaster.entity.sales.Sales;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
 import jakarta.validation.Valid;
@@ -29,6 +28,7 @@ public class SaleController {
     }
 
     //Post Method
+
     @PostMapping("/save")
     public ResponseEntity<?>saveSale(@Valid @RequestBody SalesSavingRequest savingRequest, BindingResult result){
         if (result.hasErrors()){
@@ -41,4 +41,5 @@ public class SaleController {
         salesService.save(savingRequest);
         return ResponseEntity.ok(Map.of("message","Sale saved successfully"));
     }
+
 }

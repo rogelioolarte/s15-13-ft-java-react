@@ -37,4 +37,9 @@ public class TaxesRepositoryImpl {
         List<Taxes> list = taxesRepository.findAll();
         return list.stream().map(DtoTaxesResponse::new).toList();
     }
+
+    public Taxes findById(Long id) {
+        return taxesRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tax with ID " + id + " not found"));
+    }
 }

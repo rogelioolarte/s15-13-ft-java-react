@@ -1,6 +1,5 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;

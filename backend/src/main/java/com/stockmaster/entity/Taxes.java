@@ -26,14 +26,10 @@ public class Taxes {
     @Column(name = "percentage", unique = true, nullable = true)
     private BigDecimal percentage;
 
-
-
     public Taxes(DtoTaxesRquest dtoTaxesRquest) {
         this.name = dtoTaxesRquest.name();
         this.percentage = dtoTaxesRquest.percentage();
     }
-
-
     public Taxes(DtoTaxesResponse dtoTaxesResponse) {
         this.name = dtoTaxesResponse.name();
         this.percentage = dtoTaxesResponse.percentage();
