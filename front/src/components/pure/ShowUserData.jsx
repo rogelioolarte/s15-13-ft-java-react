@@ -1,23 +1,22 @@
 import {
   Card,
-  CardHeader,
   CardBody,
   Typography
 } from '@material-tailwind/react'
 import { toast } from 'sonner'
-import LogoMedium from '../../assets/logo-md.svg'
+import UserRandom from '../../assets/user_random.png'
 import { useUserActions } from '../../hooks/useUserActions'
 
-export default function ShowUserData () {
+export default function ShowUserData() {
   const { user } = useUserActions()
-
+  console.log(user)
   return (
-    <Card className='w-[45%] h-[20%] flex flex-row justify-items-center mt-3'>
-      <CardHeader className='h-full rounded-full'> </CardHeader>
-      <img src={LogoMedium} alt='profile-picture' className='bg-black size-30 rounded-full h-full' />
-      <CardBody className='text-center justify-items-center content-center ml-5'>
-        <Typography variant='h4' color='blue-gray' className='mb-2'>
-          Welcome, {user.first_name} {user.last_name}
+    <Card className='max-w-xl w-full p-4 md:py-5 flex items-center justify-center md:flex-row gap-2 md:gap-4'>
+      <img src={UserRandom} alt='profile-picture' className='rounded-full w-[100px] h-[100px]' />
+      <CardBody className='text-center p-0 md:text-start'>
+        <Typography variant='h4' color='blue-gray'>
+          {/* Welcome, {user.first_name} {user.last_name} */}
+          Welcome, Pepen Guayabas
         </Typography>
         <button onClick={() => toast.success('This is a sonner toast')}>Render my toast</button>
       </CardBody>

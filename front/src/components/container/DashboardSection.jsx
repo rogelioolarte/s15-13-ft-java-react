@@ -6,21 +6,17 @@ import {
   Typography
 } from '@material-tailwind/react'
 
-export default function DashboardSection () {
+export default function DashboardSection() {
   return (
-    <div className='flex flex-col items-center justify-items-center w-[100%] h-[90%] '>
-      <Navbar className='mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-2 my-3 '>
-        <div className='container mx-auto flex flex-wrap items-center justify-between
-          text-blue-gray-900'
-        >
-          <Typography as='a' className='mr-4 cursor-pointer py-1.5 font-medium'>
-            <ActualDate />
-          </Typography>
-          <SearchBar />
-        </div>
+    <div className='flex flex-col items-center justify-items-center w-full gap-4 md:gap-8 p-3'>
+      <Navbar className='w-full max-w-screen-xl px-4 py-2 lg:px-8 text-[#212121] flex flex-col justify-center md:items-center md:justify-between md:flex-row gap-2'>
+        <Typography as='a' className='flex font-bold'>
+          <ActualDate />
+        </Typography>
+        <SearchBar />
       </Navbar>
       <ShowUserData />
-      <div className='h-[90%] w-[80%] mt-[5%] border border-black border-solid'>
+      <div className='h-[90%] w-[80%] border border-black border-solid'>
         Area de graficas u otros
       </div>
     </div>
