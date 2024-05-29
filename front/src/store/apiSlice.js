@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT } from '../config/api_routes'
+import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT, ROUTE_ALL_SUPPLIERS } from '../config/api_routes'
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: MAIN_API.length !== 0 ? MAIN_API : 'https://reqres.in' }),
@@ -12,7 +12,7 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         body: data
       })
-    }),
+    }), // Purchases
     purchases: build.mutation({
       query: (data) => ({
         url: MAIN_API.length !== 0 ? ROUTE_PURCHASES : '/api/purchase',
@@ -48,8 +48,20 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         param: data
       })
+    }), // Suppliers
+    getAllSuppliers: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_ALL_SUPPLIERS : '/api/unknown'
     })
   })
 })
 
-export const { useLoginMutation, useProductCreateMutation, useProductUpdateMutation, useProductDeleteMutation, usePurchasesMutation } = apiSlice
+export const {
+  useLoginMutation,
+  // Products
+  useProductCreateMutation,
+  useProductUpdateMutation,
+  useProductDeleteMutation,
+  usePurchasesMutation,
+  // Suppliers
+  useGetAllSuppliersQuery
+} = apiSlice

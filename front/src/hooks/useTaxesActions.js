@@ -7,7 +7,7 @@ import {
 } from '../store/taxesSlice'
 import { useAppDispatch, useAppSelector } from './store'
 
-export const useCustomersActions = () => {
+export const useTaxesActions = () => {
   const taxes = useAppSelector(state => state.taxes)
   const dispatch = useAppDispatch()
 

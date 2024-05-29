@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { LuChevronsUpDown } from 'react-icons/lu'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -18,8 +18,11 @@ import {
 } from '@material-tailwind/react'
 import SimplePagination from '../pure/pagination/SimplePagination'
 import PaginationGroup from '../pure/pagination/PaginationGroup'
+import { useSuppliersActions } from '../../hooks/useSuppliersActions'
+import { useGetAllSuppliersQuery } from '../../store/apiSlice'
+import { toast } from 'sonner'
 
-const TABLE_HEAD = ['Business Name', 'Cuit N°', '']
+const TABLE_HEAD = ['Supplier Name', 'Company Code N°', '']
 
 const TABLE_ROWS = [
   {
@@ -81,6 +84,22 @@ function MenuCustomAnimation () {
 
 export default function SuppliersSection () {
   const [active, setActive] = useState(1)
+  const { suppliers, useInitSuppliers } = useSuppliersActions()
+  const TABLE_DATA = suppliers.length !== 0 ? suppliers : TABLE_ROWS
+  const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
+
+  useEffect(() => {
+    if (suppliers.length === 0) {
+      if (isLoading) {
+        console.log('Loading - Poner un espiner en la tabla')
+      } else if (isSuccess) {
+        useInitSuppliers(suppliersData)
+      } else if (isError) {
+        toast.success(`Error while conecting: ${error}`)
+      }
+    }
+  }, [])
+
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
@@ -124,7 +143,7 @@ export default function SuppliersSection () {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
+              {TABLE_DATA.map(
                 ({ name, cuit }, index) => {
                   const classes = 'p-4 text-[#1D2433]'
                   return (
