@@ -1,9 +1,12 @@
-import { Button, Typography } from '@material-tailwind/react'
+import { Button, CardFooter, Typography } from '@material-tailwind/react'
 import { ProductsTable } from './ProductsTable.jsx'
 import { ProductsFormModal } from './ProductsFormModal.jsx'
 import { useState } from 'react'
 import { useProductDeleteMutation } from '../../store/apiSlice.js'
 import { useProductsActions } from '../../hooks/useProductsActions.js'
+import PaginationGroup from '../pure/pagination/PaginationGroup.jsx'
+import SimplePagination from '../pure/pagination/SimplePagination.jsx'
+import ModalConfirmationDelete from '../pure/ModalConfirmationDelete.jsx'
 
 export function ProductsSection () {
   const TABLE_HEAD = ['checkbox', 'Nombre', 'Descripcion', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
@@ -104,29 +107,43 @@ export function ProductsSection () {
   const [productDelete] = useProductDeleteMutation()
   const { useDeleteProductById } = useProductsActions()
 
+  const [active, setActive] = useState(1)
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
+
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
   const selectedItems = checkedItems.filter((value) => value === true)
 
-  const findProduct = () => {
+  const findSelectedProduct = () => {
     const index = checkedItems.findIndex((value) => value === true)
     return TABLE_ROWS[index]
   }
 
+  const getSelectedProducts = () => {
+    return checkedItems
+      .map((isChecked, index) => (isChecked ? TABLE_ROWS[index] : null))
+      .filter(product => product !== null)
+  }
+
   const handleDelete = async () => {
-    const productId = findProduct().id
-    if (productId) {
-      await productDelete(productId).then((res) => {
-        console.log(res)
-        if (res.status === 201) {
-          useDeleteProductById(productId)
-        }
-      }).catch((error) => {
-        console.log(error)
+    const products = getSelectedProducts()
+
+    console.log(products);
+    if (products) {
+      products.map(async (product) => {
+        await productDelete(product.id).then((res) => {
+          console.log(res)
+          if (res.status === 201) {
+            useDeleteProductById(product.id)
+            setIsDeleteConfirmationOpen(false)
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
       })
     }
   }
 
-  const productToEdit = selectedItems.length === 1 && findProduct()
+  const productToEdit = selectedItems.length === 1 && findSelectedProduct()
 
   console.log(productToEdit)
 
@@ -137,9 +154,14 @@ export function ProductsSection () {
         <div className='gap-10 flex my-12'>
           <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-black'>Add New</Button>} action='create' />
           <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-black'>Modify</Button>} action='edit' productToEdit={productToEdit} />
-          <Button disabled={selectedItems.length !== 1} onClick={handleDelete} className='bg-warning-40 py-4 text-black'>Eliminar</Button>
+          <Button disabled={selectedItems.length < 1} onClick={() => setIsDeleteConfirmationOpen(true)} className='bg-warning-40 py-4 text-black'>Eliminar</Button>
         </div>
         <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
+        <CardFooter className='flex items-center rounded-b-lg justify-center sm:justify-between p-4'>
+          <PaginationGroup active={active} setActive={setActive} />
+          <SimplePagination active={active} setActive={setActive} />
+        </CardFooter>
+        <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
       </main>
     </>
   )
