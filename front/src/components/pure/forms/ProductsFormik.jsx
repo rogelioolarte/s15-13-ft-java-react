@@ -8,6 +8,8 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
   const [productCreate] = useProductCreateMutation()
   const [productUpdate] = useProductUpdateMutation()
 
+  const INPUT_BG = '#FFF8F8'
+
   const { useAddProduct } = useProductsActions()
 
   const productSchema = Yup.object().shape({
@@ -67,32 +69,32 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
               <div className='flex flex-col gap-10 '>
                 <Field name='name'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 <Field name='description'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Description' label='Description' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Description' label='Description' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 <Field name='supplier'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Supplier' label='Supplier' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Supplier' label='Supplier' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 <Field name='barcode'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Barcode' label='Barcode' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Barcode' label='Barcode' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 <Field name='price'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Price' label='Price' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Price' label='Price' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 <Field name='quantity'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
-                    <Input {...field} type='text' placeholder='Quantity' label='Quantity' size='lg' className='bg-primary' />
+                    <Input {...field} type='text' placeholder='Quantity' label='Quantity' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                   )}
                 </Field>
                 {errors.name && touched.name &&

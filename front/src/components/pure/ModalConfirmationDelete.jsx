@@ -8,8 +8,10 @@ import {
 
 export default function ModalConfirmationDelete ({ handleOpen, open, message, callback }) {
   return (
-    <Dialog open={open} size='xs' handler={handleOpen} className='flex flex-col justify-center gap-4 p-5'>
-      <DialogHeader className='justify-center p-0'><h3 className='text-black font-bold'>CONFIRMATION</h3></DialogHeader>
+    <Dialog open={open} size='xs' handler={handleOpen} className='flex flex-col justify-center gap-4 py-5'>
+      <DialogHeader className='justify-center p-0'>
+        <h3 className='text-black font-bold'>CONFIRMATION</h3>
+      </DialogHeader>
       <DialogBody className='text-black text-center p-0'>
         <p>{message ?? 'You are about to delete a supplier'}</p>
         <p>Are you sure you want to continue?</p>

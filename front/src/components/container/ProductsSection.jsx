@@ -9,7 +9,7 @@ import SimplePagination from '../pure/pagination/SimplePagination.jsx'
 import ModalConfirmationDelete from '../pure/ModalConfirmationDelete.jsx'
 
 export function ProductsSection () {
-  const TABLE_HEAD = ['checkbox', 'Nombre', 'Descripcion', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
+  const TABLE_HEAD = ['checkbox', 'Product', 'Description', 'Quantity', 'Supplier', 'Code', 'Sell Price']
 
   const TABLE_ROWS = [
     {
@@ -126,8 +126,6 @@ export function ProductsSection () {
 
   const handleDelete = async () => {
     const products = getSelectedProducts()
-
-    console.log(products);
     if (products) {
       products.map(async (product) => {
         await productDelete(product.id).then((res) => {
