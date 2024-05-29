@@ -15,7 +15,7 @@ export const apiSlice = createApi({
     }),
     purchases: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_PURCHASES : '/api/purchases',
+        url: MAIN_API.length !== 0 ? ROUTE_PURCHASES : '/api/purchase',
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-type': 'application/json' },

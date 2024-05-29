@@ -22,6 +22,8 @@ export default function PurchasesPage () {
         // Realiza la llamada a la API para obtener las compras
         const result = await getPurchases()
         // Inicializa el estado de las compras en el store de Redux con los datos obtenidos
+        // useInitPurchases(result)
+        console.log(result)
         dispatch(initPurchases(result.data))
       } catch (error) {
         // Maneja cualquier error que ocurra durante la llamada a la API
