@@ -84,7 +84,7 @@ function MenuCustomAnimation ({ handleOpen }) {
       }}
     >
       <MenuHandler>
-        <IconButton className='rounded bg-transparent shadow-none text-black text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
+        <IconButton className='rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
           <HiOutlineDotsVertical />
         </IconButton>
       </MenuHandler>

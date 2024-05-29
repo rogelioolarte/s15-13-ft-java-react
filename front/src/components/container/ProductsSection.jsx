@@ -135,9 +135,9 @@ export function ProductsSection () {
       <main className='text-center p-12 md:p-12 w-full flex flex-col items-center'>
         <Typography className='font-bold' variant='h1'>Products</Typography>
         <div className='gap-10 flex my-12'>
-          <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-black'>Add New</Button>} action='create' />
-          <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-black'>Modify</Button>} action='edit' productToEdit={productToEdit} />
-          <Button disabled={selectedItems.length !== 1} onClick={handleDelete} className='bg-warning-40 py-4 text-black'>Eliminar</Button>
+          <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-gray-900'>Add New</Button>} action='create' />
+          <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-gray-900'>Modify</Button>} action='edit' productToEdit={productToEdit} />
+          <Button disabled={selectedItems.length !== 1} onClick={handleDelete} className='bg-warning-40 py-4 text-gray-900'>Eliminar</Button>
         </div>
         <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
       </main>

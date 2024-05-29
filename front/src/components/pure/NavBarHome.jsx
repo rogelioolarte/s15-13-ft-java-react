@@ -22,7 +22,7 @@ export default function NavBarHome () {
               <Button
                 variant='filled'
                 size='sm'
-                className='bg-white text-black'
+                className='bg-white text-gray-900'
               >
                 <span>Sign in</span>
               </Button>

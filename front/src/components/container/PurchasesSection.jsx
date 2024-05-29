@@ -83,7 +83,7 @@ function MenuCustomAnimation () {
       }}
     >
       <MenuHandler>
-        <IconButton className='rounded bg-transparent shadow-none text-black text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
+        <IconButton className='rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
           <HiOutlineDotsVertical />
         </IconButton>
       </MenuHandler>
@@ -141,7 +141,7 @@ export default function PurchasesSection ({ purchases }) {
             <tbody>
               {TABLE_ROWS.map(
                 ({ name, product, code, saleDate, invoiceNo, invoiceDate, totalSold, total }, index) => {
-                  const classes = 'p-4 text-[#1D2433]'
+                  const classes = 'px-4 text-[#1D2433]'
                   return (
                     <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                       {/* name */}

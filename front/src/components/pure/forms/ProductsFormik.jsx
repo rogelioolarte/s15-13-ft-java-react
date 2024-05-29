@@ -63,7 +63,7 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
         <Form className='grid justify-items-center p-8'>
           <Card className='w-full text-white shadow-none'>
             <CardBody className='flex flex-col gap-6'>
-              <h1 className='text-black font-bold text-2xl'>New Product</h1>
+              <h1 className='text-gray-900 font-bold text-2xl'>New Product</h1>
               <div className='flex flex-col gap-10 '>
                 <Field name='name'>
                   {({ field /* { name, value, onChange, onBlur } */ }) => (
@@ -96,18 +96,18 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
                   )}
                 </Field>
                 {errors.name && touched.name &&
-                  (<ErrorMessage className='text-black text-sm' name='name' component='div' />)}
+                  (<ErrorMessage className='text-gray-900 text-sm' name='name' component='div' />)}
                 {errors.price && touched.price &&
-                  (<ErrorMessage className='text-black text-sm' name='price' component='div' />)}
+                  (<ErrorMessage className='text-gray-900 text-sm' name='price' component='div' />)}
                 {errors.provider && touched.provider &&
-                  (<ErrorMessage className='text-black text-sm' name='provider' component='div' />)}
+                  (<ErrorMessage className='text-gray-900 text-sm' name='provider' component='div' />)}
                 {errors.quantity && touched.quantity &&
-                  (<ErrorMessage className='text-black text-sm' name='quantity' component='div' />)}
+                  (<ErrorMessage className='text-gray-900 text-sm' name='quantity' component='div' />)}
                 {/* <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div> */}
               </div>
             </CardBody>
             <CardFooter className='flex justify-center gap-20'>
-              <Button type='submit' variant='filled' className='bg-secondary-40 text-black'>
+              <Button type='submit' variant='filled' className='bg-secondary-40 text-gray-900'>
                 Save
               </Button>
               <Button onClick={() => setOpen(false)} variant='filled' color='black'>
