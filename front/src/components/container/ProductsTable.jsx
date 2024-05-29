@@ -13,7 +13,7 @@ export function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setChecke
   }
 
   return (
-    <Card className='h-full w-full lg:w-1/2 overflow-auto'>
+    <Card className='h-full w-full max-w-screen-xl overflow-auto'>
       <table className='w-full min-w-max table-auto text-left'>
         <thead>
           <tr>

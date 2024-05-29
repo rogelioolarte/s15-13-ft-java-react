@@ -7,7 +7,7 @@ import {
 } from '../store/purchasesSlice'
 import { useAppDispatch, useAppSelector } from './store'
 
-export const useCustomersActions = () => {
+export const usePurchasesActions = () => {
   const purchases = useAppSelector(state => state.purchases)
   const dispatch = useAppDispatch()
 
