@@ -44,9 +44,11 @@ public class TaxesController {
     }
 
 
-    @PutMapping(name = "/{id}",produces = "application/json")
-    public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody  DtoTaxesRquest dtoTaxesRquest) {
+    @PutMapping(value = "/{id}", produces = "application/json")
+
+    public ResponseEntity<?> updateTax( @RequestBody  DtoTaxesRquest dtoTaxesRquest,@PathVariable Long id) {
         try {
+
             return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.updateById(id,dtoTaxesRquest));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
@@ -54,8 +56,8 @@ public class TaxesController {
 
     }
 
-    @PatchMapping(name = "/disable/{id}",produces = "application/json")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    @PatchMapping(value = "/disable/{id}",produces = "application/json")
+    public ResponseEntity<?> disableTax(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.delete(id));
         } catch (Exception e) {
@@ -64,7 +66,7 @@ public class TaxesController {
 
     }
 
-    @PatchMapping(name = "/enable/{id}")
+    @PatchMapping(value = "/enable/{id}")
     public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
