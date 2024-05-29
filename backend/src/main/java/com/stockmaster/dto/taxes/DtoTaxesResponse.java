@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record DtoTaxesResponse(@NotBlank Long id,@NotBlank String name, @NotNull BigDecimal percentage) {
+public record DtoTaxesResponse(@NotBlank Long id,@NotBlank String name, @NotNull BigDecimal percentage, Boolean active) {
     public DtoTaxesResponse(Taxes tax) {
-        this(tax.getId(), tax.getName(),tax.getPercentage());
+        this(tax.getId(), tax.getName(),tax.getPercentage(), tax.getActive());
     }
 
 

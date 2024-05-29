@@ -34,7 +34,7 @@ public class SupplierController {
     }
 
     @GetMapping
-    public List<SupplierResponseDTO> findSuppliersByName(@RequestParam String name) {
+    public List<SupplierResponseDTO> findSuppliersByName(@RequestBody String name) {//provar endpoind
         return supplierService.findSuppliersByName(name);
     }
 

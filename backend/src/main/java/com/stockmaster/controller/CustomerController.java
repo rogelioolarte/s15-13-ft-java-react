@@ -54,7 +54,7 @@ public class CustomerController {
         List<Customer> searchResult = customerService.searchCustomerByName(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
-    @GetMapping("/searchbycustomerpersonalcode/")
+    @GetMapping("/searchbypersonalcode/")
     public ResponseEntity<?> searchByCustomerPersonalCode(@RequestParam("searchPersonalCode") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByPersonalCode(searchTerm);
         return ResponseEntity.ok(searchResult);
