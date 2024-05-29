@@ -18,7 +18,7 @@ import {
 } from '@material-tailwind/react'
 import SimplePagination from '../pure/pagination/SimplePagination'
 import PaginationGroup from '../pure/pagination/PaginationGroup'
-import { useSuppliersActions } from '../../hooks/useSuppliersActions'
+import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
 import { useGetAllSuppliersQuery } from '../../store/apiSlice'
 import { toast } from 'sonner'
 
