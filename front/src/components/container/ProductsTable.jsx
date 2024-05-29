@@ -1,5 +1,4 @@
 import { Card, Typography } from '@material-tailwind/react'
-import { useState } from 'react'
 
 export function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
   const handleCheckAll = () => {

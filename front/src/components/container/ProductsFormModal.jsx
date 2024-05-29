@@ -1,9 +1,6 @@
 import {
-  Button,
   Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter
+  DialogBody
 } from '@material-tailwind/react'
 import { cloneElement, useState } from 'react'
 import { ProductsFormik } from '../pure/forms/ProductsFormik.jsx'

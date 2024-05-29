@@ -12,7 +12,7 @@ const loginSchema = Yup.object().shape({
     .required('Search term is required')
 })
 
-export default function SearchBar() {
+export default function SearchBar () {
   const [errorVisible, setErrorVisible] = useState(false)
 
   const initialCredentials = {
@@ -45,8 +45,7 @@ export default function SearchBar() {
               className='text-[0.8rem] h-[50%] mr-[0.5rem] w-full flex'
               name='search'
               component='div'
-            />)
-          }
+            />)}
           <Field
             name='search'
           >

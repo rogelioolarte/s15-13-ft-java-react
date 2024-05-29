@@ -66,20 +66,20 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
 
   return (
     <>
-      <Drawer open={isDrawerOpen} onClose={closeDrawer} className='sidebar bg-black overflow-y-scroll'>
+      <Drawer open={isDrawerOpen} onClose={closeDrawer} className='sidebar bg-black overflow-y-scroll ps-2 py-4'>
         <Card
           color='transparent'
           shadow={false}
           className='h-[calc(100vh-2rem)] w-full'
         >
-          <header className='px-6 pt-10 pb-5'>
+          <header className='mb-5 flex justify-center'>
             <img
               className='w-24 object-cover sm:w-32'
               src={Logo}
               alt=''
             />
           </header>
-          <List>
+          <List className='p-0'>
             {propertiesProfile.map((properties) => (
               <ListItem
                 className='text-white hover:text-black'
