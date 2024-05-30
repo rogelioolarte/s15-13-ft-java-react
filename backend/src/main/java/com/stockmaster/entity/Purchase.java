@@ -25,7 +25,9 @@ public class Purchase {
     @Temporal(TemporalType.DATE)
     private Date date = new Date();
 
-    private Long idSupplier;
+    @ManyToOne
+    @JoinColumn(name = "suplier_id", referencedColumnName = "id")
+    private Supplier idSupplier;
 
     private BigDecimal total;
 

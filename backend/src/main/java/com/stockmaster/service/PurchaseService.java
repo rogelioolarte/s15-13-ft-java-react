@@ -1,21 +1,15 @@
 package com.stockmaster.service;
 
-import com.stockmaster.dto.Purchase.*;
-import com.stockmaster.dto.SupplierResponseDTO;
 import com.stockmaster.entity.Product;
-import com.stockmaster.entity.Purchase;
 import com.stockmaster.entity.ProductPurchase;
+import com.stockmaster.entity.Purchase;
 import com.stockmaster.repository.PurchaseRepository;
-import com.stockmaster.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 @Service
 public class PurchaseService {
     @Autowired
