@@ -20,7 +20,6 @@ public class TaxesRepositoryImpl {
 
 
     @Lazy
-    @Autowired
     private TaxesRepository taxesRepository;
 
 
@@ -38,15 +37,10 @@ public class TaxesRepositoryImpl {
         return list.stream().map(DtoTaxesResponse::new).toList();
     }
 
-
-    public Taxes findById(Long id) {
-        return taxesRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tax with ID " + id + " not found"));
-
     public DtoTaxesResponse updateById(Long id, DtoTaxesRquest dtoTaxesRquest) {
 
-        Taxes tax = taxesRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
+
+        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
         if(!dtoTaxesRquest.name().isBlank()) tax.setName(dtoTaxesRquest.name());
         if(dtoTaxesRquest.percentage().compareTo(BigDecimal.ZERO)>0) tax.setPercentage(dtoTaxesRquest.percentage());
         return new DtoTaxesResponse(taxesRepository.save(tax));
@@ -62,6 +56,7 @@ public class TaxesRepositoryImpl {
     public DtoTaxesResponse activeTax(Long id) {
         Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
         tax.setActive(true);
-        return new DtoTaxesResponse(taxesRepository.save(tax) );
+        return new DtoTaxesResponse(taxesRepository.save(tax));
     }
+
 }

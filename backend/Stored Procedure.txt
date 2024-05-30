@@ -1,0 +1,46 @@
+Stored Procedure
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_getByDate(IN input_date VARCHAR(10))
+BEGIN
+    DECLARE search_date DATE;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+
+        ROLLBACK;
+        SELECT 'There was a problem while the process has been happen' AS error_message;
+    END;
+
+
+    SET search_date = STR_TO_DATE(input_date, '%m/%d/%Y');
+
+    
+    IF search_date IS NULL THEN
+        SELECT 'Wrong Format. Use MM/DD/YYYY format.' AS error_message;
+    ELSE
+        -- Succesfull Request
+        SELECT
+            s.id AS sale_id,
+            c.name AS customer_name,
+            c.personalcodel AS customer_personalcode,
+            sp.id_product,
+            p.name AS product_name,
+            sp.quantity,
+            sp.discount,
+            p.sale_price,
+            t.id AS tax_id,
+            t.name AS tax_name
+        FROM
+            sales s
+            JOIN customer c ON s.id_customer = c.id
+            JOIN sales_products sp ON s.id = sp.id_sales
+            JOIN product p ON sp.id_product = p.id
+            JOIN taxes t ON s.id_taxes = t.id
+        WHERE
+            s.date = search_date;
+    END IF;
+END //
+
+DELIMITER ;

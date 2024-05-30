@@ -48,9 +48,6 @@ public class Sales {
     @Column(name = "date")
     private Date date = new Date();
 
-    @Column(name = "discount")
-    private BigDecimal discount;
-
     @Column(name = "total")
     private BigDecimal total;
 

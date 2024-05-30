@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin("*")
 public class CustomerController {
 
     private final CustomerService customerService;

@@ -1,6 +1,6 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.ProductDTO;
+import com.stockmaster.dto.product.ProductDTO;
 import com.stockmaster.entity.Product;
 import com.stockmaster.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
