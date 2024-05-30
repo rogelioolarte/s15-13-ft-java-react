@@ -20,6 +20,7 @@ public class TaxesRepositoryImpl {
 
 
     @Lazy
+    @Autowired
     private TaxesRepository taxesRepository;
 
 
