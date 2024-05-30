@@ -4,6 +4,7 @@ import {
   Typography
 } from '@material-tailwind/react'
 import { Link } from 'react-router-dom'
+import Grafico from '../../assets/grafico-diagramas.png'
 
 export default function Shortcuts () {
   return (
@@ -19,9 +20,10 @@ export default function Shortcuts () {
         </Card>
       </div>
       <div className='w-full max-w-[450px] md:h-full md:max-h-[380px] flex flex-col items-center gap-1'>
-        <Typography variant='h4' className='text-center text-base md:text-lg'>SALES SUMMARY</Typography>
-        <Card className='w-full flex flex-col items-center'>
-          Area de graficas u otros
+        <Typography variant='h4' className='text-center text-base md:text-lg'>Analytics</Typography>
+        <Card className='w-full flex flex-col items-center gap-1 px-12 pt-8 pb-4 overflow-hidden'>
+          <img className='object-cover h-[150px]' src={Grafico} alt='Estadisticas' />
+          <Button className='self-end' variant='text' size='sm'>More</Button>
         </Card>
       </div>
     </div>
