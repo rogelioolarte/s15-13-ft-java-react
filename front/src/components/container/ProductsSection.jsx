@@ -1,14 +1,14 @@
-import { Button, CardFooter, Typography } from '@material-tailwind/react'
-import { ProductsTable } from './ProductsTable.jsx'
-import { ProductsFormModal } from './ProductsFormModal.jsx'
 import { useState } from 'react'
-import { useProductDeleteMutation } from '../../store/apiSlice.js'
-import { useProductsActions } from '../../hooks/useProductsActions.js'
+import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
 import PaginationGroup from '../pure/pagination/PaginationGroup.jsx'
 import SimplePagination from '../pure/pagination/SimplePagination.jsx'
 import ModalConfirmationDelete from '../pure/ModalConfirmationDelete.jsx'
+import ProductsTable from './ProductsTable.jsx'
+import ProductsHeader from './ProductsHeader.jsx'
+import { useProductDeleteMutation } from '../../store/apiSlice.js'
+import { useProductsActions } from '../../hooks/useProductsActions.js'
 
-export function ProductsSection () {
+export default function ProductsSection () {
   const TABLE_HEAD = ['checkbox', 'Product', 'Description', 'Quantity', 'Supplier', 'Code', 'Sell Price']
 
   const TABLE_ROWS = [
@@ -147,18 +147,19 @@ export function ProductsSection () {
 
   return (
     <>
-      <main className='text-center p-12 md:p-12 w-full flex flex-col items-center'>
-        <Typography className='font-bold' variant='h1'>Products</Typography>
-        <div className='gap-10 flex my-12'>
-          <ProductsFormModal button={<Button className='bg-secondary-40 py-4 text-gray-900'>Add New</Button>} action='create' />
-          <ProductsFormModal button={<Button disabled={selectedItems.length !== 1} className='bg-secondary-40 py-4 text-gray-900'>Modify</Button>} action='edit' productToEdit={productToEdit} />
-          <Button disabled={selectedItems.length < 1} onClick={() => setIsDeleteConfirmationOpen(true)} className='bg-warning-40 py-4 text-gray-900'>Eliminar</Button>
-        </div>
-        <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
-        <CardFooter className='flex items-center rounded-b-lg justify-center sm:justify-between p-4'>
-          <PaginationGroup active={active} setActive={setActive} />
-          <SimplePagination active={active} setActive={setActive} />
-        </CardFooter>
+      <main className='w-full flex justify-center overflow-hidden px-6 py-4'>
+        <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
+          <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-5 m-0 mb-4'>
+            <ProductsHeader productToEdit={productToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
+          </CardHeader>
+          <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
+            <ProductsTable TABLE_ROWS={TABLE_ROWS} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
+          </CardBody>
+          <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
+            <PaginationGroup active={active} setActive={setActive} />
+            <SimplePagination active={active} setActive={setActive} />
+          </CardFooter>
+        </Card>
         <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
       </main>
     </>

@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter
-} from '@material-tailwind/react'
+import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
 import SimplePagination from '../pure/pagination/SimplePagination'
 import PaginationGroup from '../pure/pagination/PaginationGroup'
 import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'

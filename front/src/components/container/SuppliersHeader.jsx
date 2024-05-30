@@ -1,9 +1,5 @@
+import { Button, Input, Typography } from '@material-tailwind/react'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
-import {
-  Button,
-  Input,
-  Typography
-} from '@material-tailwind/react'
 
 export default function SuppliersHeader () {
   return (
