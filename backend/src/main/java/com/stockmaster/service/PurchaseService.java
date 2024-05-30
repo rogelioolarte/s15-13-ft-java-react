@@ -2,8 +2,9 @@ package com.stockmaster.service;
 
 import com.stockmaster.dto.Purchase.*;
 import com.stockmaster.dto.SupplierResponseDTO;
+import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Purchase;
-import com.stockmaster.entity.PurchaseProduct;
+import com.stockmaster.entity.ProductPurchase;
 import com.stockmaster.repository.PurchaseRepository;
 import com.stockmaster.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PurchaseService {
 
     @Autowired
     private SupplierRepository supplierRepository;
-
+/*
     @Transactional
     public PurchaseResponseDTO createPurchase(PurchaseRequestDTO requestDTO) {
         final Purchase purchase = new Purchase();
@@ -30,9 +31,9 @@ public class PurchaseService {
         purchase.setIdSupplier(requestDTO.getSupplierId());
         purchase.setTotal(calculateTotal(requestDTO.getProducts()));
 
-        final List<PurchaseProduct> products = requestDTO.getProducts().stream().map(dto -> {
-            final PurchaseProduct product = new PurchaseProduct();
-            product.setIdProduct(dto.getIdProduct());
+        final List<ProductPurchase> products = requestDTO.getProducts().stream().map(dto -> {
+            final ProductPurchase product = new ProductPurchase();
+            product.setProduct( Product.builder().id(dto.getIdProduct()).build());
             product.setQuantity(dto.getQuantity());
             product.setPurchase(purchase);
             return product;
@@ -83,7 +84,7 @@ public class PurchaseService {
 
         final List<PurchaseProductDTO> products = purchase.getProducts().stream().map(product -> {
             final PurchaseProductDTO productDTO = new PurchaseProductDTO();
-            productDTO.setIdProduct(product.getIdProduct());
+            productDTO.setIdProduct(product.getId().getProductId());
             productDTO.setQuantity(product.getQuantity());
             return productDTO;
         }).collect(Collectors.toList());
@@ -91,5 +92,6 @@ public class PurchaseService {
         dto.setProducts(products);
         dto.setTotal(purchase.getTotal());
         return dto;
-    }
+    }*/
+
 }

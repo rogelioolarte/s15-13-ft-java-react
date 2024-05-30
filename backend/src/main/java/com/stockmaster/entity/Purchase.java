@@ -29,9 +29,11 @@ public class Purchase {
 
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
-    private List<PurchaseProduct> products;
+    @ManyToMany
+    @JoinTable(name = "products_purchase",
+            joinColumns = @JoinColumn(name = "id_purchase"),
+            inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private List<Product> product;
 
-    // Getters and Setters
-    // Constructors
+
 }

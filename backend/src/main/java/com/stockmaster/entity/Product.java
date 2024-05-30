@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -38,4 +39,6 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @ManyToMany(mappedBy = "product")
+    private List<Purchase> purchase;
 }
