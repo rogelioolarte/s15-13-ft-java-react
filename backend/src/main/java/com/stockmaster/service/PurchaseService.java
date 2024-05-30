@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,78 +21,33 @@ public class PurchaseService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
-/*
+
     @Transactional
-    public PurchaseResponseDTO createPurchase(PurchaseRequestDTO requestDTO) {
-        final Purchase purchase = new Purchase();
-        purchase.setBill(requestDTO.getBill());
-        purchase.setDate(requestDTO.getDate());
-        purchase.setIdSupplier(requestDTO.getSupplierId());
-        purchase.setTotal(calculateTotal(requestDTO.getProducts()));
+    public void MakeAPurchase(Purchase purchase, List<ProductPurchase> ProductPurchase){
 
-        final List<ProductPurchase> products = requestDTO.getProducts().stream().map(dto -> {
-            final ProductPurchase product = new ProductPurchase();
-            product.setProduct( Product.builder().id(dto.getIdProduct()).build());
-            product.setQuantity(dto.getQuantity());
-            product.setPurchase(purchase);
-            return product;
-        }).collect(Collectors.toList());
 
-        purchase.setProducts(products);
-        Purchase savedPurchase = purchaseRepository.save(purchase);
 
-        return mapToResponseDTO(savedPurchase);
+        List<Product> productos = new ArrayList<>();
+
+        for (ProductPurchase productoCompra : ProductPurchase) {
+            // Aquí podrías recuperar el Producto desde el ProductoCompra o realizar alguna lógica específica
+            Product producto = productoCompra.getProduct();
+            int cantidad = productoCompra.getQuantity();
+
+            // Realizar lógica relacionada con la cantidad y el producto si es necesario
+
+            // Agregar el producto a la lista tantas veces como indique la cantidad
+            for (int i = 0; i < cantidad; i++) {
+                productos.add(producto);
+            }
+        }
+
+        purchase.setProduct(productos); // Agregar los productos a la compra
+
+        purchaseRepository.save(purchase); // Guardar la compra en la base de datos
     }
 
-    public List<PurchaseDatesDTO> searchPurchasesByDate(PurchaseSearchDTO searchDTO) {
-        final List<Purchase> purchases = purchaseRepository.findByDateBetween(searchDTO.getFrom(), searchDTO.getTo());
-        return purchases.stream().map(purchase -> {
-            final PurchaseDatesDTO dto = new PurchaseDatesDTO();
-            dto.setDate(purchase.getDate());
-            dto.setTotal(purchase.getTotal());
-            return dto;
-        }).collect(Collectors.toList());
+
     }
 
-    public List<PurchaseResponseDTO> getPurchasesByDate(Date date) {
-        final List<Purchase> purchases = purchaseRepository.findByDate(date);
-        return purchases.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
-    }
 
-    private BigDecimal calculateTotal(List<PurchaseProductDTO> products) {
-        // Implement the logic to calculate total based on product prices and quantities
-        return BigDecimal.ZERO;
-    }
-
-    private PurchaseResponseDTO mapToResponseDTO(final Purchase purchase) {
-        final PurchaseResponseDTO dto = new PurchaseResponseDTO();
-        dto.setId(purchase.getId());
-        dto.setBill(purchase.getBill());
-        dto.setDate(purchase.getDate());
-
-        final SupplierResponseDTO supplierDTO = supplierRepository.findById(purchase.getIdSupplier())
-                .map(supplier -> {
-                    final SupplierResponseDTO sDto = new SupplierResponseDTO();
-                    sDto.setId(supplier.getId());
-                    sDto.setName(supplier.getName());
-                    sDto.setCompanyCode(supplier.getCompanyCode());
-                 //   sDto.setActive(supplier.getActive());
-                    return sDto;
-                }).orElse(null);
-        dto.setSupplier(supplierDTO);
-
-        final List<PurchaseProductDTO> products = purchase.getProducts().stream().map(product -> {
-            final PurchaseProductDTO productDTO = new PurchaseProductDTO();
-            productDTO.setIdProduct(product.getId().getProductId());
-            productDTO.setQuantity(product.getQuantity());
-            return productDTO;
-        }).collect(Collectors.toList());
-
-        dto.setProducts(products);
-        dto.setTotal(purchase.getTotal());
-        return dto;
-    }*/
-
-}
