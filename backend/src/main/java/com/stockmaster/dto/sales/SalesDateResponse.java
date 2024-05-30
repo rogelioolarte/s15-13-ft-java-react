@@ -25,15 +25,17 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SalesDateResponse {
 
-    private Long id;//
+    private Long sale_id;
+    private String customerName;
+    private String customerPersonalCode;
+    private Long product_id;
+    private String product_name;
+    private int quantity;
+    private int discount;
+    private int sale_price;
+    private Long tax_id;
+    private String tax_name;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    private Date date;//
 
-    private CustomerDateResponse customer;
-    private List<ProductSizeResponse> productSize;
-    private TaxesDateResponse taxes;
-
-    private BigDecimal totalPrice;
 
 }
