@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import MenuActionsTable from '../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
 export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
+  const [sortConfig, setSortConfig] = useState(null)
+
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
@@ -14,14 +17,38 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
     setCheckedItems(newCheckedItems)
   }
 
+  const handleSort = (key) => {
+    let direction = 'ascending'
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending'
+    }
+    setSortConfig({ key, direction })
+  }
+
+  const sortedRows = [...TABLE_ROWS].sort((a, b) => {
+    if (!sortConfig) return 0
+
+    const { key, direction } = sortConfig
+
+    // Verificamos el tipo de dato de la clave
+    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
+      // Orden alfabético
+      return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
+    } else {
+      // Orden numérico
+      return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
+    }
+  })
+
   return (
     <table className='w-full min-w-max table-auto text-left'>
       <thead>
         <tr>
-          {TABLE_HEAD.map((head, index) =>
+          {TABLE_HEAD.map(({ head, row }, index) =>
             <th
               key={head}
               className='first:flex items-center last:w-10 h-12 first:cursor-default last:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9] last:hover:bg-[#F1F3F9]'
+              onClick={() => (index !== 0 && index !== TABLE_HEAD.length - 1) && handleSort(row.toLowerCase())}
             >
               {head === 'checkbox'
                 ? (
@@ -48,8 +75,8 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
         </tr>
       </thead>
       <tbody>
-        {TABLE_ROWS.map(
-          ({ name, description, stockMinimo, supplier, barCode, precioVenta }, index) => {
+        {sortedRows.map(
+          ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
             const classes = 'px-4 py-1 text-[#1D2433]'
             return (
               <tr key={barCode} className='even:bg-[#F8F9FC] odd:bg-white'>
@@ -115,13 +142,13 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
                     {barCode}
                   </Typography>
                 </td>
-                {/* precioVenta */}
+                {/* salePrice */}
                 <td className={classes}>
                   <Typography
                     variant='small'
                     className='font-normal'
                   >
-                    {precioVenta}
+                    ${salePrice}
                   </Typography>
                 </td>
                 {/* actions */}

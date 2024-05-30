@@ -9,7 +9,40 @@ import { useProductDeleteMutation } from '../../store/apiSlice.js'
 import { useProductsActions } from '../../hooks/useProductsActions.js'
 
 export default function ProductsSection () {
-  const TABLE_HEAD = ['checkbox', 'Product', 'Description', 'Quantity', 'Supplier', 'Code', 'Sell Price', '']
+  const TABLE_HEAD = [
+    {
+      head: 'checkbox',
+      row: 'checkbox'
+    },
+    {
+      head: 'Product',
+      row: 'name'
+    },
+    {
+      head: 'Description',
+      row: 'description'
+    },
+    {
+      head: 'Quantity',
+      row: 'stockMinimo'
+    },
+    {
+      head: 'Supplier',
+      row: 'supplier'
+    },
+    {
+      head: 'Code',
+      row: 'barCode'
+    },
+    {
+      head: 'Sell Price',
+      row: 'salePrice'
+    },
+    {
+      head: '',
+      row: 'actions'
+    }
+  ]
 
   const TABLE_ROWS = [
     {
@@ -18,7 +51,7 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor F',
       barCode: 'F006',
-      precioVenta: '$180',
+      salePrice: 180,
       stockMinimo: 15
     },
     {
@@ -27,16 +60,16 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor G',
       barCode: 'G007',
-      precioVenta: '$220',
+      salePrice: 220,
       stockMinimo: 8
     },
     {
       id: '3',
       name: 'Producto 3',
       description: 'La descripcion',
-      supplier: 'Proveedor H',
+      supplier: 'Proveedor A',
       barCode: 'H008',
-      precioVenta: '$120',
+      salePrice: 120,
       stockMinimo: 25
     },
     {
@@ -44,8 +77,8 @@ export default function ProductsSection () {
       name: 'Producto 4',
       description: 'La descripcion',
       supplier: 'Proveedor I',
-      barCode: 'I009',
-      precioVenta: '$350',
+      barCode: 'A009',
+      salePrice: 350,
       stockMinimo: 3
     },
     {
@@ -54,16 +87,16 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor J',
       barCode: 'J010',
-      precioVenta: '$280',
+      salePrice: 280,
       stockMinimo: 18
     },
     {
       id: '6',
       name: 'Producto 6',
-      description: 'La descripcion',
+      description: 'Una descripcion',
       supplier: 'Proveedor K',
       barCode: 'K011',
-      precioVenta: '$200',
+      salePrice: 200,
       stockMinimo: 11
     },
     {
@@ -72,7 +105,7 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor L',
       barCode: 'L012',
-      precioVenta: '$320',
+      salePrice: 320,
       stockMinimo: 6
     },
     {
@@ -81,7 +114,7 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor M',
       barCode: 'M013',
-      precioVenta: '$140',
+      salePrice: 140,
       stockMinimo: 22
     },
     {
@@ -90,7 +123,7 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor N',
       barCode: 'N014',
-      precioVenta: '$270',
+      salePrice: 270,
       stockMinimo: 9
     },
     {
@@ -99,16 +132,16 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor O',
       barCode: 'O010',
-      precioVenta: '$190',
+      salePrice: 190,
       stockMinimo: 14
     },
     {
       id: '11',
       name: 'Producto 11',
-      description: 'La descripcion',
+      description: 'Una descripcion',
       supplier: 'Proveedor P',
       barCode: 'P011',
-      precioVenta: '$320',
+      salePrice: 320,
       stockMinimo: 6
     },
     {
@@ -117,7 +150,7 @@ export default function ProductsSection () {
       description: 'La descripcion',
       supplier: 'Proveedor Q',
       barCode: 'Q012',
-      precioVenta: '$140',
+      salePrice: 140,
       stockMinimo: 22
     }
   ]

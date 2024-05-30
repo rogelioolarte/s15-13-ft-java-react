@@ -15,8 +15,11 @@ export function ProductsFormModal ({ button, action, productToEdit }) {
   return (
     <>
       {buttonWithClick}
-      <Dialog open={open} handler={handleOpen} size='sm'>
-        <DialogBody className='p-0'>
+      <Dialog open={open} handler={handleOpen} size='xs' className='m-1'>
+        <DialogBody className='flex flex-col gap-3 p-8'>
+          {action === 'create'
+            ? (<h1 className='text-gray-900 font-bold text-2xl leading-none'>New Product</h1>)
+            : (<h1 className='text-gray-900 font-bold text-2xl leading-none'>Modify Product</h1>)}
           <ProductsFormik setOpen={setOpen} action={action} productToEdit={productToEdit} />
         </DialogBody>
       </Dialog>
