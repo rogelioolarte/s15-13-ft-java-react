@@ -8,7 +8,7 @@ import ProductsHeader from './ProductsHeader.jsx'
 import { useProductDeleteMutation } from '../../store/apiSlice.js'
 import { useProductsActions } from '../../hooks/useProductsActions.js'
 
-export default function ProductsSection () {
+export default function ProductsSection() {
   const TABLE_HEAD = [
     {
       head: 'checkbox',
@@ -157,7 +157,7 @@ export default function ProductsSection () {
 
   const [productDelete] = useProductDeleteMutation()
   const { useDeleteProductById } = useProductsActions()
-
+  const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
@@ -202,7 +202,29 @@ export default function ProductsSection () {
   const startIndex = (page - 1) * productsPerPage
   const endIndex = Math.min(startIndex + productsPerPage, TABLE_ROWS.length)
 
-  const visibleProducts = TABLE_ROWS.slice(startIndex, endIndex)
+  const handleSort = (key) => {
+    let direction = 'ascending'
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending'
+    }
+    setSortConfig({ key, direction })
+  }
+
+  const sortedRows = [...TABLE_ROWS].sort((a, b) => {
+    if (!sortConfig) return TABLE_ROWS
+
+    const { key, direction } = sortConfig
+
+    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
+      // Orden alfabético
+      return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
+    } else {
+      // Orden numérico
+      return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
+    }
+  })
+
+  const visibleProducts = sortedRows.slice(startIndex, endIndex)
 
   return (
     <>
@@ -212,7 +234,7 @@ export default function ProductsSection () {
             <ProductsHeader productToEdit={productToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
           </CardHeader>
           <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
-            <ProductsTable TABLE_ROWS={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} page={page} />
+            <ProductsTable TABLE_ROWS={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
           </CardBody>
           <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
             <PaginationGroup page={page} setPage={setPage} totalItems={TABLE_ROWS.length} />

@@ -1,11 +1,8 @@
-import { useState } from 'react'
 import MenuActionsTable from '../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
-  const [sortConfig, setSortConfig] = useState(null)
-
+export default function ProductsTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
@@ -16,29 +13,6 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
     newCheckedItems[index] = !newCheckedItems[index]
     setCheckedItems(newCheckedItems)
   }
-
-  const handleSort = (key) => {
-    let direction = 'ascending'
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending'
-    }
-    setSortConfig({ key, direction })
-  }
-
-  const sortedRows = [...TABLE_ROWS].sort((a, b) => {
-    if (!sortConfig) return 0
-
-    const { key, direction } = sortConfig
-
-    // Verificamos el tipo de dato de la clave
-    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
-      // Orden alfabético
-      return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
-    } else {
-      // Orden numérico
-      return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
-    }
-  })
 
   return (
     <table className='w-full min-w-max table-auto text-left'>
@@ -75,7 +49,7 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
         </tr>
       </thead>
       <tbody>
-        {sortedRows.map(
+        {TABLE_ROWS.map(
           ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
             const classes = 'px-4 py-1 text-[#1D2433]'
             return (
