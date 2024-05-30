@@ -3,6 +3,7 @@ package com.stockmaster.controller;
 import com.stockmaster.dto.ProductDTO;
 import com.stockmaster.entity.Product;
 import com.stockmaster.service.ProductService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
 public class ProductController {
 
     @Autowired

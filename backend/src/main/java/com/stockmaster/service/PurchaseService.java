@@ -27,7 +27,7 @@ public class PurchaseService {
         final Purchase purchase = new Purchase();
         purchase.setBill(requestDTO.getBill());
         purchase.setDate(requestDTO.getDate());
-        purchase.setIdSupplier(requestDTO.getSupplierId());
+        purchase.setIdSupplier(requestDTO.getSupplier_id());
         purchase.setTotal(calculateTotal(requestDTO.getProducts()));
 
         final List<PurchaseProduct> products = requestDTO.getProducts().stream().map(dto -> {
@@ -76,7 +76,7 @@ public class PurchaseService {
                     sDto.setId(supplier.getId());
                     sDto.setName(supplier.getName());
                     sDto.setCompanyCode(supplier.getCompanyCode());
-                 //   sDto.setActive(supplier.getActive());
+                   sDto.setActive(supplier.isActive());
                     return sDto;
                 }).orElse(null);
         dto.setSupplier(supplierDTO);

@@ -4,6 +4,7 @@ import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.entity.sales.Sales;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/sale")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
 public class SaleController {
     private final SalesService salesService;
     private final SalesRepository salesRepository;

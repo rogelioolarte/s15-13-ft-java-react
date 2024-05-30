@@ -10,7 +10,7 @@ import java.util.List;
 public class PurchaseRequestDTO {
     private Long id;
     private Date date;
-    private Long supplierId;
+    private Long supplier_id;
     private String bill;
     private List<PurchaseProductDTO> products;
 

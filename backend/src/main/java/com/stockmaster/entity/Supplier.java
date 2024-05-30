@@ -34,4 +34,7 @@ public class Supplier {
             inverseJoinColumns = @JoinColumn(name = "supplier_product_id"))
     private List<SupplierProduct> products;
 
+    public boolean isActive() {
+        return active;
+    }
 }

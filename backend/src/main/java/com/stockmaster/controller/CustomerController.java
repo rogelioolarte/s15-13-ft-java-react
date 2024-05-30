@@ -6,6 +6,7 @@ import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
 import com.stockmaster.repository.CustomerRepository;
 import com.stockmaster.service.customer.CustomerService;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
 public class CustomerController {
 
     private final CustomerService customerService;

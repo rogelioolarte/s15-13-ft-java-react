@@ -14,5 +14,7 @@ public class SupplierResponseDTO {
     private String companyCode;
     private boolean active;
 
-
+    public boolean isActive() {
+        return active;
+    }
 }
