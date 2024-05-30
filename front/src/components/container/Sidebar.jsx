@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/logo-md.svg'
-import { AiOutlineDashboard, AiOutlineProduct, AiOutlineSetting } from 'react-icons/ai'
-import { BsReceipt, BsCartCheck, BsTruck, BsCalendarDate, BsBoxArrowRight } from 'react-icons/bs'
-import { TbPresentationAnalytics } from 'react-icons/tb'
+import { AiOutlineDashboard, AiOutlineProduct } from 'react-icons/ai'
+import { BsReceipt, BsTruck, BsBoxArrowRight } from 'react-icons/bs'
+import { TbReceiptTax, TbUser } from 'react-icons/tb'
 import {
   List,
   ListItem,
@@ -22,11 +22,6 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       icon: <AiOutlineDashboard className='h-5 w-5' />
     },
     {
-      name: 'Products',
-      url: '/products',
-      icon: <AiOutlineProduct className='h-5 w-5' />
-    },
-    {
       name: 'Sales',
       url: '/sales',
       icon: <BsReceipt className='h-5 w-5' />
@@ -37,11 +32,26 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
     //   icon: <BsCartCheck className='h-5 w-5' />
     // },
     {
+      name: 'Products',
+      url: '/products',
+      icon: <AiOutlineProduct className='h-5 w-5' />
+    },
+    {
       name: 'Suppliers',
       url: '/suppliers',
       icon: <BsTruck className='h-5 w-5' />
     },
     {
+      name: 'Customers',
+      url: '/customers',
+      icon: <TbUser className='h-5 w-5' />
+    },
+    {
+      name: 'Taxes',
+      url: '/taxes',
+      icon: <TbReceiptTax className='h-5 w-5' />
+    }
+    /* {
       name: 'Analytics',
       url: '/analytics',
       icon: <TbPresentationAnalytics className='h-5 w-5' />
@@ -50,12 +60,7 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       name: 'Inquiries',
       url: '/inquiries',
       icon: <BsCalendarDate className='h-5 w-5' />
-    },
-    {
-      name: 'Settings',
-      url: '/settings',
-      icon: <AiOutlineSetting className='h-5 w-5' />
-    }
+    } */
   ]
   const navigateRoutes = (url) => {
     navigate(url)

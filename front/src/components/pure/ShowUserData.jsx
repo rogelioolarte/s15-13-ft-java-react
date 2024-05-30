@@ -18,7 +18,7 @@ export default function ShowUserData () {
           {/* Welcome, {user.first_name} {user.last_name} */}
           Welcome, Pepen Guayabas
         </Typography>
-        <button onClick={() => toast.success('This is a sonner toast')}>Render my toast</button>
+        <button onClick={() => toast.success('This is a sonner toast', { duration: 1500 })}>Render my toast</button>
       </CardBody>
     </Card>
   )

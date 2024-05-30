@@ -55,14 +55,12 @@ export default function SuppliersSection () {
   const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
 
   useEffect(() => {
-    if (suppliers.length === 0) {
-      if (isLoading) {
-        console.log('Loading - Poner un espiner en la tabla')
-      } else if (isSuccess) {
-        useInitSuppliers(suppliersData)
-      } else if (isError) {
-        toast.success(`Error while conecting: ${error}`)
-      }
+    if (isLoading) {
+      console.log('Loading - Poner un espiner en la tabla')
+    } else if (isSuccess) {
+      useInitSuppliers(suppliersData)
+    } else if (isError) {
+      toast.error(`Error while conecting: ${error}`)
     }
   }, [])
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
