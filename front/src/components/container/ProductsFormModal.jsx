@@ -5,7 +5,7 @@ import {
 import { cloneElement, useState } from 'react'
 import { ProductsFormik } from '../pure/forms/ProductsFormik.jsx'
 
-export function ProductsFormModal({ button, action, productToEdit }) {
+export function ProductsFormModal ({ button, action, productToEdit }) {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(!open)

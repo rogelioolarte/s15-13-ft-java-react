@@ -4,17 +4,15 @@ import {
   IconButton
 } from '@material-tailwind/react'
 
-export default function SimplePagination ({ active, setActive }) {
+export default function SimplePagination ({ page, setPage, totalPages }) {
   const next = () => {
-    if (active === 10) return
-
-    setActive(active + 1)
+    if (page === totalPages) return
+    setPage(page + 1)
   }
 
   const prev = () => {
-    if (active === 1) return
-
-    setActive(active - 1)
+    if (page === 1) return
+    setPage(page - 1)
   }
 
   return (
@@ -23,19 +21,18 @@ export default function SimplePagination ({ active, setActive }) {
         size='sm'
         variant='outlined'
         onClick={prev}
-        disabled={active === 1}
+        disabled={page === 1}
       >
         <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
       </IconButton>
       <Typography color='gray' className='font-normal'>
-        Page <strong className='text-gray-900'>{active}</strong> of{' '}
-        <strong className='text-gray-900'>10</strong>
+        Page {page} of {totalPages}
       </Typography>
       <IconButton
         size='sm'
         variant='outlined'
         onClick={next}
-        disabled={active === 10}
+        disabled={page === 10}
       >
         <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
       </IconButton>

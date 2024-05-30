@@ -1,8 +1,7 @@
-import MenuActionsTable from '../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function ProductsTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
+export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
@@ -21,8 +20,8 @@ export default function ProductsTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, se
           {TABLE_HEAD.map(({ head, row }, index) =>
             <th
               key={head}
-              className='first:flex items-center last:w-10 h-12 first:cursor-default last:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9] last:hover:bg-[#F1F3F9]'
-              onClick={() => (index !== 0 && index !== TABLE_HEAD.length - 1) && handleSort(row.toLowerCase())}
+              className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
+              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
             >
               {head === 'checkbox'
                 ? (
@@ -51,7 +50,7 @@ export default function ProductsTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, se
       <tbody>
         {TABLE_ROWS.map(
           ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
-            const classes = 'px-4 py-1 text-[#1D2433]'
+            const classes = 'px-4 py-[13.5px] text-[#1D2433]'
             return (
               <tr key={barCode} className='even:bg-[#F8F9FC] odd:bg-white'>
                 {/* checked */}
@@ -124,10 +123,6 @@ export default function ProductsTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, se
                   >
                     ${salePrice}
                   </Typography>
-                </td>
-                {/* actions */}
-                <td className={classes + ' text-center'}>
-                  <MenuActionsTable />
                 </td>
               </tr>
             )

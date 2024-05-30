@@ -8,7 +8,7 @@ import ProductsHeader from './ProductsHeader.jsx'
 import { useProductDeleteMutation } from '../../store/apiSlice.js'
 import { useProductsActions } from '../../hooks/useProductsActions.js'
 
-export default function ProductsSection() {
+export default function ProductsSection () {
   const TABLE_HEAD = [
     {
       head: 'checkbox',
@@ -37,10 +37,6 @@ export default function ProductsSection() {
     {
       head: 'Sell Price',
       row: 'salePrice'
-    },
-    {
-      head: '',
-      row: 'actions'
     }
   ]
 
@@ -225,6 +221,8 @@ export default function ProductsSection() {
   })
 
   const visibleProducts = sortedRows.slice(startIndex, endIndex)
+  const itemsPerPage = 7
+  const totalPages = Math.ceil(TABLE_ROWS.length / itemsPerPage)
 
   return (
     <>
@@ -237,8 +235,8 @@ export default function ProductsSection() {
             <ProductsTable TABLE_ROWS={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
           </CardBody>
           <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
-            <PaginationGroup page={page} setPage={setPage} totalItems={TABLE_ROWS.length} />
-            <SimplePagination page={page} setPage={setPage} />
+            <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />
+            <SimplePagination page={page} setPage={setPage} totalPages={totalPages} />
           </CardFooter>
         </Card>
         <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />

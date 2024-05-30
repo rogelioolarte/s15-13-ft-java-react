@@ -1,10 +1,7 @@
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IconButton, ButtonGroup, Typography } from '@material-tailwind/react'
 
-export default function PaginationGroup ({ page, setPage, totalItems }) {
-  const itemsPerPage = 7
-  const totalPages = Math.ceil(totalItems / itemsPerPage)
-
+export default function PaginationGroup ({ page, setPage, totalPages }) {
   const getItemProps = (index) => ({
     className: page === index ? 'bg-white text-black font-bold hover:opacity-100 hover:bg-[#F8F9FC] focus:ring-0' : '',
     onClick: () => setPage(index)
