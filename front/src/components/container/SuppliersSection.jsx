@@ -68,9 +68,9 @@ export default function SuppliersSection () {
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
 
   return (
-    <main className='w-full flex justify-center overflow-hidden px-6 py-4'>
+    <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
-        <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-5 m-0 mb-4'>
+        <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
           <SuppliersHeader />
         </CardHeader>
         <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
