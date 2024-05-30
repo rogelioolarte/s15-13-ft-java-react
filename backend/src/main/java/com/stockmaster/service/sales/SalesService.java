@@ -43,13 +43,13 @@ public class SalesService {
             SalesDateResponse response = SalesDateResponse.builder()
                     .sale_id(((BigInteger)result[0]).longValue())
                     .customerName((String) result[1])
-                    .product_id(((BigInteger) result[3]).longValue())
-                    .product_name((String) result[4])
-                    .quantity((Integer) result[5])
-                    .discount((Integer) result[6])
-                    .sale_price((Integer) result[7])
-                    .tax_id(((BigInteger)result[8]).longValue())
-                    .tax_name((String) result[9])
+                    .personalCode((String) result[2])
+                    .product_name((String) result[3])
+                    .quantity((Integer) result[4])
+                    .discount((Integer) result[5])
+                    .price((Integer) result[6])
+                    .tax_name((String) result[7])
+                    .total((Integer) result[8])
                     .build();
             salesResponses.add(response);
         }

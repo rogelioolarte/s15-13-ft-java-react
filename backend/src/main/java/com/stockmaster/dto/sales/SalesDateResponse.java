@@ -27,15 +27,12 @@ public class SalesDateResponse {
 
     private Long sale_id;
     private String customerName;
-    private String customerPersonalCode;
-    private Long product_id;
+    private String personalCode;
     private String product_name;
     private int quantity;
     private int discount;
-    private int sale_price;
-    private Long tax_id;
+    private int price;
     private String tax_name;
-
-
+    private int total;
 
 }
