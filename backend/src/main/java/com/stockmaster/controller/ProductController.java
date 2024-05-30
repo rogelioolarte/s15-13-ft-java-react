@@ -1,6 +1,6 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.ProductDTO;
+import com.stockmaster.dto.product.ProductDTO;
 import com.stockmaster.entity.Product;
 import com.stockmaster.service.ProductService;
 import io.swagger.annotations.Api;
@@ -14,7 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+<<<<<<< HEAD
 @Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
+=======
+@CrossOrigin("*")
+>>>>>>> f566aab1c5e7d01d0c72e3ae7f2878ede6a19507
 public class ProductController {
 
     @Autowired

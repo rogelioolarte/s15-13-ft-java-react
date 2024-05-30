@@ -17,7 +17,8 @@ CREATE TABLE user (
 CREATE TABLE taxes (
 	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(100) UNIQUE NOT NULL,
-    percentage DECIMAL(18,2) NOT NULL
+    percentage DECIMAL(18,2) NOT NULL,
+    active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE customer (
@@ -68,7 +69,6 @@ CREATE TABLE sales (
 id_customer BIGINT,
 id_taxes BIGINT,
 date DATE NOT NULL,
-discount DECIMAL(18,2),
 total DECIMAL(18,2) NOT NULL,
 FOREIGN KEY (id_customer) REFERENCES customer(id),
 FOREIGN KEY (id_taxes) REFERENCES taxes(id)
@@ -78,7 +78,8 @@ CREATE TABLE sales_products (
     id_sales BIGINT,
 	 id_product BIGINT,
     quantity INT,
-    FOREIGN KEY (id_product) REFERENCES product(id),
+    discount DECIMAL(18,2),
+    FOREIGN KEY (id_product) REFERENCES products(id),
     FOREIGN KEY (id_sales) REFERENCES sales(id)
 ); 
 

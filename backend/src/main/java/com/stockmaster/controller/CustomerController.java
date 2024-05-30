@@ -1,6 +1,5 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
@@ -22,8 +21,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
+<<<<<<< HEAD
 @CrossOrigin
 @Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
+=======
+@CrossOrigin("*")
+>>>>>>> f566aab1c5e7d01d0c72e3ae7f2878ede6a19507
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -57,7 +60,7 @@ public class CustomerController {
         List<Customer> searchResult = customerService.searchCustomerByName(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
-    @GetMapping("/searchbycustomerpersonalcode/")
+    @GetMapping("/searchbypersonalcode/")
     public ResponseEntity<?> searchByCustomerPersonalCode(@RequestParam("searchPersonalCode") String searchTerm) {
         List<Customer> searchResult = customerService.searchCustomerByPersonalCode(searchTerm);
         return ResponseEntity.ok(searchResult);
