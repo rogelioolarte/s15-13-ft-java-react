@@ -25,15 +25,15 @@ export default function PaginationGroup ({ active, setActive }) {
         Page 1 of 10
       </Typography>
       <ButtonGroup variant='outlined' className='hidden sm:block'>
-        <IconButton onClick={prev}>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' onClick={prev}>
           <FaArrowLeftLong strokeWidth={2} className='h-4 w-4' />
         </IconButton>
-        <IconButton {...getItemProps(1)}>1</IconButton>
-        <IconButton {...getItemProps(2)}>2</IconButton>
-        <IconButton {...getItemProps(3)}>3</IconButton>
-        <IconButton {...getItemProps(4)}>4</IconButton>
-        <IconButton {...getItemProps(5)}>5</IconButton>
-        <IconButton onClick={next}>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' {...getItemProps(1)}>1</IconButton>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' {...getItemProps(2)}>2</IconButton>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' {...getItemProps(3)}>3</IconButton>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' {...getItemProps(4)}>4</IconButton>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' {...getItemProps(5)}>5</IconButton>
+        <IconButton className='hover:opacity-100 bg-[#f8f9fc] text-black focus:ring-0' onClick={next}>
           <FaArrowRightLong strokeWidth={2} className='h-4 w-4' />
         </IconButton>
       </ButtonGroup>

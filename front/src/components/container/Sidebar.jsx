@@ -31,11 +31,11 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       url: '/sales',
       icon: <BsReceipt className='h-5 w-5' />
     },
-    {
-      name: 'Purchases',
-      url: '/purchases',
-      icon: <BsCartCheck className='h-5 w-5' />
-    },
+    // {
+    //   name: 'Purchases',
+    //   url: '/purchases',
+    //   icon: <BsCartCheck className='h-5 w-5' />
+    // },
     {
       name: 'Suppliers',
       url: '/suppliers',
