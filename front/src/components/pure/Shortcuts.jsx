@@ -3,6 +3,7 @@ import {
   Card,
   Typography
 } from '@material-tailwind/react'
+import { Link } from 'react-router-dom'
 
 export default function Shortcuts () {
   return (
@@ -11,8 +12,8 @@ export default function Shortcuts () {
         <Typography variant='h4' className='text-center text-base md:text-lg'>SHORTCUTS</Typography>
         <Card className='w-full flex flex-col items-center gap-5 px-12 pt-8 pb-4'>
           <div className='w-full flex flex-col gap-5'>
-            <Button className='bg-[#2E90FA]' fullWidth size='lg'>INQUIRIES</Button>
-            <Button className='bg-[#2E90FA]' fullWidth size='lg'>PURCHASES</Button>
+            <Link to='/sales'><Button className='bg-[#2E90FA]' fullWidth size='lg'>Sales</Button></Link>
+            <Link to='/purchases'><Button className='bg-[#2E90FA]' fullWidth size='lg'>Purchases</Button></Link>
           </div>
           <Button className='self-end' variant='text' size='sm'>Edit</Button>
         </Card>

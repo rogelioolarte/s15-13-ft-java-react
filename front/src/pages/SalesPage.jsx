@@ -5,6 +5,8 @@ export default function SalesPage () {
   /* useProtectedRoutes() */
 
   return (
-    <SalesSection />
+    <div className='w-full h-[100vh]'>
+      <SalesSection />
+    </div>
   )
 }

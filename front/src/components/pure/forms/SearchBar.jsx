@@ -41,11 +41,13 @@ export default function SearchBar () {
         <Form className='flex flex-col md:flex-row items-center justify-end gap-2'>
           {/* Search Errors */}
           {errors.search && touched.search && errorVisible &&
-            (<ErrorMessage
-              className='text-[0.8rem] h-[50%] mr-[0.5rem] w-full flex'
-              name='search'
-              component='div'
-            />)}
+            (
+              <ErrorMessage
+                className='text-[0.8rem] h-[50%] mr-[0.5rem] w-full flex'
+                name='search'
+                component='div'
+              />
+            )}
           <Field
             name='search'
           >
