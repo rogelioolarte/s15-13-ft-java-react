@@ -2,6 +2,7 @@ package com.stockmaster.dto.sales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.stockmaster.dto.customer.CustomerDateResponse;
 import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.product.ProductSizeResponse;
 import com.stockmaster.dto.taxes.DtoTaxesResponse;
@@ -26,13 +27,13 @@ public class SalesDateResponse {
 
     private Long id;//
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
     private Date date;//
 
-    private CustomerResponse customer;//
+    private CustomerDateResponse customer;
     private List<ProductSizeResponse> productSize;
     private TaxesDateResponse taxes;
 
-    private BigDecimal totalPrice;//
+    private BigDecimal totalPrice;
 
 }

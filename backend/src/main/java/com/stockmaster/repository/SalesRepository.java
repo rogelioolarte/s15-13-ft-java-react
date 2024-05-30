@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface SalesRepository extends JpaRepository<Sales, Long> {
 
     @Query(value = "CALL sp_getByDate(:date)", nativeQuery = true)
-    List<SalesDateResponse> findByDate(@Param("date") String date);
+    List<SalesDateResponse> findByDate(@Param("date") Date date);
 }

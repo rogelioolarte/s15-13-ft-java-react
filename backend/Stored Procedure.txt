@@ -1,30 +1,26 @@
-Stored Procedure
-
-
 DELIMITER //
 
-CREATE PROCEDURE sp_getByDate(IN input_date VARCHAR(10))
+CREATE PROCEDURE sp_getByDate(IN input_date VARCHAR(50))
 BEGIN
     DECLARE search_date DATE;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
+    DECLARE error_message VARCHAR(255) DEFAULT '';
+    DECLARE result_date DATE;
 
-        ROLLBACK;
-        SELECT 'There was a problem while the process has been happen' AS error_message;
-    END;
-
-
-    SET search_date = STR_TO_DATE(input_date, '%m/%d/%Y');
-
-    
-    IF search_date IS NULL THEN
-        SELECT 'Wrong Format. Use MM/DD/YYYY format.' AS error_message;
+    -- Verificar el formato de fecha de entrada
+    IF STR_TO_DATE(input_date, '%m/%d/%Y') IS NULL THEN
+        SET error_message = 'Formato de fecha inválido. Use el formato MM/DD/YYYY.';
     ELSE
-        -- Succesfull Request
+        -- Convertir la cadena de entrada a un valor de fecha
+        SET search_date = STR_TO_DATE(input_date, '%m/%d/%Y');
+        
+        -- Asignar la fecha de búsqueda al resultado
+        SET result_date = search_date;
+
+        -- Realizar la consulta utilizando la fecha convertida
         SELECT
             s.id AS sale_id,
             c.name AS customer_name,
-            c.personalcodel AS customer_personalcode,
+            c.personalcode AS customer_personalcode,
             sp.id_product,
             p.name AS product_name,
             sp.quantity,
@@ -41,6 +37,12 @@ BEGIN
         WHERE
             s.date = search_date;
     END IF;
+
+    -- Si hay un mensaje de error, mostrarlo junto con la fecha
+    IF error_message <> '' THEN
+        SELECT error_message AS error_message, result_date AS result_date;
+    END IF;
 END //
 
 DELIMITER ;
+

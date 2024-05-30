@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class SaleController {
         return ResponseEntity.ok(salesService.findByAll());
     }*/
     @GetMapping("/getbydate/")//byDate
-    public ResponseEntity<?>getSalesByDate(@RequestParam("date") String date) {
+    public ResponseEntity<?>getSalesByDate(@RequestParam("date") Date date) {
         List<SalesDateResponse> sales = salesService.findByDate(date);
         return ResponseEntity.ok(sales);
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -26,17 +27,24 @@ public class SalesService {
                 .map(salesMapper::toSalesResponse).toList();
     }*/
 
+    /*
     public List<SalesDateResponse>findByDate(String date){
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         try {
             formatter.parse(date);
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Fecha no válida, debe estar en formato MM/dd/yyyy");
+            throw new IllegalArgumentException("Invalid Format please use the MM/dd/yyyy format");
         }
 
         return salesRepository.findByDate(date);
-    }
+    }*/
+    public List<SalesDateResponse> findByDate(Date date) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        String formattedDate = formatter.format(date);
+
+        return salesRepository.findByDate(date);
+    }
 
     /*
     public SalesResponse save(SalesSavingRequest salesSavingRequest){
