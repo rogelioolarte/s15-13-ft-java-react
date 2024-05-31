@@ -2,6 +2,7 @@ package com.stockmaster.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,7 +30,8 @@ public class Purchase {
 
     private BigDecimal total;
 
-    @ManyToMany
+
+    @ManyToMany//(fetch = FetchType.EAGER)
     @JoinTable(name = "products_purchase",
             joinColumns = @JoinColumn(name = "id_purchase"),
             inverseJoinColumns = @JoinColumn(name = "id_product"))

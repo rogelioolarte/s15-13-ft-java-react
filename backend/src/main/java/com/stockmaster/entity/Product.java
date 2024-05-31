@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
 @Builder
 public class Product {
     @Id
@@ -44,4 +45,14 @@ public class Product {
     private List<Purchase> purchase;
 
 
+    public Product(ProductPurchase productPurchase) {
+        this.id = productPurchase.getProduct().getId();
+        this.name = productPurchase.getProduct().getName();
+        this.barcode = productPurchase.getProduct().getBarcode();
+        this.description = productPurchase.getProduct().getDescription();
+        this.salePrice = productPurchase.getProduct().getSalePrice();
+        this.minimal = productPurchase.getProduct().getMinimal();
+        this.stock = productPurchase.getProduct().getStock();
+        this.active = productPurchase.getProduct().isActive();
+    }
 }
