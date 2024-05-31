@@ -17,6 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 public class TaxesRepositoryImpl {
+
     private final TaxesRepository taxesRepository;
 
     public TaxesRepositoryImpl(  @Lazy TaxesRepository taxesRepository) {

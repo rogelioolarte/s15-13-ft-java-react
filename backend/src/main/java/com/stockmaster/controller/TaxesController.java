@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/taxes")
 @CrossOrigin("*")
-
 public class TaxesController {
     @Lazy
     @Autowired
