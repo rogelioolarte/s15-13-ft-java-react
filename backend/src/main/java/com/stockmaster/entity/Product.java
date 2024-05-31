@@ -2,6 +2,7 @@ package com.stockmaster.entity;
 
 
 import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
+import com.stockmaster.entity.sales.SalesProduct;
 import jakarta.persistence.*;
 import lombok.*;
 
