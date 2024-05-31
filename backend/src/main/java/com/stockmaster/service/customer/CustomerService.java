@@ -91,6 +91,20 @@ public class CustomerService {
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
     }
+    //Activate
+
+    public void activate(Long id) {
+        if (id == null || id <= 0) {
+            throw new RequestException("The Id is invalid or non-existent.");        }
+
+        Optional<Customer> customerOptional = customerRepository.findActiveById(id);
+        if (!customerOptional.isPresent()) {
+            throw new RequestException("No Customer was found with the ID: " + id);
+        }
+        Customer customer = customerOptional.get();
+        customer.setActive(true);
+        customerRepository.save(customer);
+    }
 
     //Delete
     public void delete(Long id) {
