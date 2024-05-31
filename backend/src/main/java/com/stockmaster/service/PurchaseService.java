@@ -1,69 +1,70 @@
 package com.stockmaster.service;
 
-import com.stockmaster.dto.Purchase.*;
-import com.stockmaster.dto.SupplierResponseDTO;
+import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
+import com.stockmaster.entity.Product;
+import com.stockmaster.entity.ProductPurchase;
 import com.stockmaster.entity.Purchase;
-import com.stockmaster.entity.PurchaseProduct;
+import com.stockmaster.entity.Supplier;
 import com.stockmaster.repository.PurchaseRepository;
-import com.stockmaster.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Service
 public class PurchaseService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
 
     @Transactional
+<<<<<<< HEAD
     public PurchaseResponseDTO createPurchase(PurchaseRequestDTO requestDTO) {
         final Purchase purchase = new Purchase();
         purchase.setBill(requestDTO.getBill());
         purchase.setDate(requestDTO.getDate());
         purchase.setIdSupplier(requestDTO.getSupplier_id());
         purchase.setTotal(calculateTotal(requestDTO.getProducts()));
+=======
+    public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101
 
-        final List<PurchaseProduct> products = requestDTO.getProducts().stream().map(dto -> {
-            final PurchaseProduct product = new PurchaseProduct();
-            product.setIdProduct(dto.getIdProduct());
-            product.setQuantity(dto.getQuantity());
-            product.setPurchase(purchase);
-            return product;
-        }).collect(Collectors.toList());
+        List<ProductPurchase> ProductPurchase = dtoPurchaseResponse.productList().stream().map(ProductPurchase::new).toList();
 
-        purchase.setProducts(products);
-        Purchase savedPurchase = purchaseRepository.save(purchase);
 
-        return mapToResponseDTO(savedPurchase);
+        List<Product> productos = new ArrayList<>();
+
+        for (ProductPurchase productoCompra : ProductPurchase) {
+            // Aquí podrías recuperar el Producto desde el ProductoCompra o realizar alguna lógica específica
+            Product producto = productoCompra.getProduct();
+            int cantidad = productoCompra.getQuantity();
+
+            // Realizar lógica relacionada con la cantidad y el producto si es necesario
+
+            // Agregar el producto a la lista tantas veces como indique la cantidad
+            for (int i = 0; i < cantidad; i++) {
+                productos.add(producto);
+            }
+        }
+
+        Purchase purchase = Purchase.builder()
+                .bill(dtoPurchaseResponse.bill())
+                .product(productos)
+                .date(dtoPurchaseResponse.date())
+                .idSupplier(Supplier.builder().id(dtoPurchaseResponse.supplier()).build())
+                .build();
+
+
+      return  purchaseRepository.save(purchase);
     }
 
-    public List<PurchaseDatesDTO> searchPurchasesByDate(PurchaseSearchDTO searchDTO) {
-        final List<Purchase> purchases = purchaseRepository.findByDateBetween(searchDTO.getFrom(), searchDTO.getTo());
-        return purchases.stream().map(purchase -> {
-            final PurchaseDatesDTO dto = new PurchaseDatesDTO();
-            dto.setDate(purchase.getDate());
-            dto.setTotal(purchase.getTotal());
-            return dto;
-        }).collect(Collectors.toList());
-    }
 
-    public List<PurchaseResponseDTO> getPurchasesByDate(Date date) {
-        final List<Purchase> purchases = purchaseRepository.findByDate(date);
-        return purchases.stream().map(this::mapToResponseDTO).collect(Collectors.toList());
-    }
+}
 
-    private BigDecimal calculateTotal(List<PurchaseProductDTO> products) {
-        // Implement the logic to calculate total based on product prices and quantities
-        return BigDecimal.ZERO;
-    }
 
+<<<<<<< HEAD
     private PurchaseResponseDTO mapToResponseDTO(final Purchase purchase) {
         final PurchaseResponseDTO dto = new PurchaseResponseDTO();
         dto.setId(purchase.getId());
@@ -93,3 +94,5 @@ public class PurchaseService {
         return dto;
     }
 }
+=======
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101

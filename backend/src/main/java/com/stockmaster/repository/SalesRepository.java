@@ -13,7 +13,6 @@ import java.util.List;
 
 @Repository
 public interface SalesRepository extends JpaRepository<Sales, Long> {
-
     @Query(value = "CALL sp_getByDate(:date)", nativeQuery = true)
     List<Object[]> findByDate(@Param("date") String date);
 }

@@ -1,5 +1,6 @@
 package com.stockmaster.controller;
 
+<<<<<<< HEAD
 import com.stockmaster.dto.Purchase.PurchaseDatesDTO;
 import com.stockmaster.dto.Purchase.PurchaseRequestDTO;
 import com.stockmaster.dto.Purchase.PurchaseResponseDTO;
@@ -16,11 +17,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/purchase")
+=======
+import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
+import com.stockmaster.service.PurchaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("api/purchase")
+@CrossOrigin("*")
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101
 public class PurchaseController {
 
     @Autowired
     private PurchaseService purchaseService;
 
+<<<<<<< HEAD
     @PostMapping
     @Operation(summary = "Create a new purchase")
     public PurchaseResponseDTO createPurchase(@RequestBody PurchaseRequestDTO requestDTO) {
@@ -39,3 +56,16 @@ public class PurchaseController {
         return purchaseService.getPurchasesByDate(date);
     }
 }
+=======
+
+    @PostMapping
+    public ResponseEntity<?> createPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
+        try {
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(purchaseService.MakeAPurchase(dtoPurchaseResponse));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! purchase not created");
+        }
+    }
+}
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101

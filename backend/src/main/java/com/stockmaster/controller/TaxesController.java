@@ -64,6 +64,7 @@ public class TaxesController {
 
     }
 
+
     @PatchMapping(value = "/enable/{id}")
     public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
         try {
