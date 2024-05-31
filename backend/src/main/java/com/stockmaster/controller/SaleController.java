@@ -3,11 +3,9 @@ package com.stockmaster.controller;
 import com.stockmaster.dto.sales.SalesDateResponse;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
-<<<<<<< HEAD
+
 import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
-=======
->>>>>>> f566aab1c5e7d01d0c72e3ae7f2878ede6a19507
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -21,12 +21,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
-<<<<<<< HEAD
-@CrossOrigin
-@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
-=======
+
 @CrossOrigin("*")
->>>>>>> f566aab1c5e7d01d0c72e3ae7f2878ede6a19507
 public class CustomerController {
 
     private final CustomerService customerService;

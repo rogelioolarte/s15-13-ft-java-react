@@ -8,7 +8,6 @@ import com.stockmaster.repository.TaxesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,7 +19,6 @@ public class TaxesRepositoryImpl {
 
 
     @Lazy
-    @Autowired
     private TaxesRepository taxesRepository;
 
 
