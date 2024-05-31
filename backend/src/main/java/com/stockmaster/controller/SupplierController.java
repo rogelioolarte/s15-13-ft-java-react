@@ -3,6 +3,7 @@ package com.stockmaster.controller;
 import com.stockmaster.dto.SupplierRequestDTO;
 import com.stockmaster.dto.SupplierResponseDTO;
 import com.stockmaster.service.SupplierService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/supplier")
+@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
 public class SupplierController {
 
     @Autowired
