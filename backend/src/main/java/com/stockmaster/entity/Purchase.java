@@ -1,15 +1,13 @@
 package com.stockmaster.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -25,13 +23,17 @@ public class Purchase {
     @Temporal(TemporalType.DATE)
     private Date date = new Date();
 
-    private Long idSupplier;
+    @ManyToOne
+    @JoinColumn(name = "suplier_id", referencedColumnName = "id")
+    private Supplier idSupplier;
 
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
-    private List<PurchaseProduct> products;
+    @ManyToMany
+    @JoinTable(name = "products_purchase",
+            joinColumns = @JoinColumn(name = "id_purchase"),
+            inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private List<Product> product;
 
-    // Getters and Setters
-    // Constructors
+
 }
