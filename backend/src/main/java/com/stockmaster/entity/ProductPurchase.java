@@ -1,5 +1,6 @@
 package com.stockmaster.entity;
 
+import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,8 @@ public class ProductPurchase {
     private Integer quantity;
 
 
-
+    public ProductPurchase(DtoPurchaseProductResponse dtoPurchaseProductResponse) {
+        this.quantity = dtoPurchaseProductResponse.quantity();
+        this.product = Product.builder().id(dtoPurchaseProductResponse.id()).build();
+    }
 }

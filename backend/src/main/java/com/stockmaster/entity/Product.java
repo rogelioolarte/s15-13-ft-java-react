@@ -1,6 +1,7 @@
 package com.stockmaster.entity;
 
 
+import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,4 +42,6 @@ public class Product {
 
     @ManyToMany(mappedBy = "product")
     private List<Purchase> purchase;
+
+
 }

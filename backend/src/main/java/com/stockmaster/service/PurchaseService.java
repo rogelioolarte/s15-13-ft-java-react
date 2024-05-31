@@ -1,8 +1,10 @@
 package com.stockmaster.service;
 
+import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.ProductPurchase;
 import com.stockmaster.entity.Purchase;
+import com.stockmaster.entity.Supplier;
 import com.stockmaster.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class PurchaseService {
     @Autowired
@@ -17,8 +20,9 @@ public class PurchaseService {
 
 
     @Transactional
-    public void MakeAPurchase(Purchase purchase, List<ProductPurchase> ProductPurchase){
+    public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
 
+        List<ProductPurchase> ProductPurchase = dtoPurchaseResponse.productList().stream().map(ProductPurchase::new).toList();
 
 
         List<Product> productos = new ArrayList<>();
@@ -36,12 +40,18 @@ public class PurchaseService {
             }
         }
 
-        purchase.setProduct(productos); // Agregar los productos a la compra
+        Purchase purchase = Purchase.builder()
+                .bill(dtoPurchaseResponse.bill())
+                .product(productos)
+                .date(dtoPurchaseResponse.date())
+                .idSupplier(Supplier.builder().id(dtoPurchaseResponse.supplier()).build())
+                .build();
 
-        purchaseRepository.save(purchase); // Guardar la compra en la base de datos
+
+      return  purchaseRepository.save(purchase);
     }
 
 
-    }
+}
 
 
