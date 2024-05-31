@@ -1,8 +1,8 @@
-import { Button, Input, Typography } from '@material-tailwind/react'
-import { FaMagnifyingGlass } from 'react-icons/fa6'
+import { Button, Typography } from '@material-tailwind/react'
 import { ProductsFormModal } from './ProductsFormModal.jsx'
+import SearchTables from '../pure/SearchTables.jsx'
 
-export default function ProductsHeader ({ productToEdit, selectedItems, setIsDeleteConfirmationOpen }) {
+export default function ProductsHeader ({ onSearch, productToEdit, selectedItems, setIsDeleteConfirmationOpen }) {
   return (
     <>
       <div className='w-full text-center'>
@@ -13,11 +13,7 @@ export default function ProductsHeader ({ productToEdit, selectedItems, setIsDel
       <div className='w-full flex flex-col lg:flex-row items-center lg:justify-between gap-2'>
         {/* Search */}
         <div className='w-full md:w-72'>
-          <Input
-            className='bg-white'
-            label='Search'
-            icon={<FaMagnifyingGlass className='h-5 w-5' />}
-          />
+          <SearchTables onSearch={onSearch} />
         </div>
         {/* Buttons */}
         <div className='flex flex-wrap items-center gap-2'>

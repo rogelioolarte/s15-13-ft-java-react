@@ -1,10 +1,10 @@
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
+export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
-    setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
+    setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
   }
 
   const handleCheckItem = (index) => {
@@ -48,7 +48,7 @@ export default function ProductsTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, s
         </tr>
       </thead>
       <tbody>
-        {TABLE_ROWS.map(
+        {TABLE_DATA.map(
           ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
             const classes = 'px-4 py-[13.5px] text-[#1D2433]'
             return (

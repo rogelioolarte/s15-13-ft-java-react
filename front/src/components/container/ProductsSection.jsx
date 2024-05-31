@@ -137,7 +137,7 @@ export default function ProductsSection () {
       description: 'Una descripcion',
       supplier: 'Proveedor P',
       barCode: 'P011',
-      salePrice: 320,
+      salePrice: 270,
       stockMinimo: 6
     },
     {
@@ -147,26 +147,27 @@ export default function ProductsSection () {
       supplier: 'Proveedor Q',
       barCode: 'Q012',
       salePrice: 140,
-      stockMinimo: 22
+      stockMinimo: 30
     }
   ]
-
+  const TABLE_DATA = TABLE_ROWS
   const [productDelete] = useProductDeleteMutation()
   const { useDeleteProductById } = useProductsActions()
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
+  const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
+  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_DATA.length).fill(false))
   const selectedItems = checkedItems.filter((value) => value === true)
 
   const findSelectedProduct = () => {
     const index = checkedItems.findIndex((value) => value === true)
-    return TABLE_ROWS[index]
+    return TABLE_DATA[index]
   }
 
   const getSelectedProducts = () => {
     return checkedItems
-      .map((isChecked, index) => (isChecked ? TABLE_ROWS[index] : null))
+      .map((isChecked, index) => (isChecked ? TABLE_DATA[index] : null))
       .filter(product => product !== null)
   }
 
@@ -187,16 +188,28 @@ export default function ProductsSection () {
     }
   }
 
+  const handleSearch = (searchTerm) => {
+    const filteredProducts = TABLE_DATA.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.supplier.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.barCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.salePrice.toString().includes(searchTerm) ||
+      product.stockMinimo.toString().includes(searchTerm)
+    )
+    setSearchFilter(filteredProducts)
+  }
+
   const productToEdit = selectedItems.length === 1 && findSelectedProduct()
 
   useEffect(() => {
     // Restablecer productos seleccionados al cambiar de página
-    setCheckedItems(new Array(TABLE_ROWS.length).fill(false))
+    setCheckedItems(new Array(TABLE_DATA.length).fill(false))
   }, [page])
 
   const productsPerPage = 7
   const startIndex = (page - 1) * productsPerPage
-  const endIndex = Math.min(startIndex + productsPerPage, TABLE_ROWS.length)
+  const endIndex = Math.min(startIndex + productsPerPage, TABLE_DATA.length)
 
   const handleSort = (key) => {
     let direction = 'ascending'
@@ -206,8 +219,8 @@ export default function ProductsSection () {
     setSortConfig({ key, direction })
   }
 
-  const sortedRows = [...TABLE_ROWS].sort((a, b) => {
-    if (!sortConfig) return TABLE_ROWS
+  const sortedRows = [...searchFilter].sort((a, b) => {
+    if (!sortConfig) return TABLE_DATA
 
     const { key, direction } = sortConfig
 
@@ -222,25 +235,23 @@ export default function ProductsSection () {
 
   const visibleProducts = sortedRows.slice(startIndex, endIndex)
   const itemsPerPage = 7
-  const totalPages = Math.ceil(TABLE_ROWS.length / itemsPerPage)
+  const totalPages = Math.ceil(TABLE_DATA.length / itemsPerPage)
 
   return (
-    <>
-      <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
-        <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
-          <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
-            <ProductsHeader productToEdit={productToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
-          </CardHeader>
-          <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
-            <ProductsTable TABLE_ROWS={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
-          </CardBody>
-          <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
-            <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />
-            <SimplePagination page={page} setPage={setPage} totalPages={totalPages} />
-          </CardFooter>
-        </Card>
-        <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
-      </main>
-    </>
+    <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
+      <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
+        <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
+          <ProductsHeader onSearch={handleSearch} productToEdit={productToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
+        </CardHeader>
+        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
+          <ProductsTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
+        </CardBody>
+        <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
+          <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />
+          <SimplePagination page={page} setPage={setPage} totalPages={totalPages} />
+        </CardFooter>
+      </Card>
+      <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
+    </main>
   )
 }
