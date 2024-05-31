@@ -1,13 +1,20 @@
 package com.stockmaster.service.sales;
 
+import com.stockmaster.dto.product.ProductSavingRequest;
 import com.stockmaster.dto.sales.SalesDateResponse;
 import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
+import com.stockmaster.entity.Product;
+import com.stockmaster.entity.Taxes;
+import com.stockmaster.entity.customer.Customer;
 import com.stockmaster.entity.sales.Sales;
+import com.stockmaster.entity.sales.SalesProduct;
 import com.stockmaster.exception.RequestException;
-import com.stockmaster.repository.SalesRepository;
+import com.stockmaster.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,9 +29,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SalesService {
 
+    @Lazy
     @Autowired
     private final SalesRepository salesRepository;
-    private final SalesMapper salesMapper;
+    @Lazy
+    @Autowired
+    private final CustomerRepository customerRepository;
+    @Lazy
+    @Autowired
+    private final TaxesRepository taxesRepository;
+    @Lazy
+    @Autowired
+    private final ProductRepository productRepository;
+    @Lazy
+    @Autowired
+    private final SalesProductRepository salesProductRepository;
     /*
     public List<SalesResponse>findByAll(){
         List<Sales> customers = salesRepository.findAll();
@@ -56,28 +75,34 @@ public class SalesService {
 
         return salesResponses;
     }
-    /*
-    public List<SalesDateResponse>findByDate(String date){
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            formatter.parse(date);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid Format please use the MM/dd/yyyy format");
+
+    @Transactional
+    public Sales save(SalesSavingRequest request) {
+        Customer customer = customerRepository.findById(request.getId_customer())
+                .orElseThrow(() -> new RequestException("Customer not found"));
+        Taxes tax = taxesRepository.findById(request.getId_taxes())
+                .orElseThrow(()-> new RequestException("Tax not found"));
+
+        Sales sales = Sales.builder()
+                .customer(customer)
+                .tax(tax)
+                .date(request.getDate())
+                .total(request.getTotalGeneral())
+                .build();
+
+        sales = salesRepository.save(sales);
+
+        for(ProductSavingRequest productRequest : request.getProducts()){
+            Product product = productRepository.findById(productRequest.getIdProduct())
+                    .orElseThrow(()-> new RequestException("Product not found"));
+
+            SalesProduct salesProduct = SalesProduct.builder()
+                    .sales(sales)
+                    .quantity(productRequest.getQuantity())
+                    .discount(productRequest.getDiscount())
+                    .build();
+            salesProductRepository.save(salesProduct);
         }
-
-        return salesRepository.findByDate(date);
-    }*/
-
-
-    /*
-    public SalesResponse save(SalesSavingRequest salesSavingRequest){
-        if (salesSavingRequest.getTotal() == null || salesSavingRequest.getTotal().compareTo(BigDecimal.ZERO) == 0){
-            throw new RequestException("Total cant be null or empty");
-        }
-        Sales sales = salesMapper.salesRequestToPost(salesSavingRequest);
-
-        return salesMapper.toSalesResponse(salesRepository.save(sales));
-    }*/
-
-
+        return sales;
+    }
 }

@@ -9,6 +9,7 @@ import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-
+    @Lazy
     private final CustomerRepository customerRepository;
+    @Lazy
     private final CustomerMapper customerMapper;
 
     //Metodos Get
