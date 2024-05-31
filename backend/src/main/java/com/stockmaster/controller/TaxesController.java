@@ -2,6 +2,7 @@ package com.stockmaster.controller;
 
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.service.TaxesRepositoryImpl;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/taxes")
 @CrossOrigin("*")
+@Api(value = "Purchase Management System", description = "Operations pertaining to purchases in Purchase Management System")
+
 public class TaxesController {
     @Lazy
     @Autowired

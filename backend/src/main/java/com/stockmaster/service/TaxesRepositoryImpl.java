@@ -7,7 +7,11 @@ import com.stockmaster.entity.Taxes;
 import com.stockmaster.repository.TaxesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+<<<<<<< HEAD
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+=======
 import org.springframework.context.annotation.Lazy;
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,12 +22,17 @@ import java.util.List;
 public class TaxesRepositoryImpl {
 
 
-
+<<<<<<< HEAD
+    @Lazy
+    private TaxesRepository taxesRepository;
+=======
     private final TaxesRepository taxesRepository;
 
     public TaxesRepositoryImpl(  @Lazy TaxesRepository taxesRepository) {
         this.taxesRepository = taxesRepository;
     }
+
+>>>>>>> 3b0587dcdd6b13f3faaefc256c3d2c11d092d101
 
 
     public DtoTaxesResponse taxRegister(DtoTaxesRquest dtoTaxesRquest) {

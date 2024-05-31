@@ -19,8 +19,9 @@ public class SupplierProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Supplier> suppliers;
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

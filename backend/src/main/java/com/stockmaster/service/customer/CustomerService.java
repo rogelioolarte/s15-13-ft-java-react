@@ -9,6 +9,7 @@ import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-
+    @Lazy
     private final CustomerRepository customerRepository;
+    @Lazy
     private final CustomerMapper customerMapper;
 
     //Metodos Get
@@ -88,6 +90,20 @@ public class CustomerService {
         customer.setActive(customerRequest.isActive());
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
+    }
+    //Activate
+
+    public void activate(Long id) {
+        if (id == null || id <= 0) {
+            throw new RequestException("The Id is invalid or non-existent.");        }
+
+        Optional<Customer> customerOptional = customerRepository.findActiveById(id);
+        if (!customerOptional.isPresent()) {
+            throw new RequestException("No Customer was found with the ID: " + id);
+        }
+        Customer customer = customerOptional.get();
+        customer.setActive(true);
+        customerRepository.save(customer);
     }
 
     //Delete

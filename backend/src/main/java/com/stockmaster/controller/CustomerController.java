@@ -5,6 +5,7 @@ import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
 import com.stockmaster.repository.CustomerRepository;
 import com.stockmaster.service.customer.CustomerService;
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
+
 @CrossOrigin("*")
 public class CustomerController {
 
@@ -36,15 +38,7 @@ public class CustomerController {
         List<Customer> customers = customerRepository.findAllActive();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
-    //    @PatchMapping("/active/{id}")
-    //    public ResponseEntity<?> getActiveCustomers() {
-    //Para traer el customer por el sale all List<sale>,
-    // traer un sale por date mes/dia/año
-    /*
-    @GetMapping("/sale/{id}")
-    public ResponseEntity<?> getCustomerBySalesId(@PathVariable Long id){
-        return ResponseEntity.ok(customerService.findBySaleId(id));
-    }*/
+
     @GetMapping("/findby/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
@@ -77,12 +71,15 @@ public class CustomerController {
     public ResponseEntity<?> updateCustomer(@Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
         return ResponseEntity.ok(customerService.update(customer));
     }
-    //Metodo Delete
+    //Metodo Patch
     @PatchMapping("/deletecustomer/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
-
+    @PatchMapping("/enable/{id}")
+    public ResponseEntity<?> enableCustomer(@PathVariable Long id){
+        customerService.activate(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }
