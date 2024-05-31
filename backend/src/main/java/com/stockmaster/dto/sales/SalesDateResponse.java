@@ -2,8 +2,11 @@ package com.stockmaster.dto.sales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.stockmaster.dto.customer.CustomerDateResponse;
 import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.product.ProductSizeResponse;
+import com.stockmaster.dto.taxes.DtoTaxesResponse;
+import com.stockmaster.dto.taxes.TaxesDateResponse;
 import com.stockmaster.entity.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,15 +23,16 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SalesResponse {
-    private Long id;
+public class SalesDateResponse {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date date;
-
-    private CustomerResponse customer;
-    private List<ProductSizeResponse> productSize;
-    private Long taxes;
-    private Double totalPrice;
+    private Long sale_id;
+    private String customerName;
+    private String personalCode;
+    private String product_name;
+    private int quantity;
+    private int discount;
+    private int price;
+    private String tax_name;
+    private int total;
 
 }

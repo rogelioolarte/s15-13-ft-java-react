@@ -1,4 +1,4 @@
-package com.stockmaster.dto;
+package com.stockmaster.dto.product;
 
 import lombok.Getter;
 import lombok.Setter;

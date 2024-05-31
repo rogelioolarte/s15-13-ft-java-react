@@ -14,22 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/taxes")
 @CrossOrigin("*")
 public class TaxesController {
-
-
-
     @Lazy
     @Autowired
     private  TaxesRepositoryImpl taxesRepositoryImpl;
 
-
-
     @PostMapping(produces = "application/json")
     public ResponseEntity<?> register(@RequestBody @Valid DtoTaxesRquest dtoTaxesRquest) {
         try{
-        return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
-    } catch (Exception e) {
-        return  ResponseEntity.status(HttpStatus.CONFLICT).body("tax already exists");
-    }
+            return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.CONFLICT).body("tax already exists");
+        }
     }
 
 

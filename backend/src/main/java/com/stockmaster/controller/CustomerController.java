@@ -1,6 +1,5 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/customer")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin("*")
 public class CustomerController {
 
     private final CustomerService customerService;

@@ -1,14 +1,15 @@
 package com.stockmaster.service;
 
+
 import com.stockmaster.dto.taxes.DtoTaxesResponse;
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.entity.Taxes;
 import com.stockmaster.repository.TaxesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -56,6 +57,7 @@ public class TaxesRepositoryImpl {
     public DtoTaxesResponse activeTax(Long id) {
         Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
         tax.setActive(true);
-        return new DtoTaxesResponse(taxesRepository.save(tax) );
+        return new DtoTaxesResponse(taxesRepository.save(tax));
     }
+
 }

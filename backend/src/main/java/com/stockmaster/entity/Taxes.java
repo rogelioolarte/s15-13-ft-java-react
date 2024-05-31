@@ -25,16 +25,14 @@ public class Taxes {
     private String name;
     @Column(name = "percentage", unique = true, nullable = true)
     private BigDecimal percentage;
+
     @Column(name = "active")
     private Boolean active;
-
 
     public Taxes(DtoTaxesRquest dtoTaxesRquest) {
         this.name = dtoTaxesRquest.name();
         this.percentage = dtoTaxesRquest.percentage();
     }
-
-
     public Taxes(DtoTaxesResponse dtoTaxesResponse) {
         this.name = dtoTaxesResponse.name();
         this.percentage = dtoTaxesResponse.percentage();
