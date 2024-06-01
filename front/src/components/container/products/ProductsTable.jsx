@@ -50,25 +50,21 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
       <tbody>
         {TABLE_DATA.map(
           ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
-            const classes = 'px-4 py-[13.5px] text-[#1D2433]'
+            const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
               <tr key={barCode} className='even:bg-[#F8F9FC] odd:bg-white'>
                 {/* checked */}
                 <td className={classes}>
-                  <div className='flex items-center gap-3'>
-                    <div className='flex flex-col'>
-                      <Checkbox
-                        id={barCode}
-                        ripple={false}
-                        className='hover:before:opacity-0'
-                        containerProps={{
-                          className: 'p-0'
-                        }}
-                        checked={checkedItems[index]}
-                        onChange={() => handleCheckItem(index)}
-                      />
-                    </div>
-                  </div>
+                  <Checkbox
+                    id={barCode}
+                    ripple={false}
+                    className='hover:before:opacity-0'
+                    containerProps={{
+                      className: 'p-0'
+                    }}
+                    checked={checkedItems[index]}
+                    onChange={() => handleCheckItem(index)}
+                  />
                 </td>
                 {/* name */}
                 <td className={classes}>

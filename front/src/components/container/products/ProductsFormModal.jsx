@@ -5,7 +5,7 @@ import {
 import { cloneElement, useState } from 'react'
 import { ProductsFormik } from '../../pure/forms/ProductsFormik'
 
-export function ProductsFormModal({ button, action, productToEdit }) {
+export function ProductsFormModal ({ button, action, productToEdit }) {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(!open)
@@ -18,8 +18,8 @@ export function ProductsFormModal({ button, action, productToEdit }) {
       <Dialog open={open} handler={handleOpen} size='xs' className='m-1 max-h-[calc(100vh-0.5rem)] md:max-h-[initial] overflow-y-scroll md:overflow-y-auto'>
         <DialogBody className='flex flex-col gap-3 p-8'>
           {action === 'create'
-            ? (<h1 className='text-gray-900 font-bold text-2xl leading-none'>New Product</h1>)
-            : (<h1 className='text-gray-900 font-bold text-2xl leading-none'>Modify Product</h1>)}
+            ? (<h3 className='text-gray-900 font-bold text-2xl leading-none'>New Product</h3>)
+            : (<h3 className='text-gray-900 font-bold text-2xl leading-none'>Modify Product</h3>)}
           <ProductsFormik setOpen={setOpen} action={action} productToEdit={productToEdit} />
         </DialogBody>
       </Dialog>

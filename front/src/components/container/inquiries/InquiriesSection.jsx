@@ -74,7 +74,7 @@ const TABLE_ROWS = [
   }
 ]
 
-function MenuCustomAnimation({ handleOpen }) {
+function MenuCustomAnimation ({ handleOpen }) {
   return (
     <Menu
       placement='left'
@@ -97,7 +97,7 @@ function MenuCustomAnimation({ handleOpen }) {
   )
 }
 
-export default function InquiriesSection() {
+export default function InquiriesSection () {
   const [active, setActive] = useState(1)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)

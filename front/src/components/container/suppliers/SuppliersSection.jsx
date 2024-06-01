@@ -48,7 +48,7 @@ const TABLE_ROWS = [
   }
 ]
 
-export default function SuppliersSection() {
+export default function SuppliersSection () {
   const [active, setActive] = useState(1)
   const { suppliers, useInitSuppliers } = useSuppliersActions()
   const TABLE_DATA = suppliers.length !== 0 ? suppliers : TABLE_ROWS

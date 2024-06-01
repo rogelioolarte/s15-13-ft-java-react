@@ -8,7 +8,7 @@ import ProductsHeader from './ProductsHeader'
 import { useProductDeleteMutation } from '../../../store/apiSlice.js'
 import { useProductsActions } from '../../../hooks/useProductsActions.js'
 
-export default function ProductsSection() {
+export default function ProductsSection () {
   const TABLE_HEAD = [
     {
       head: 'checkbox',

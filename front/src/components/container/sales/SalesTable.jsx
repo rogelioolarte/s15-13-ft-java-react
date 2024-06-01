@@ -1,86 +1,47 @@
-import { Card, Typography } from '@material-tailwind/react'
 import { useState } from 'react'
-const TABLE_HEAD = ['checkbox', 'Producto', 'Cantidad', 'Proveedor', 'Codigo', 'Precio de Venta']
+import {
+  Checkbox,
+  Typography,
+  IconButton,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem
+} from '@material-tailwind/react'
+import { LuChevronsUpDown } from 'react-icons/lu'
+import { HiOutlineDotsVertical } from 'react-icons/hi'
 
-const TABLE_ROWS = [
-  {
-    producto: 'Producto 6',
-    cantidad: 15,
-    proveedor: 'Proveedor F',
-    codigo: 'F006',
-    precioDeVenta: '$180'
-  },
-  {
-    producto: 'Producto 7',
-    cantidad: 8,
-    proveedor: 'Proveedor G',
-    codigo: 'G007',
-    precioDeVenta: '$220'
-  },
-  {
-    producto: 'Producto 8',
-    cantidad: 25,
-    proveedor: 'Proveedor H',
-    codigo: 'H008',
-    precioDeVenta: '$120'
-  },
-  {
-    producto: 'Producto 9',
-    cantidad: 3,
-    proveedor: 'Proveedor I',
-    codigo: 'I009',
-    precioDeVenta: '$350'
-  },
-  {
-    producto: 'Producto 10',
-    cantidad: 18,
-    proveedor: 'Proveedor J',
-    codigo: 'J010',
-    precioDeVenta: '$280'
-  },
-  {
-    producto: 'Producto 11',
-    cantidad: 11,
-    proveedor: 'Proveedor K',
-    codigo: 'K011',
-    precioDeVenta: '$200'
-  },
-  {
-    producto: 'Producto 12',
-    cantidad: 6,
-    proveedor: 'Proveedor L',
-    codigo: 'L012',
-    precioDeVenta: '$320'
-  },
-  {
-    producto: 'Producto 13',
-    cantidad: 22,
-    proveedor: 'Proveedor M',
-    codigo: 'M013',
-    precioDeVenta: '$140'
-  },
-  {
-    producto: 'Producto 14',
-    cantidad: 9,
-    proveedor: 'Proveedor N',
-    codigo: 'N014',
-    precioDeVenta: '$270'
-  },
-  {
-    producto: 'Producto 15',
-    cantidad: 14,
-    proveedor: 'Proveedor O',
-    codigo: 'O015',
-    precioDeVenta: '$190'
-  }
-]
+function formatProductList (productList) {
+  return productList.map(product => `${product.name} x ${product.quantity}`).join(', ')
+}
 
-export function SalesTable () {
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
+function MenuCustomAnimation ({ handleOpen }) {
+  return (
+    <Menu
+      placement='left'
+      animate={{
+        mount: { x: 0 },
+        unmount: { x: 25 }
+      }}
+    >
+      <MenuHandler>
+        <IconButton className='h-5 rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
+          <HiOutlineDotsVertical />
+        </IconButton>
+      </MenuHandler>
+      <MenuList>
+        <MenuItem>See More</MenuItem>
+      </MenuList>
+    </Menu>
+  )
+}
+
+export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
+  const [open, setOpen] = useState(false)
 
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
-    setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
+    setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
   }
 
   const handleCheckItem = (index) => {
@@ -89,63 +50,122 @@ export function SalesTable () {
     setCheckedItems(newCheckedItems)
   }
 
+  const handleOpen = () => setOpen(!open)
+
   return (
-    <Card className='h-full w-full lg:w-1/2 overflow-auto'>
-      <table className='w-full min-w-max table-auto text-left'>
-        <thead>
-          <tr>
-            {TABLE_HEAD.map((head, index) =>
-              head === 'checkbox'
+    <table className='w-full min-w-max table-auto text-left'>
+      <thead>
+        <tr>
+          {TABLE_HEAD.map(({ head, row }, index) =>
+            <th
+              key={head}
+              className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
+              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
+            >
+              {head === 'checkbox'
                 ? (
-                  <th key={index} className='border-b border-blue-gray-100 bg-secondary-40 p-4'>
-                    <input type='checkbox' onChange={handleCheckAll} checked={checkedItems.every((item) => item)} />
-                  </th>
-                  )
+                  <Checkbox
+                    ripple={false}
+                    className='hover:before:opacity-0'
+                    containerProps={{
+                      className: 'p-0'
+                    }}
+                    checked={checkedItems.every((item) => item)}
+                    onChange={handleCheckAll}
+                  />)
                 : (
-                  <th key={index} className='border-b border-blue-gray-100 bg-secondary-40 p-4'>
-                    <Typography variant='small' color='blue-gray' className='font-normal leading-none opacity-70'>
-                      {head}
-                    </Typography>
-                  </th>
-                  )
-            )}
-          </tr>
-        </thead>
-        <tbody className='bg-primary-30'>
-          {TABLE_ROWS.map(({ producto, cantidad, proveedor, codigo, precioDeVenta }, index) => (
-            <tr key={codigo} className='even:bg-secondary-20'>
-              <td className='p-4'>
-                <input type='checkbox' checked={checkedItems[index]} onChange={() => handleCheckItem(index)} />
+                  <Typography
+                    variant='small'
+                    className='flex text-[#1D2433] font-semibold items-center gap-2 leading-none'
+                  >
+                    {head}{' '}
+                    {(index !== 0 && index !== TABLE_HEAD.length - 1) && (
+                      <LuChevronsUpDown strokeWidth={2} className='h-3 w-4' />
+                    )}
+                  </Typography>)}
+            </th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {TABLE_DATA.map(({ invoiceDate, invoiceNo, customer, productList, taxes, total }, index) => {
+          const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
+          return (
+            <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
+              {/* checked */}
+              <td className={classes}>
+                <Checkbox
+                  id={index}
+                  ripple={false}
+                  className='hover:before:opacity-0'
+                  containerProps={{
+                    className: 'p-0'
+                  }}
+                  checked={checkedItems[index]}
+                  onChange={() => handleCheckItem(index)}
+                />
               </td>
-              <td className='p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {producto}
+              {/* invoiceDate */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  {invoiceDate}
                 </Typography>
               </td>
-              <td className='p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {cantidad}
+              {/* invoiceNo */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  {invoiceNo}
                 </Typography>
               </td>
-              <td className='p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {proveedor}
+              {/* customer */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  {customer}
                 </Typography>
               </td>
-              <td className='p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {codigo}
+              {/* productList */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  {formatProductList(productList)}
                 </Typography>
               </td>
-              <td className='p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                  {precioDeVenta}
+              {/* taxes */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  {taxes}%
                 </Typography>
+              </td>
+              {/* total */}
+              <td className={classes}>
+                <Typography
+                  variant='small'
+                  className='font-normal'
+                >
+                  ${total}
+                </Typography>
+              </td>
+              {/* actions */}
+              <td className={classes}>
+                <MenuCustomAnimation handleOpen={handleOpen} />
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </Card>
+          )
+        })}
+      </tbody>
+    </table>
   )
 }

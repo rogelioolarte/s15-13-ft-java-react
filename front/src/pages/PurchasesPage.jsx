@@ -7,7 +7,7 @@ import PurchasesSection from '../components/container/purchases/PurchasesSection
 
 export const useAppSelector = useSelector
 export const useAppDispatch = useDispatch
-export default function PurchasesPage() {
+export default function PurchasesPage () {
   /* useProtectedRoutes() */
   const dispatch = useAppDispatch()
   const purchases = useAppSelector(state => state.purchases)

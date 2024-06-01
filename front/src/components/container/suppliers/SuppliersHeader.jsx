@@ -1,7 +1,7 @@
 import { Button, Input, Typography } from '@material-tailwind/react'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 
-export default function SuppliersHeader() {
+export default function SuppliersHeader () {
   return (
     <>
       <div className='w-full text-center'>

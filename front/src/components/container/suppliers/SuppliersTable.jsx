@@ -2,7 +2,7 @@ import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function SuppliersTable({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
+export default function SuppliersTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
