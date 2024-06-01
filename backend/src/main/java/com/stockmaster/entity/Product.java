@@ -42,18 +42,10 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @ManyToMany(mappedBy = "product")
-    private List<Purchase> purchase;
 
-
-    public Product(ProductPurchase productPurchase) {
-        this.id = productPurchase.getProduct().getId();
-        this.name = productPurchase.getProduct().getName();
-        this.barcode = productPurchase.getProduct().getBarcode();
-        this.description = productPurchase.getProduct().getDescription();
-        this.salePrice = productPurchase.getProduct().getSalePrice();
-        this.minimal = productPurchase.getProduct().getMinimal();
-        this.stock = productPurchase.getProduct().getStock();
-        this.active = productPurchase.getProduct().isActive();
+    public Product(DtoPurchaseProductResponse dtoPurchaseProductResponse) {
+        this.id = dtoPurchaseProductResponse.id();
     }
+    @ManyToMany(mappedBy="product")
+    private List<Purchase> purchase;
 }

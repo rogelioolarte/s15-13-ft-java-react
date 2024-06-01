@@ -34,13 +34,13 @@ public class PurchaseService {
     @Transactional
     public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
 
-        Set<ProductPurchase> productPurchase = dtoPurchaseResponse.productList().stream().map(ProductPurchase::new).collect(Collectors.toSet());
+        Set<Product> products = dtoPurchaseResponse.productList().stream().map(Product::new).collect(Collectors.toSet());
 
 
         //productPurchase.forEach((f) ->  productPurchaseRepository.save(f));
 
 var suplierdb = supplierService.getReferenceById(dtoPurchaseResponse.supplier());
-        List<Product> products = productPurchase.stream().map(Product::new).toList();
+       // Set<Product> products = productPurchase.//.stream().map(Product::new).collect(Collectors.toSet());
 
         Purchase purchase = Purchase.builder()
                 .bill(dtoPurchaseResponse.bill())
@@ -51,13 +51,13 @@ var suplierdb = supplierService.getReferenceById(dtoPurchaseResponse.supplier())
 
         var purchaseDb = purchaseRepository.save(purchase);
 
-        for (ProductPurchase p : productPurchase) {
+       /* for (ProductPurchase p : productPurchase) {
             Product product = productService.getProductById(p.getProduct().getId());
             //p.setProduct(Product.builder().id(p.getProduct().getId()).build());
             p.setProduct(product);
             p.setPurchase(purchaseDb);
             productPurchaseRepository.save(p);
-        }
+        }*/
 
         return purchaseDb;
     }
