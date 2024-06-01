@@ -79,7 +79,7 @@ CREATE TABLE sales_products (
 	 id_product BIGINT,
     quantity INT,
     discount DECIMAL(18,2),
-    FOREIGN KEY (id_product) REFERENCES products(id),
+    FOREIGN KEY (id_product) REFERENCES product(id),
     FOREIGN KEY (id_sales) REFERENCES sales(id)
 ); 
 
