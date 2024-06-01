@@ -48,7 +48,7 @@ public class CustomerService {
             throw new RequestException("The customer type is null or non-existent");
         }
         Customer customer = customerMapper.customerRequestToPost(customerSavingRequest);
-        customer.setActive(customerSavingRequest.isActive());
+
         try {
             return customerMapper.toCustomerResponse(customerRepository.save(customer));
         } catch (DataIntegrityViolationException e) {

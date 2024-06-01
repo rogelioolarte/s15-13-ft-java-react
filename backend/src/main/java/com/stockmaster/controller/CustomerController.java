@@ -62,8 +62,8 @@ public class CustomerController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        customerService.save(customer);  // Aquí se lanzará la CustomRequestException si hay un error
-        return ResponseEntity.ok(Map.of("message", "Customer saved successfully"));
+         // Aquí se lanzará la CustomRequestException si hay un error
+        return ResponseEntity.ok( customerService.save(customer) );
     }
     //Metodos Put
     @PutMapping("/updatecustomer")

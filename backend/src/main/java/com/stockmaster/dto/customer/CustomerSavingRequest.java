@@ -25,5 +25,5 @@ public class CustomerSavingRequest {
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
-    private boolean active = true;
+
 }
