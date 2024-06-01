@@ -44,7 +44,7 @@ var suplierdb = supplierService.getReferenceById(dtoPurchaseResponse.supplier())
 
         Purchase purchase = Purchase.builder()
                 .bill(dtoPurchaseResponse.bill())
-                .product(products)
+               // .product(products)
                 .date(dtoPurchaseResponse.date())
                 .idSupplier(suplierdb)
                 .build();
