@@ -2,7 +2,6 @@ package com.stockmaster.service.sales;
 
 import com.stockmaster.dto.product.ProductSavingRequest;
 import com.stockmaster.dto.sales.SalesDateResponse;
-import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Taxes;
@@ -82,6 +81,12 @@ public class SalesService {
                 .orElseThrow(() -> new RequestException("Customer not found"));
         Taxes tax = taxesRepository.findById(request.getId_taxes())
                 .orElseThrow(()-> new RequestException("Tax not found"));
+
+        BigDecimal totalGeneral = BigDecimal.ZERO;
+
+        for (ProductSavingRequest productRequest : request.getProducts()){
+            totalGeneral = totalGeneral.add(productRequest.getTotalProduct());
+        }
 
         Sales sales = Sales.builder()
                 .customer(customer)

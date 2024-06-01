@@ -32,14 +32,6 @@ public class Sales {
     @ManyToOne
     @JoinColumn(name = "id_customer", nullable = false, referencedColumnName = "id")
     private Customer customer;
-    /*
-    @ManyToMany
-    @JoinTable(
-            name = "sales_taxes",
-            joinColumns = @JoinColumn(name = "sales_id"),
-            inverseJoinColumns = @JoinColumn(name = "tax_id")
-    )
-    private Set<Taxes> taxes;*/
 
     @ManyToOne
     @JoinColumn(name = "id_taxes", nullable = false)
