@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
-import PaginationGroup from '../pure/pagination/PaginationGroup.jsx'
-import SimplePagination from '../pure/pagination/SimplePagination.jsx'
-import ModalConfirmationDelete from '../pure/ModalConfirmationDelete.jsx'
-import ProductsTable from './ProductsTable.jsx'
-import ProductsHeader from './ProductsHeader.jsx'
-import { useProductDeleteMutation } from '../../store/apiSlice.js'
-import { useProductsActions } from '../../hooks/useProductsActions.js'
+import PaginationGroup from '../../pure/pagination/PaginationGroup'
+import SimplePagination from '../../pure/pagination/SimplePagination'
+import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
+import ProductsTable from './ProductsTable'
+import ProductsHeader from './ProductsHeader'
+import { useProductDeleteMutation } from '../../../store/apiSlice.js'
+import { useProductsActions } from '../../../hooks/useProductsActions.js'
 
-export default function ProductsSection () {
+export default function ProductsSection() {
   const TABLE_HEAD = [
     {
       head: 'checkbox',

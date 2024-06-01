@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
-import SimplePagination from '../pure/pagination/SimplePagination'
-import PaginationGroup from '../pure/pagination/PaginationGroup'
-import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
-import { useGetAllSuppliersQuery } from '../../store/apiSlice'
+import SimplePagination from '../../pure/pagination/SimplePagination'
+import PaginationGroup from '../../pure/pagination/PaginationGroup'
+import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
+import { useGetAllSuppliersQuery } from '../../../store/apiSlice.js'
 import SuppliersTable from './SuppliersTable'
-import SuppliersHeader from './SuppliersHeader.jsx'
+import SuppliersHeader from './SuppliersHeader'
 
 const TABLE_HEAD = ['checkbox', 'Supplier Name', 'Company Code N°', '']
 
@@ -48,7 +48,7 @@ const TABLE_ROWS = [
   }
 ]
 
-export default function SuppliersSection () {
+export default function SuppliersSection() {
   const [active, setActive] = useState(1)
   const { suppliers, useInitSuppliers } = useSuppliersActions()
   const TABLE_DATA = suppliers.length !== 0 ? suppliers : TABLE_ROWS

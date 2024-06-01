@@ -1,8 +1,8 @@
 import { Button, Typography } from '@material-tailwind/react'
-import { ProductsFormModal } from './ProductsFormModal.jsx'
-import SearchTables from '../pure/SearchTables.jsx'
+import { ProductsFormModal } from './ProductsFormModal'
+import SearchTables from '../../pure/SearchTables'
 
-export default function ProductsHeader ({ onSearch, productToEdit, selectedItems, setIsDeleteConfirmationOpen }) {
+export default function ProductsHeader({ onSearch, productToEdit, selectedItems, setIsDeleteConfirmationOpen }) {
   return (
     <>
       <div className='w-full text-center'>

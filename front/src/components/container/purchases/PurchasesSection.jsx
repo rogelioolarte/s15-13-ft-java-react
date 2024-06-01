@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { LuChevronsUpDown } from 'react-icons/lu'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
@@ -13,76 +13,67 @@ import {
   Menu,
   MenuHandler,
   MenuList,
-  MenuItem,
-  Button
+  MenuItem
 } from '@material-tailwind/react'
-import SimplePagination from '../pure/pagination/SimplePagination'
-import PaginationGroup from '../pure/pagination/PaginationGroup'
-import ModalConfirmationDelete from '../pure/ModalConfirmationDelete'
-import { useSalesActions } from '../../hooks/useSalesActions'
-import { useGetAllSalesMutation } from '../../store/apiSlice'
-import { toast } from 'sonner'
+import SimplePagination from '../../pure/pagination/SimplePagination'
+import PaginationGroup from '../../pure/pagination/PaginationGroup'
 
-const TABLE_HEAD = ['Invoice Date', 'Invoice No.', 'Customer', 'Products', 'Taxes', 'Total Price', '']
+const TABLE_HEAD = ['Customer', 'Product', 'Code', 'Sale Date', 'Invoice No.', 'Invoice Date', 'Total Sold', 'TOTAL', '']
 
 const TABLE_ROWS = [
   {
+    name: 'John Michael',
+    product: 'john@creative-tim.com',
+    code: 'Manager',
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
     invoiceDate: '24/04/18',
-    invoiceNo: 'XXXXXX',
-    customer: 'John Michael',
-    productList: [{ name: 'Soap Mr.White', quantity: 10, price: 2, discount: 0 },
-      { name: 'Sponge Lange', quantity: 2, price: 5, discount: 0.5 }],
-    taxes: 1.8,
-    total: 25.45
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
+    name: 'Alexa Liras',
+    product: 'alexa@creative-tim.com',
+    code: 'Programator',
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
     invoiceDate: '24/04/18',
-    invoiceNo: 'XXXXXX',
-    customer: 'John Jackson',
-    productList: [{ name: 'Meat 1kg', quantity: 1, price: 15, discount: 0 },
-      { name: 'Tomato 1Kg', quantity: 1, price: 5, discount: 0.1 }],
-    taxes: 1.8,
-    total: 19.85
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    invoiceDate: 'dd/MM/YYYY',
-    invoiceNo: 'XXXXXX',
-    customer: 'XXXXXX',
-    productList: [{ name: 'XXXXXX', quantity: 0, price: 0, discount: 0 },
-      { name: 'XXXXXX', quantity: 0, price: 0, discount: 0 }],
-    taxes: 0,
-    total: 0
+    name: 'Laurent Perrier',
+    product: 'laurent@creative-tim.com',
+    code: 'Executive',
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    invoiceDate: 'dd/MM/YYYY',
-    invoiceNo: 'XXXXXX',
-    customer: 'XXXXXX',
-    productList: [{ name: 'XXXXXX', quantity: 0, price: 0, discount: 0 },
-      { name: 'XXXXXX', quantity: 0, price: 0, discount: 0 }],
-    taxes: 0,
-    total: 0
+    name: 'Michael Levi',
+    product: 'michael@creative-tim.com',
+    code: 'Programator',
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   },
   {
-    invoiceDate: 'dd/MM/YYYY',
-    invoiceNo: 'XXXXXX',
-    customer: 'XXXXXX',
-    productList: [{ name: 'XXXXXX', quantity: 0, price: 0, discount: 0 },
-      { name: 'XXXXXX', quantity: 0, price: 0, discount: 0 }],
-    taxes: 0,
-    total: 0
-  },
-  {
-    invoiceDate: 'dd/MM/YYYY',
-    invoiceNo: 'XXXXXX',
-    customer: 'XXXXXX',
-    productList: [{ name: 'XXXXXX', quantity: 0, price: 0, discount: 0 },
-      { name: 'XXXXXX', quantity: 0, price: 0, discount: 0 }],
-    taxes: 0,
-    total: 0
+    name: 'Richard Gran',
+    product: 'richard@creative-tim.com',
+    code: 'Manager',
+    saleDate: '23/04/18',
+    invoiceNo: 'XX',
+    invoiceDate: '24/04/18',
+    totalSold: '$2000',
+    total: '$2000'
   }
 ]
 
-function MenuCustomAnimation ({ handleOpen }) {
+function MenuCustomAnimation() {
   return (
     <Menu
       placement='left'
@@ -97,53 +88,32 @@ function MenuCustomAnimation ({ handleOpen }) {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>See More</MenuItem>
+        <MenuItem>Delete</MenuItem>
+        <MenuItem>Edit</MenuItem>
+        <MenuItem>Order from supplier</MenuItem>
       </MenuList>
     </Menu>
   )
 }
 
-function formatProductList (productList) {
-  return productList.map(product => `${product.name} x ${product.quantity}`).join(', ')
-}
-
-export default function SalesSection () {
+export default function PurchasesSection({ purchases }) {
+  console.log('Purchases:', purchases)
   const [active, setActive] = useState(1)
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(!open)
-  const { sales, useInitSales } = useSalesActions()
-  const TABLE_DATA = sales.length !== 0 ? sales : TABLE_ROWS
-  const defaultDate = { from: 'first', to: 'last' }
-  const { data: salesList, isLoading, isSuccess, isError, error } = useGetAllSalesMutation(defaultDate)
-
-  useEffect(() => {
-    if (isLoading) {
-      console.log('Loading - Poner un espiner en la tabla')
-    } else if (isSuccess) {
-      useInitSales(salesList)
-    } else if (isError) {
-      toast.error(`Error while conecting: ${error}`)
-    }
-  }, [])
-
   return (
-    <main className='w-full h-[100%] flex justify-center overflow-hidden p-2'>
+    <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
-        <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-3 m-0 mb-4'>
+        <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-8 m-0 mb-4'>
           <div className='w-full text-center'>
             <Typography variant='h1' color='black'>
-              Sales
+              Purchases
             </Typography>
           </div>
-          <div className='gap-10 flex justify-between'>
-            <div className='w-full md:w-72'>
-              <Input
-                className='bg-white'
-                label='Search by Costumer'
-                icon={<FaMagnifyingGlass className='h-5 w-5' />}
-              />
-            </div>
-            <Button className='bg-secondary-40 py-4 text-gray-900'>Add New Sale</Button>
+          <div className='w-full md:w-72'>
+            <Input
+              className='bg-white'
+              label='Search'
+              icon={<FaMagnifyingGlass className='h-5 w-5' />}
+            />
           </div>
         </CardHeader>
         <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
@@ -169,20 +139,20 @@ export default function SalesSection () {
               </tr>
             </thead>
             <tbody>
-              {TABLE_DATA.map(
-                ({ invoiceDate, invoiceNo, customer, productList, taxes, total }, index) => {
-                  const classes = 'p-2 text-[#1D2433]'
+              {TABLE_ROWS.map(
+                ({ name, product, code, saleDate, invoiceNo, invoiceDate, totalSold, total }, index) => {
+                  const classes = 'px-4 text-[#1D2433]'
                   return (
                     <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                       {/* name */}
                       <td className={classes}>
-                        <div className='flex items-center gap-2'>
+                        <div className='flex items-center gap-3'>
                           <div className='flex flex-col'>
                             <Typography
                               variant='small'
                               className='font-normal'
                             >
-                              {invoiceDate}
+                              {name}
                             </Typography>
                           </div>
                         </div>
@@ -193,7 +163,7 @@ export default function SalesSection () {
                           variant='small'
                           className='font-normal'
                         >
-                          {invoiceNo}
+                          {product}
                         </Typography>
                       </td>
                       {/* code */}
@@ -202,7 +172,7 @@ export default function SalesSection () {
                           variant='small'
                           className='font-normal'
                         >
-                          {customer}
+                          {code}
                         </Typography>
                       </td>
                       {/* saleDate */}
@@ -211,7 +181,7 @@ export default function SalesSection () {
                           variant='small'
                           className='font-normal'
                         >
-                          {formatProductList(productList)}
+                          {saleDate}
                         </Typography>
                       </td>
                       {/* invoiceNo */}
@@ -220,7 +190,25 @@ export default function SalesSection () {
                           variant='small'
                           className='font-normal'
                         >
-                          {taxes}%
+                          {invoiceNo}
+                        </Typography>
+                      </td>
+                      {/* invoiceDate */}
+                      <td className={classes}>
+                        <Typography
+                          variant='small'
+                          className='font-normal'
+                        >
+                          {invoiceDate}
+                        </Typography>
+                      </td>
+                      {/* totalSold */}
+                      <td className={classes}>
+                        <Typography
+                          variant='small'
+                          className='font-normal'
+                        >
+                          {totalSold}
                         </Typography>
                       </td>
                       {/* total */}
@@ -229,12 +217,12 @@ export default function SalesSection () {
                           variant='small'
                           className='font-normal'
                         >
-                          ${total}
+                          {total}
                         </Typography>
                       </td>
                       {/* edit */}
                       <td className={classes}>
-                        <MenuCustomAnimation handleOpen={handleOpen} />
+                        <MenuCustomAnimation />
                       </td>
                     </tr>
                   )
@@ -243,12 +231,11 @@ export default function SalesSection () {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between py-1 px-3'>
+        <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between p-4'>
           <PaginationGroup active={active} setActive={setActive} />
           <SimplePagination active={active} setActive={setActive} />
         </CardFooter>
       </Card>
-      <ModalConfirmationDelete handleOpen={handleOpen} open={open} />
     </main>
   )
 }

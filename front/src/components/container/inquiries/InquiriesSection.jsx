@@ -15,8 +15,9 @@ import {
   MenuList,
   MenuItem
 } from '@material-tailwind/react'
-import SimplePagination from '../pure/pagination/SimplePagination'
-import PaginationGroup from '../pure/pagination/PaginationGroup'
+import SimplePagination from '../../pure/pagination/SimplePagination'
+import PaginationGroup from '../../pure/pagination/PaginationGroup'
+import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 
 const TABLE_HEAD = ['Customer', 'Product', 'Code', 'Sale Date', 'Invoice No.', 'Invoice Date', 'Total Sold', 'TOTAL', '']
 
@@ -73,7 +74,7 @@ const TABLE_ROWS = [
   }
 ]
 
-function MenuCustomAnimation () {
+function MenuCustomAnimation({ handleOpen }) {
   return (
     <Menu
       placement='left'
@@ -88,7 +89,7 @@ function MenuCustomAnimation () {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Delete</MenuItem>
+        <MenuItem onClick={() => handleOpen('sm')}>Delete</MenuItem>
         <MenuItem>Edit</MenuItem>
         <MenuItem>Order from supplier</MenuItem>
       </MenuList>
@@ -96,16 +97,18 @@ function MenuCustomAnimation () {
   )
 }
 
-export default function PurchasesSection ({ purchases }) {
-  console.log('Purchases:', purchases)
+export default function InquiriesSection() {
   const [active, setActive] = useState(1)
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(!open)
+
   return (
     <main className='w-full flex justify-center overflow-hidden p-8'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-8 m-0 mb-4'>
           <div className='w-full text-center'>
             <Typography variant='h1' color='black'>
-              Purchases
+              Inquiries
             </Typography>
           </div>
           <div className='w-full md:w-72'>
@@ -141,7 +144,7 @@ export default function PurchasesSection ({ purchases }) {
             <tbody>
               {TABLE_ROWS.map(
                 ({ name, product, code, saleDate, invoiceNo, invoiceDate, totalSold, total }, index) => {
-                  const classes = 'px-4 text-[#1D2433]'
+                  const classes = 'p-4 text-[#1D2433]'
                   return (
                     <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                       {/* name */}
@@ -222,7 +225,7 @@ export default function PurchasesSection ({ purchases }) {
                       </td>
                       {/* edit */}
                       <td className={classes}>
-                        <MenuCustomAnimation />
+                        <MenuCustomAnimation handleOpen={handleOpen} />
                       </td>
                     </tr>
                   )
@@ -236,6 +239,7 @@ export default function PurchasesSection ({ purchases }) {
           <SimplePagination active={active} setActive={setActive} />
         </CardFooter>
       </Card>
+      <ModalConfirmationDelete handleOpen={handleOpen} open={open} />
     </main>
   )
 }
