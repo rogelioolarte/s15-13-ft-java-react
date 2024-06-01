@@ -22,10 +22,10 @@ public class Supplier {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(name = "company_code", unique = true, nullable = false)
+    @Column(name = "companycode", unique = true, nullable = false)
     private String companyCode;
 
-    @Column(nullable = false)
+    @Column
     private boolean active = true;
 
     @ManyToMany
