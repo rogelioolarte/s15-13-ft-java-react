@@ -42,10 +42,13 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-
-    public Product(DtoPurchaseProductResponse dtoPurchaseProductResponse) {
-        this.id = dtoPurchaseProductResponse.id();
-    }
     @ManyToMany(mappedBy="product")
     private List<Purchase> purchase;
+
+
+    public Product(DtoPurchaseProductResponse dtoPurchaseProductResponse) {
+
+        this.id = dtoPurchaseProductResponse.id();
+    }
+
 }

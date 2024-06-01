@@ -17,6 +17,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "purchase")
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +43,9 @@ public class Purchase {
     )
     private List<Product> product;
 
+
+    @ElementCollection
+    @CollectionTable(name = "products_purchase", joinColumns = @JoinColumn(name = "id_purchase"))
+    private List<PurchaseProduct> productsPurchased;
 
 }

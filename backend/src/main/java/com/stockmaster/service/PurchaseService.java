@@ -1,10 +1,7 @@
 package com.stockmaster.service;
 
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
-import com.stockmaster.entity.Product;
-import com.stockmaster.entity.ProductPurchase;
-import com.stockmaster.entity.Purchase;
-import com.stockmaster.entity.Supplier;
+import com.stockmaster.entity.*;
 import com.stockmaster.repository.ProductPurchaseRepository;
 import com.stockmaster.repository.PurchaseRepository;
 import com.stockmaster.repository.SupplierRepository;
@@ -37,29 +34,7 @@ public class PurchaseService {
         Set<Product> products = dtoPurchaseResponse.productList().stream().map(Product::new).collect(Collectors.toSet());
 
 
-        //productPurchase.forEach((f) ->  productPurchaseRepository.save(f));
-
-var suplierdb = supplierService.getReferenceById(dtoPurchaseResponse.supplier());
-       // Set<Product> products = productPurchase.//.stream().map(Product::new).collect(Collectors.toSet());
-
-        Purchase purchase = Purchase.builder()
-                .bill(dtoPurchaseResponse.bill())
-               // .product(products)
-                .date(dtoPurchaseResponse.date())
-                .idSupplier(suplierdb)
-                .build();
-
-        var purchaseDb = purchaseRepository.save(purchase);
-
-       /* for (ProductPurchase p : productPurchase) {
-            Product product = productService.getProductById(p.getProduct().getId());
-            //p.setProduct(Product.builder().id(p.getProduct().getId()).build());
-            p.setProduct(product);
-            p.setPurchase(purchaseDb);
-            productPurchaseRepository.save(p);
-        }*/
-
-        return purchaseDb;
+return new Purchase();
     }
 
 }

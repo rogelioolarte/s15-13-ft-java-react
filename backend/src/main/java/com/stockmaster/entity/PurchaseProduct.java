@@ -11,18 +11,23 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="purchaseproduct")
+@Table(name="products_purchase")
 public class PurchaseProduct {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private PurchaseProductId id;
 
-    private Long idProduct;
 
-    private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "purchase_id")
+    @MapsId("productId")
+    @JoinColumn(name = "id_product")
+    private Product product;
+
+    @ManyToOne
+    @MapsId("purchaseId")
+    @JoinColumn(name = "id_purchase")
     private Purchase purchase;
+
+    private int quantity;
 
 }
