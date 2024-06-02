@@ -14,7 +14,7 @@ export default function useProtectedRoutes () {
     if ((location.pathname === '/login' || location.pathname === '/home') && useCheckRealUser(user)) {
       navigate('/dashboard')
     } else if (!(location.pathname === '/login' || location.pathname === '/home') &&
-        !useCheckRealUser(user)) {
+      !useCheckRealUser(user)) {
       navigate('/login')
     }
   }, [user])
