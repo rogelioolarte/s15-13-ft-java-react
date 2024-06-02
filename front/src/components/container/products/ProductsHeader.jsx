@@ -6,7 +6,7 @@ export default function ProductsHeader ({ onSearch, productToEdit, selectedItems
   return (
     <>
       <div className='w-full text-center'>
-        <Typography variant='h2' color='black'>
+        <Typography variant='h2' color='black' className='font-[Inter]'>
           Products
         </Typography>
       </div>

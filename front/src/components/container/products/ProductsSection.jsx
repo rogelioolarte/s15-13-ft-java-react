@@ -37,6 +37,10 @@ export default function ProductsSection () {
     {
       head: 'Sell Price',
       row: 'salePrice'
+    },
+    {
+      head: '',
+      row: 'actions'
     }
   ]
 
@@ -155,6 +159,7 @@ export default function ProductsSection () {
   const { useDeleteProductById } = useProductsActions()
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
+  const [open, setOpen] = useState(false)
   const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_DATA.length).fill(false))
@@ -187,6 +192,8 @@ export default function ProductsSection () {
       })
     }
   }
+
+  const handleOpen = () => setOpen(!open)
 
   const handleSearch = (searchTerm) => {
     const filteredProducts = TABLE_DATA.filter(product =>
@@ -234,8 +241,7 @@ export default function ProductsSection () {
   })
 
   const visibleProducts = sortedRows.slice(startIndex, endIndex)
-  const itemsPerPage = 7
-  const totalPages = Math.ceil(TABLE_DATA.length / itemsPerPage)
+  const totalPages = Math.ceil(TABLE_DATA.length / productsPerPage)
 
   return (
     <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
@@ -244,7 +250,7 @@ export default function ProductsSection () {
           <ProductsHeader onSearch={handleSearch} productToEdit={productToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
         </CardHeader>
         <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
-          <ProductsTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
+          <ProductsTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} handleOpen={handleOpen} />
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />

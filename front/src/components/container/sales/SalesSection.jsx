@@ -106,6 +106,7 @@ export default function SalesSection () {
   const { data: salesList, isLoading, isSuccess, isError, error } = useGetAllSalesMutation(defaultDate)
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
+  const [open, setOpen] = useState(false)
   const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
   const [checkedItems, setCheckedItems] = useState(new Array(TABLE_DATA.length).fill(false))
   // const selectedItems = checkedItems.filter((value) => value === true)
@@ -119,6 +120,8 @@ export default function SalesSection () {
       toast.error(`Error while conecting: ${error}`)
     }
   }, [])
+
+  const handleOpen = () => setOpen(!open)
 
   const handleSearch = (searchTerm) => {
     const filteredProducts = TABLE_DATA.filter(product =>
@@ -172,7 +175,7 @@ export default function SalesSection () {
           <SalesHeader onSearch={handleSearch} />
         </CardHeader>
         <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
-          <SalesTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />
+          <SalesTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} handleOpen={handleOpen} />
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />

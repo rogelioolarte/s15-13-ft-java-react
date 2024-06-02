@@ -7,7 +7,7 @@ import {
   MenuItem
 } from '@material-tailwind/react'
 
-export default function MenuActionsTable () {
+export default function MenuActionsTable ({ handleOpen }) {
   return (
     <Menu
       placement='left'
@@ -17,14 +17,15 @@ export default function MenuActionsTable () {
       }}
     >
       <MenuHandler>
-        <IconButton className='rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
+        <IconButton
+          className='h-5 rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'
+          onClick={() => handleOpen()}
+        >
           <HiOutlineDotsVertical />
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>New</MenuItem>
-        <MenuItem>Delete</MenuItem>
-        <MenuItem>Modify</MenuItem>
+        <MenuItem>See More</MenuItem>
       </MenuList>
     </Menu>
   )

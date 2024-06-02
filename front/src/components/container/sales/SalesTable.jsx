@@ -1,44 +1,12 @@
-import { useState } from 'react'
-import {
-  Checkbox,
-  Typography,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem
-} from '@material-tailwind/react'
+import MenuActionsTable from '../../pure/MenuActionsTable'
+import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
-import { HiOutlineDotsVertical } from 'react-icons/hi'
 
 function formatProductList (productList) {
   return productList.map(product => `${product.name} x ${product.quantity}`).join(', ')
 }
 
-function MenuCustomAnimation ({ handleOpen }) {
-  return (
-    <Menu
-      placement='left'
-      animate={{
-        mount: { x: 0 },
-        unmount: { x: 25 }
-      }}
-    >
-      <MenuHandler>
-        <IconButton className='h-5 rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'>
-          <HiOutlineDotsVertical />
-        </IconButton>
-      </MenuHandler>
-      <MenuList>
-        <MenuItem>See More</MenuItem>
-      </MenuList>
-    </Menu>
-  )
-}
-
-export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
-  const [open, setOpen] = useState(false)
-
+export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
@@ -49,8 +17,6 @@ export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedIt
     newCheckedItems[index] = !newCheckedItems[index]
     setCheckedItems(newCheckedItems)
   }
-
-  const handleOpen = () => setOpen(!open)
 
   return (
     <table className='w-full min-w-max table-auto text-left'>
@@ -160,7 +126,7 @@ export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedIt
               </td>
               {/* actions */}
               <td className={classes}>
-                <MenuCustomAnimation handleOpen={handleOpen} />
+                <MenuActionsTable handleOpen={handleOpen} />
               </td>
             </tr>
           )

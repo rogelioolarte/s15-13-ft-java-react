@@ -13,6 +13,8 @@ export default function SearchTables ({ onSearch }) {
 
   return (
     <Input
+      id='search-input'
+      name='search'
       className='bg-white'
       label='Search'
       icon={<FaMagnifyingGlass className='h-5 w-5' />}

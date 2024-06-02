@@ -2,10 +2,10 @@ import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function SuppliersTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, setCheckedItems }) {
+export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
-    setCheckedItems(new Array(TABLE_ROWS.length).fill(!allChecked))
+    setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
   }
 
   const handleCheckItem = (index) => {
@@ -18,10 +18,11 @@ export default function SuppliersTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, 
     <table className='w-full min-w-max table-auto text-left'>
       <thead>
         <tr>
-          {TABLE_HEAD.map((head, index) =>
+          {TABLE_HEAD.map(({ head, row }, index) =>
             <th
               key={head}
-              className='first:flex items-center last:w-10 h-12 first:cursor-default last:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9] last:hover:bg-[#F1F3F9]'
+              className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
+              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
             >
               {head === 'checkbox'
                 ? (
@@ -48,40 +49,32 @@ export default function SuppliersTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, 
         </tr>
       </thead>
       <tbody>
-        {TABLE_ROWS.map(
+        {TABLE_DATA.map(
           ({ id, name, cuit }, index) => {
-            const classes = 'px-4 py-1 text-[#1D2433]'
+            const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
-              <tr key={id} className='even:bg-[#F8F9FC] odd:bg-white'>
+              <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
                 {/* checked */}
                 <td className={classes}>
-                  <div className='flex items-center gap-3'>
-                    <div className='flex flex-col'>
-                      <Checkbox
-                        id={id}
-                        ripple={false}
-                        className='hover:before:opacity-0'
-                        containerProps={{
-                          className: 'p-0'
-                        }}
-                        checked={checkedItems[index]}
-                        onChange={() => handleCheckItem(index)}
-                      />
-                    </div>
-                  </div>
+                  <Checkbox
+                    id={id}
+                    ripple={false}
+                    className='hover:before:opacity-0'
+                    containerProps={{
+                      className: 'p-0'
+                    }}
+                    checked={checkedItems[index]}
+                    onChange={() => handleCheckItem(index)}
+                  />
                 </td>
                 {/* name */}
                 <td className={classes}>
-                  <div className='flex items-center gap-3'>
-                    <div className='flex flex-col'>
-                      <Typography
-                        variant='small'
-                        className='font-normal'
-                      >
-                        {name}
-                      </Typography>
-                    </div>
-                  </div>
+                  <Typography
+                    variant='small'
+                    className='font-normal'
+                  >
+                    {name}
+                  </Typography>
                 </td>
                 {/* cuit */}
                 <td className={classes}>
@@ -93,8 +86,8 @@ export default function SuppliersTable ({ TABLE_ROWS, TABLE_HEAD, checkedItems, 
                   </Typography>
                 </td>
                 {/* actions */}
-                <td className={classes + ' text-center'}>
-                  <MenuActionsTable />
+                <td className={classes}>
+                  <MenuActionsTable handleOpen={handleOpen} />
                 </td>
               </tr>
             )

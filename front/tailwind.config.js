@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 const withMT = require('@material-tailwind/react/utils/withMT')
-export default withMT({
-  content: ['./index.html', './src/**'],
+
+module.exports = withMT({
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -22,13 +23,16 @@ export default withMT({
           90: '#2E90FA90'
         },
         warning: {
-          DEFAULT: '#FBB03B',
-          20: '#FBB03B20',
-          40: '#FBB03B40',
-          60: '#FBB03B60',
-          80: '#FBB03B80',
-          90: '#FBB03B90'
+          DEFAULT: '#8D8543',
+          20: '#8D854320',
+          40: '#8D854340',
+          60: '#8D854360',
+          80: '#8D854380',
+          90: '#8D854390'
         }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif']
       }
     }
   },
