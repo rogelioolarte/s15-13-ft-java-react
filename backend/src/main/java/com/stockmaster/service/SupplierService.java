@@ -57,7 +57,7 @@ public class SupplierService {
     public SupplierResponseDTO createSupplier(SupplierRequestDTO supplierRequestDTO) {
       //  Supplier supplier = mapToEntity(supplierRequestDTO);
       //  supplier = supplierRepository.save(new Supplier(supplier));
-        return mapToResponseDTO(supplierRepository.save(new Supplier(null,supplierRequestDTO.getName(),supplierRequestDTO.getCompanyCode(),true,null)));
+        return mapToResponseDTO(supplierRepository.save(new Supplier(null,supplierRequestDTO.getName(),supplierRequestDTO.getCompanyCode(),true,null,null)));
     }
 
     public SupplierResponseDTO updateSupplier(Long id, SupplierRequestDTO supplierRequestDTO) {

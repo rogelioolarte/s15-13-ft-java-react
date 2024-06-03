@@ -42,7 +42,7 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @ManyToMany(mappedBy="product")
+    @ManyToMany(mappedBy="products")
     private List<Purchase> purchase;
 
 

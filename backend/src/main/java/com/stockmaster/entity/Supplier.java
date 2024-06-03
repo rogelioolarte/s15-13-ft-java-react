@@ -17,6 +17,7 @@ public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -27,12 +28,20 @@ public class Supplier {
 
     @Column
     private boolean active = true;
+    /*
+        @ManyToMany
+        @JoinTable(name = "supplier_product",
+                joinColumns = @JoinColumn(name = "supplier_id"),
+                inverseJoinColumns = @JoinColumn(name = "supplier_product_id"))
+        private List<SupplierProduct> products;
 
-    @ManyToMany
-    @JoinTable(name = "supplier_product",
-            joinColumns = @JoinColumn(name = "supplier_id"),
-            inverseJoinColumns = @JoinColumn(name = "supplier_product_id"))
+        @OneToMany(mappedBy = "supplier")
+        private List<Purchase> purchases;*/
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<SupplierProduct> products;
+
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    private List<Purchase> purchases;
 
     public boolean isActive() {
         return active;

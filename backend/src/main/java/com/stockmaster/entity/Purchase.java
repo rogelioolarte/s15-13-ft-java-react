@@ -21,6 +21,7 @@ import java.util.Set;
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     private String bill;
@@ -29,19 +30,19 @@ public class Purchase {
     private Date date = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "suplier_id", referencedColumnName = "id")
-    private Supplier idSupplier;
+    @JoinColumn(name = "id_supplier", referencedColumnName = "id")
+    private Supplier supplier;
 
     private BigDecimal total;
 
     //@NotFound(action = NotFoundAction.IGNORE)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "products_purchase",
-            joinColumns = @JoinColumn(name = "id_purchase" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id")
+            name = "purchase_products",
+            joinColumns = @JoinColumn(name = "purchase_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    private List<Product> product;
+    private List<Product> products;
 
 
     @ElementCollection

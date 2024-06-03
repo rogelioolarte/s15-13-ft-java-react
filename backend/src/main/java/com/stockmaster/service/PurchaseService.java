@@ -5,10 +5,12 @@ import com.stockmaster.entity.*;
 import com.stockmaster.repository.ProductPurchaseRepository;
 import com.stockmaster.repository.PurchaseRepository;
 import com.stockmaster.repository.SupplierRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,20 +23,26 @@ public class PurchaseService {
     private PurchaseRepository purchaseRepository;
 
     @Autowired
-    private ProductPurchaseRepository productPurchaseRepository;
+    private SupplierRepository  supplierRepository ;
 
-    @Autowired
-    private ProductService productService;
-    //getSupplierById
-    @Autowired
-    private SupplierRepository supplierService;
     @Transactional
     public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
 
-        Set<Product> products = dtoPurchaseResponse.productList().stream().map(Product::new).collect(Collectors.toSet());
+        List<PurchaseProduct> products = dtoPurchaseResponse.productList().stream().map(PurchaseProduct::new).toList();
 
+        BigDecimal suma = new BigDecimal(0 );
+               // products.stream().map(p ->suma.add(p.getProduct().getSalePrice()) );
 
-return new Purchase();
+                Supplier supplier = supplierRepository.findById(dtoPurchaseResponse.supplier()).orElseThrow(()-> new EntityNotFoundException("no existe el supplier"));
+
+        Purchase purchase = Purchase.builder()
+                .supplier(supplier)
+                .date(dtoPurchaseResponse.date())
+                .bill(dtoPurchaseResponse.bill())
+                .productsPurchased(products)
+                .total(suma)
+                .build();
+        return purchaseRepository.save(purchase);
     }
 
 }
