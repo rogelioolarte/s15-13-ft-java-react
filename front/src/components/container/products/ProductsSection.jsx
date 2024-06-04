@@ -1,168 +1,184 @@
 import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
 import PaginationGroup from '../../pure/pagination/PaginationGroup'
 import SimplePagination from '../../pure/pagination/SimplePagination'
 import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import ProductsTable from './ProductsTable'
 import ProductsHeader from './ProductsHeader'
-import { useProductDeleteMutation } from '../../../store/apiSlice.js'
 import { useProductsActions } from '../../../hooks/useProductsActions.js'
+import { useGetAllProductsQuery, useProductDeleteMutation } from '../../../store/apiSlice.js'
+
+const TABLE_HEAD = [
+  {
+    head: 'checkbox',
+    row: 'checkbox'
+  },
+  {
+    head: 'Product',
+    row: 'name'
+  },
+  {
+    head: 'Code',
+    row: 'barcode'
+  },
+  {
+    head: 'Description',
+    row: 'description'
+  },
+  {
+    head: 'Sell Price',
+    row: 'salePrice'
+  },
+  {
+    head: 'Minimal Stock',
+    row: 'minimal'
+  },
+  {
+    head: 'Stock',
+    row: 'stock'
+  },
+  {
+    head: '',
+    row: 'actions'
+  }
+]
+const TABLE_ROWS = [
+  {
+    id: '1',
+    name: 'Producto 1',
+    barcode: 'F006',
+    description: 'La descripcion',
+    salePrice: 180,
+    minimal: 15,
+    stock: 3
+  },
+  {
+    id: '2',
+    name: 'Producto 2',
+    barcode: 'G007',
+    description: 'La descripcion',
+    salePrice: 220,
+    minimal: 8,
+    stock: 3
+  },
+  {
+    id: '3',
+    name: 'Producto 3',
+    barcode: 'H008',
+    description: 'La descripcion',
+    salePrice: 120,
+    minimal: 25,
+    stock: 3
+  },
+  {
+    id: '4',
+    name: 'Producto 4',
+    barcode: 'A009',
+    description: 'La descripcion',
+    salePrice: 350,
+    minimal: 30,
+    stock: 3
+  },
+  {
+    id: '5',
+    name: 'Producto 5',
+    barcode: 'J010',
+    description: 'La descripcion',
+    salePrice: 280,
+    minimal: 18,
+    stock: 3
+  },
+  {
+    id: '6',
+    name: 'Producto 6',
+    barcode: 'K011',
+    description: 'Una descripcion',
+    salePrice: 200,
+    minimal: 11,
+    stock: 3
+  },
+  {
+    id: '7',
+    name: 'Producto 7',
+    barcode: 'L012',
+    description: 'La descripcion',
+    salePrice: 320,
+    minimal: 6,
+    stock: 3
+  },
+  {
+    id: '8',
+    name: 'Producto 8',
+    barcode: 'M013',
+    description: 'La descripcion',
+    salePrice: 140,
+    minimal: 22,
+    stock: 3
+  },
+  {
+    id: '9',
+    name: 'Producto 9',
+    barcode: 'N014',
+    description: 'La descripcion',
+    salePrice: 270,
+    minimal: 9,
+    stock: 3
+  },
+  {
+    id: '10',
+    name: 'Producto 10',
+    barcode: 'O010',
+    description: 'La descripcion',
+    salePrice: 190,
+    minimal: 14,
+    stock: 3
+  },
+  {
+    id: '11',
+    name: 'Producto 11',
+    barcode: 'P011',
+    description: 'Una descripcion',
+    salePrice: 270,
+    minimal: 6,
+    stock: 3
+  },
+  {
+    id: '12',
+    name: 'Producto 12',
+    barcode: 'Q012',
+    description: 'La descripcion',
+    salePrice: 140,
+    minimal: 30,
+    stock: 3
+  }
+]
 
 export default function ProductsSection () {
-  const TABLE_HEAD = [
-    {
-      head: 'checkbox',
-      row: 'checkbox'
-    },
-    {
-      head: 'Product',
-      row: 'name'
-    },
-    {
-      head: 'Description',
-      row: 'description'
-    },
-    {
-      head: 'Quantity',
-      row: 'stockMinimo'
-    },
-    {
-      head: 'Supplier',
-      row: 'supplier'
-    },
-    {
-      head: 'Code',
-      row: 'barCode'
-    },
-    {
-      head: 'Sell Price',
-      row: 'salePrice'
-    },
-    {
-      head: '',
-      row: 'actions'
-    }
-  ]
-
-  const TABLE_ROWS = [
-    {
-      id: '1',
-      name: 'Producto 1',
-      description: 'La descripcion',
-      supplier: 'Proveedor F',
-      barCode: 'F006',
-      salePrice: 180,
-      stockMinimo: 15
-    },
-    {
-      id: '2',
-      name: 'Producto 2',
-      description: 'La descripcion',
-      supplier: 'Proveedor G',
-      barCode: 'G007',
-      salePrice: 220,
-      stockMinimo: 8
-    },
-    {
-      id: '3',
-      name: 'Producto 3',
-      description: 'La descripcion',
-      supplier: 'Proveedor A',
-      barCode: 'H008',
-      salePrice: 120,
-      stockMinimo: 25
-    },
-    {
-      id: '4',
-      name: 'Producto 4',
-      description: 'La descripcion',
-      supplier: 'Proveedor I',
-      barCode: 'A009',
-      salePrice: 350,
-      stockMinimo: 3
-    },
-    {
-      id: '5',
-      name: 'Producto 5',
-      description: 'La descripcion',
-      supplier: 'Proveedor J',
-      barCode: 'J010',
-      salePrice: 280,
-      stockMinimo: 18
-    },
-    {
-      id: '6',
-      name: 'Producto 6',
-      description: 'Una descripcion',
-      supplier: 'Proveedor K',
-      barCode: 'K011',
-      salePrice: 200,
-      stockMinimo: 11
-    },
-    {
-      id: '7',
-      name: 'Producto 7',
-      description: 'La descripcion',
-      supplier: 'Proveedor L',
-      barCode: 'L012',
-      salePrice: 320,
-      stockMinimo: 6
-    },
-    {
-      id: '8',
-      name: 'Producto 8',
-      description: 'La descripcion',
-      supplier: 'Proveedor M',
-      barCode: 'M013',
-      salePrice: 140,
-      stockMinimo: 22
-    },
-    {
-      id: '9',
-      name: 'Producto 9',
-      description: 'La descripcion',
-      supplier: 'Proveedor N',
-      barCode: 'N014',
-      salePrice: 270,
-      stockMinimo: 9
-    },
-    {
-      id: '10',
-      name: 'Producto 10',
-      description: 'La descripcion',
-      supplier: 'Proveedor O',
-      barCode: 'O010',
-      salePrice: 190,
-      stockMinimo: 14
-    },
-    {
-      id: '11',
-      name: 'Producto 11',
-      description: 'Una descripcion',
-      supplier: 'Proveedor P',
-      barCode: 'P011',
-      salePrice: 270,
-      stockMinimo: 6
-    },
-    {
-      id: '12',
-      name: 'Producto 12',
-      description: 'La descripcion',
-      supplier: 'Proveedor Q',
-      barCode: 'Q012',
-      salePrice: 140,
-      stockMinimo: 30
-    }
-  ]
-  const TABLE_DATA = TABLE_ROWS
   const [productDelete] = useProductDeleteMutation()
+  const { products, useInitProducts } = useProductsActions()
+  console.log(products)
+  // const TABLE_DATA = products.length !== 0 ? products : TABLE_ROWS
+  const TABLE_DATA = TABLE_ROWS
+  const { data: productsData, isLoading, isSuccess, isError, error } = useGetAllProductsQuery()
+
+  useEffect(() => {
+    if (isLoading) {
+      console.log('Loading - Poner un espiner en la tabla')
+    } else if (isSuccess) {
+      useInitProducts(productsData)
+    } else if (isError) {
+      toast.error(`Error while conecting: ${error}`)
+    }
+  }, [])
+
+  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_DATA.length).fill(false))
   const { useDeleteProductById } = useProductsActions()
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
   const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_DATA.length).fill(false))
   const selectedItems = checkedItems.filter((value) => value === true)
 
   const findSelectedProduct = () => {
@@ -198,11 +214,11 @@ export default function ProductsSection () {
   const handleSearch = (searchTerm) => {
     const filteredProducts = TABLE_DATA.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.barcode.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.supplier.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.barCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.salePrice.toString().includes(searchTerm) ||
-      product.stockMinimo.toString().includes(searchTerm)
+      product.minimal.toString().includes(searchTerm) ||
+      product.stock.toString().includes(searchTerm)
     )
     setSearchFilter(filteredProducts)
   }

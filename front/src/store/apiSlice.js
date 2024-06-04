@@ -22,6 +22,9 @@ export const apiSlice = createApi({
         body: data
       })
     }), // Products
+    getAllProducts: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_PRODUCT + '/all' : '/api/unknown'
+    }),
     productCreate: build.mutation({
       query: (data) => ({
         url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
@@ -163,6 +166,7 @@ export const apiSlice = createApi({
 export const {
   useLoginMutation,
   // Products
+  useGetAllProductsQuery,
   useProductCreateMutation,
   useProductUpdateMutation,
   useProductDeleteMutation,

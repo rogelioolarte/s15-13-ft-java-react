@@ -14,21 +14,21 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
 
   const productSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    description: Yup.string(),
-    supplier: Yup.string().required('Supplier is required'),
     barcode: Yup.string().required('Barcode is required'),
+    description: Yup.string(),
     price: Yup.string().required('Price is required'),
-    quantity: Yup.string().required('Quantity is required')
+    minimal: Yup.string().required('Stock minimal is required'),
+    stock: Yup.string().required('Stock is required')
 
   })
 
   const initialValues = {
     name: productToEdit?.name ?? '',
-    description: productToEdit?.description ?? '',
-    supplier: productToEdit?.supplier ?? '',
     barcode: productToEdit?.barCode ?? '',
+    description: productToEdit?.description ?? '',
     price: productToEdit?.precioVenta ?? '',
-    quantity: productToEdit?.stockMinimo ?? ''
+    minimal: productToEdit?.minimal ?? '',
+    stock: productToEdit?.stock ?? ''
   }
 
   const createProduct = async (values) => {
@@ -74,26 +74,6 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
                 ? (<ErrorMessage className='ml-2 text-red-600 text-xs' name='name' component='div' />)
                 : <div className='h-4' />}
             </div>
-            {/* description */}
-            <div className='flex flex-col gap-[2px]'>
-              <Field name='description'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Description' label='Description' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
-                )}
-              </Field>
-              <div className='h-4' />
-            </div>
-            {/* supplier */}
-            <div className='flex flex-col gap-[2px]'>
-              <Field name='supplier'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Supplier' label='Supplier' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
-                )}
-              </Field>
-              {errors.supplier && touched.supplier
-                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='supplier' component='div' />)
-                : <div className='h-4' />}
-            </div>
             {/* barcode */}
             <div className='flex flex-col gap-[2px]'>
               <Field name='barcode'>
@@ -104,6 +84,15 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
               {errors.barcode && touched.barcode
                 ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='barcode' component='div' />)
                 : <div className='h-4' />}
+            </div>
+            {/* description */}
+            <div className='flex flex-col gap-[2px]'>
+              <Field name='description'>
+                {({ field /* { name, value, onChange, onBlur } */ }) => (
+                  <Input {...field} type='text' placeholder='Description' label='Description' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                )}
+              </Field>
+              <div className='h-4' />
             </div>
             {/* price */}
             <div className='flex flex-col gap-[2px]'>
@@ -116,15 +105,26 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
                 ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='price' component='div' />)
                 : <div className='h-4' />}
             </div>
-            {/* quantity */}
+            {/* minimal */}
             <div className='flex flex-col gap-[2px]'>
-              <Field name='quantity'>
+              <Field name='minimal'>
                 {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Quantity' label='Quantity' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                  <Input {...field} type='text' placeholder='Minimal Stock' label='Minimal Stock' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
-              {errors.quantity && touched.quantity
-                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='quantity' component='div' />)
+              {errors.minimal && touched.minimal
+                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='minimal' component='div' />)
+                : <div className='h-4' />}
+            </div>
+            {/* stock */}
+            <div className='flex flex-col gap-[2px]'>
+              <Field name='stock'>
+                {({ field /* { name, value, onChange, onBlur } */ }) => (
+                  <Input {...field} type='text' placeholder='Stock' label='Stock' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                )}
+              </Field>
+              {errors.stock && touched.stock
+                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='stock' component='div' />)
                 : <div className='h-4' />}
             </div>
             {/* <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div> */}

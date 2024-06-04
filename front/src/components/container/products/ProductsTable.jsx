@@ -50,14 +50,14 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
       </thead>
       <tbody>
         {TABLE_DATA.map(
-          ({ name, description, stockMinimo, supplier, barCode, salePrice }, index) => {
+          ({ name, barcode, description, salePrice, minimal, stock }, index) => {
             const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
-              <tr key={barCode} className='even:bg-[#F8F9FC] odd:bg-white'>
+              <tr key={barcode} className='even:bg-[#F8F9FC] odd:bg-white'>
                 {/* checked */}
                 <td className={classes}>
                   <Checkbox
-                    id={barCode}
+                    id={barcode}
                     ripple={false}
                     className='hover:before:opacity-0'
                     containerProps={{
@@ -76,6 +76,15 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     {name}
                   </Typography>
                 </td>
+                {/* barcode */}
+                <td className={classes}>
+                  <Typography
+                    variant='small'
+                    className='font-normal'
+                  >
+                    {barcode}
+                  </Typography>
+                </td>
                 {/* description */}
                 <td className={classes}>
                   <Typography
@@ -85,33 +94,6 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     {description}
                   </Typography>
                 </td>
-                {/* stockMinimo */}
-                <td className={classes}>
-                  <Typography
-                    variant='small'
-                    className='font-normal'
-                  >
-                    {stockMinimo}
-                  </Typography>
-                </td>
-                {/* supplier */}
-                <td className={classes}>
-                  <Typography
-                    variant='small'
-                    className='font-normal'
-                  >
-                    {supplier}
-                  </Typography>
-                </td>
-                {/* barCode */}
-                <td className={classes}>
-                  <Typography
-                    variant='small'
-                    className='font-normal'
-                  >
-                    {barCode}
-                  </Typography>
-                </td>
                 {/* salePrice */}
                 <td className={classes}>
                   <Typography
@@ -119,6 +101,24 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     className='font-normal'
                   >
                     ${salePrice}
+                  </Typography>
+                </td>
+                {/* minimal */}
+                <td className={classes}>
+                  <Typography
+                    variant='small'
+                    className='font-normal'
+                  >
+                    {minimal}
+                  </Typography>
+                </td>
+                {/* stock */}
+                <td className={classes}>
+                  <Typography
+                    variant='small'
+                    className='font-normal'
+                  >
+                    {stock}
                   </Typography>
                 </td>
                 {/* actions */}
