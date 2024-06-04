@@ -37,6 +37,9 @@ public class Sales {
     @JoinColumn(name = "id_taxes", nullable = false)
     private Taxes tax;
 
+    @OneToMany(mappedBy = "sales", cascade = CascadeType.ALL)
+    private List<SalesProduct> salesProducts;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private Date date = new Date();
@@ -44,11 +47,5 @@ public class Sales {
     @Column(name = "total")
     private BigDecimal total;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "sales_products",
-            joinColumns = @JoinColumn(name = "id_sales"),
-            inverseJoinColumns = @JoinColumn(name = "id_product")
-    )
-    private List<SalesProduct> products;
+
 }

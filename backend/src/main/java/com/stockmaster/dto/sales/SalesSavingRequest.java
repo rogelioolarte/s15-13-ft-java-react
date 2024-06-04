@@ -32,7 +32,6 @@ public class SalesSavingRequest {
     private Date date;
     @NotNull
     private List<ProductSavingRequest> products;
-
     @NotNull
     private BigDecimal totalGeneral;
 }

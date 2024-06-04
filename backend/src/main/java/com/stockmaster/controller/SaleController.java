@@ -8,6 +8,7 @@ import com.stockmaster.service.sales.SalesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/sale")
 @RequiredArgsConstructor
-
-@CrossOrigin("*")
-
+@CrossOrigin()
 public class SaleController {
     @Autowired
     private final SalesService salesService;
@@ -31,7 +30,7 @@ public class SaleController {
     //Get Method
 
     @GetMapping("/getbydate/")//byDate
-    public ResponseEntity<?>getSalesByDate(@RequestParam("date") Date date) {
+    public ResponseEntity<?>getSalesByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         List<SalesDateResponse> sales = salesService.findByDate(date);
         return ResponseEntity.ok(sales);
     }

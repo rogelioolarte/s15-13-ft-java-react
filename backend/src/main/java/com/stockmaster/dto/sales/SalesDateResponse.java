@@ -1,22 +1,13 @@
 package com.stockmaster.dto.sales;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.stockmaster.dto.customer.CustomerDateResponse;
-import com.stockmaster.dto.customer.CustomerResponse;
-import com.stockmaster.dto.product.ProductSizeResponse;
-import com.stockmaster.dto.taxes.DtoTaxesResponse;
-import com.stockmaster.dto.taxes.TaxesDateResponse;
-import com.stockmaster.entity.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.math.BigInteger;
 
 @Data
 @Builder
@@ -30,9 +21,9 @@ public class SalesDateResponse {
     private String personalCode;
     private String product_name;
     private int quantity;
-    private int discount;
-    private int price;
+    private BigDecimal discount;
+    private BigDecimal price;
     private String tax_name;
-    private int total;
+    private BigDecimal total;
 
 }

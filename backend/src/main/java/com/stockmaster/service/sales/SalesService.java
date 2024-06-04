@@ -12,6 +12,8 @@ import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 public class SalesService {
@@ -49,29 +49,63 @@ public class SalesService {
         return salesRepository.findAll().stream()
                 .map(salesMapper::toSalesResponse).toList();
     }*/
-
+    /*
     public List<SalesDateResponse> findByDate(Date date) {
 
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String formattedDate = dateFormat.format(date);
         List<Object[]>results = salesRepository.findByDate(formattedDate);
 
         List<SalesDateResponse> salesResponses = new ArrayList<>();
         for (Object[] result : results){
             SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(((BigInteger)result[0]).longValue())
+                    .sale_id(((BigInteger)result[0]))
                     .customerName((String) result[1])
                     .personalCode((String) result[2])
                     .product_name((String) result[3])
                     .quantity((Integer) result[4])
-                    .discount((Integer) result[5])
-                    .price((Integer) result[6])
+                    .discount((BigDecimal) result[5])
+                    .price((BigDecimal) result[6])
                     .tax_name((String) result[7])
-                    .total((Integer) result[8])
+                    .total((BigDecimal) result[8])
                     .build();
             salesResponses.add(response);
         }
+        return salesResponses;
+    }*/
+    private static final Logger logger = LoggerFactory.getLogger(SalesService.class);
+    public List<SalesDateResponse> findByDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
 
+        logger.info("Formatted date: {}", formattedDate); // Logging
+
+        List<Object[]> results = salesRepository.findByDate(formattedDate);
+
+        if (results.isEmpty()) {
+            logger.info("No results found for date: {}", formattedDate); // Logging
+            return Collections.emptyList();
+        }
+
+        List<SalesDateResponse> salesResponses = new ArrayList<>();
+        for (Object[] result : results) {
+            logger.info("Result: {}", Arrays.toString(result)); // Logging each result
+
+            Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
+
+            SalesDateResponse response = SalesDateResponse.builder()
+                    .sale_id(saleId)
+                    .customerName((String) result[1])
+                    .personalCode((String) result[2])
+                    .product_name((String) result[3])
+                    .quantity((Integer) result[4])
+                    .discount((BigDecimal) result[5])
+                    .price((BigDecimal) result[6])
+                    .tax_name((String) result[7])
+                    .total((BigDecimal) result[8])
+                    .build();
+            salesResponses.add(response);
+        }
         return salesResponses;
     }
 
@@ -82,32 +116,54 @@ public class SalesService {
         Taxes tax = taxesRepository.findById(request.getId_taxes())
                 .orElseThrow(()-> new RequestException("Tax not found"));
 
-        BigDecimal totalGeneral = BigDecimal.ZERO;
-
-        for (ProductSavingRequest productRequest : request.getProducts()){
-            totalGeneral = totalGeneral.add(productRequest.getTotalProduct());
-        }
+        BigDecimal totalGeneral = calculateTotalGeneral(request.getProducts());
+        totalGeneral = addTaxToTotal(totalGeneral, tax);
 
         Sales sales = Sales.builder()
                 .customer(customer)
                 .tax(tax)
                 .date(request.getDate())
-                .total(request.getTotalGeneral())
+                .total(totalGeneral)
                 .build();
 
-        sales = salesRepository.save(sales);
-
+        List<SalesProduct> salesProducts = new ArrayList<>();
         for(ProductSavingRequest productRequest : request.getProducts()){
             Product product = productRepository.findById(productRequest.getIdProduct())
                     .orElseThrow(()-> new RequestException("Product not found"));
 
             SalesProduct salesProduct = SalesProduct.builder()
                     .sales(sales)
+                    .product(product)
                     .quantity(productRequest.getQuantity())
                     .discount(productRequest.getDiscount())
                     .build();
-            salesProductRepository.save(salesProduct);
+            salesProducts.add(salesProduct);
         }
+        sales.setSalesProducts(salesProducts);
+        sales = salesRepository.save(sales);
         return sales;
+    }
+    private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
+        return products.stream()
+                .map(product -> {
+                    BigDecimal discountAmount = product.getTotalProduct()
+                            .multiply(product.getDiscount())
+                            .divide(BigDecimal.valueOf(100));
+                    BigDecimal discountedPrice = product.getTotalProduct().subtract(discountAmount);
+                    return discountedPrice.multiply(BigDecimal.valueOf(product.getQuantity()));
+                })
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    /*
+    private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
+        return products.stream()
+                .map(ProductSavingRequest::getTotalProduct)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }*/
+
+    private BigDecimal addTaxToTotal(BigDecimal total, Taxes tax) {
+        BigDecimal taxAmount = total.multiply
+        (tax.getPercentage()).divide(BigDecimal.valueOf(100));
+        return total.add(taxAmount);
     }
 }

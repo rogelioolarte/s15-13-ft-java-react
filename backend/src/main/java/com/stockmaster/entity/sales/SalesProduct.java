@@ -25,15 +25,11 @@ public class SalesProduct {
     @JoinColumn(name = "id_sales", nullable = false)
     private Sales sales;
 
-    @ManyToMany
-    @JoinTable(
-            name = "sales_product_mapping",
-            joinColumns = @JoinColumn(name = "id_sales_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_product")
-    )
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
+    private Product product;
 
-    @Column(nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "discount")
