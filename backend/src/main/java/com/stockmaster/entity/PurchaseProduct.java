@@ -16,19 +16,23 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="products_purchase")
+@Table(name = "products_purchase")
 public class PurchaseProduct {
-   @EmbeddedId
- private PurchaseProductId id;
 
- /* @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;*/
+    // @EmbeddedId
+    //private PurchaseProductId id;
 
+    /* @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private Long id;*/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
-    @MapsId("id")
-    @JoinColumn(name = "product_id")
+    //@MapsId("id")
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
     private Product product;
 
   /*
@@ -41,13 +45,14 @@ public class PurchaseProduct {
     private List<Product> products;*/
 
     @ManyToOne
-    @MapsId("purchaseId")
-    @JoinColumn(name = "purchase_id", nullable = false)
+    // @MapsId("purchaseId")
+    @JoinColumn(name = "id_purchase", referencedColumnName = "id")
     private Purchase purchase;
 
+    @Column(name = "quantity")
     private int quantity;
 
-    public PurchaseProduct(DtoPurchaseProductResponse dtoPurchaseResponse){
+    public PurchaseProduct(DtoPurchaseProductResponse dtoPurchaseResponse) {
         this.product = Product.builder().id(dtoPurchaseResponse.id()).build();
         this.quantity = dtoPurchaseResponse.quantity();
     }

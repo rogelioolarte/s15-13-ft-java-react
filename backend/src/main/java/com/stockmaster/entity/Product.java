@@ -45,6 +45,9 @@ public class Product {
     @ManyToMany(mappedBy="products")
     private List<Purchase> purchase;
 
+    @OneToMany(mappedBy="product")
+    private List<PurchaseProduct> PurchaseProduct;
+
     public Product() {
         this.active = true;
     }

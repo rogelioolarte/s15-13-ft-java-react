@@ -57,14 +57,15 @@ public class PurchaseService {
                 .supplier(supplier)
                 .date(dtoPurchaseResponse.date())
                 .bill(dtoPurchaseResponse.bill())
-                 .productsPurchased(purchaseProductsroducts)
+                // .productsPurchased(purchaseProductsroducts)
                 .total(new BigDecimal(suma))
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);
 
-       // purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
-       //List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
-        return purchaseDb;
+        purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
+       List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
+         purchaseDb.setPurchaseProduct(productsDb2);
+         return purchaseDb;
     }
 
 }

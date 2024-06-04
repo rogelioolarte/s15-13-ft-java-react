@@ -45,9 +45,13 @@ public class Purchase {
     )
     private List<Product> products;
 
-
+    @Column(insertable=false, updatable=false)
     @ElementCollection
     @CollectionTable(name = "products_purchase", joinColumns = @JoinColumn(name = "id_purchase"))
     private List<PurchaseProduct> productsPurchased;
+
+
+    @OneToMany(mappedBy="purchase")
+    private List<PurchaseProduct> PurchaseProduct;
 
 }
