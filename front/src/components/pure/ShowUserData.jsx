@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import UserRandom from '../../assets/user_random.png'
 import { useUserActions } from '../../hooks/useUserActions'
 
-export default function ShowUserData () {
+export default function ShowUserData() {
   const { user } = useUserActions()
   console.log(user)
   return (
@@ -15,8 +15,7 @@ export default function ShowUserData () {
       <img src={UserRandom} alt='profile-picture' className='rounded-full w-[100px] h-[100px]' />
       <CardBody className='text-center p-0 md:text-start'>
         <Typography variant='h4' color='blue-gray'>
-          {/* Welcome, {user.first_name} {user.last_name} */}
-          Welcome, Pepen Guayabas
+          Welcome, {user.first_name} {user.last_name}
         </Typography>
         <button onClick={() => toast.success('This is a sonner toast', { duration: 1500 })}>Render my toast</button>
       </CardBody>

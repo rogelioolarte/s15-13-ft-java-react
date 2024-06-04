@@ -1,56 +1,57 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
-import { useSupplierCreateMutation, useSupplierUpdateMutation } from '../../../store/apiSlice.js'
-import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
+import { useCustomerCreateMutation, useCustomerUpdateMutation } from '../../../store/apiSlice.js'
+import { useCustomersActions } from '../../../hooks/useCustomersActions.js'
 
-export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
-  const [supplierCreate] = useSupplierCreateMutation()
-  const [supplierUpdate] = useSupplierUpdateMutation()
+export function CustomersFormik ({ setOpen, action, customerToEdit }) {
+  const [customerCreate] = useCustomerCreateMutation()
+  const [customerUpdate] = useCustomerUpdateMutation()
 
   const INPUT_BG = '#FFF8F8'
 
-  const { useAddSupplier } = useSuppliersActions()
+  const { useAddCustomer } = useCustomersActions()
 
-  const supplierSchema = Yup.object().shape({
+  const customerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    companyCode: Yup.string().required('Code is required')
-
+    personalCode: Yup.string().required('Code is required'),
+    customerType: Yup.string().required('Customer type is required')
   })
 
   const initialValues = {
-    name: supplierToEdit?.name ?? '',
-    companyCode: supplierToEdit?.companyCode ?? ''
+    name: customerToEdit?.name ?? '',
+    personalCode: customerToEdit?.personalCode ?? '',
+    customerType: customerToEdit?.customerType ?? ''
   }
 
-  const createSupplier = async (values) => {
-    await supplierCreate(values).unwrap()
+  const createCustomer = async (values) => {
+    await customerCreate(values).unwrap()
       .then((res) => {
         console.log(res)
         if (res.status === 200) {
-          useAddSupplier(res.data)
+          useAddCustomer(res.data)
         }
       }).catch((error) => console.log(error))
   }
 
-  const editSupplier = async (values) => {
-    await supplierUpdate(values).unwrap()
+  const editCustomer = async (values) => {
+    await customerUpdate(values).unwrap()
       .then((res) => {
         console.log(res)
         if (res.status === 201) {
-          useAddSupplier(res.data)
+          useAddCustomer(res.data)
         }
       }).catch((error) => console.log(error))
   }
 
   const handleSubmit = async (values) => {
     console.log(values)
-    action === 'create' && await createSupplier(values)
-    action === 'edit' && await editSupplier(values)
+    action === 'create' && await createCustomer(values)
+    action === 'edit' && await editCustomer(values)
   }
 
   return (
-    <Formik initialValues={initialValues} validationSchema={supplierSchema} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={customerSchema} onSubmit={handleSubmit}>
 
       {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
         <Form className='flex flex-col gap-2'>
@@ -66,15 +67,26 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
                 ? (<ErrorMessage className='ml-2 text-red-600 text-xs' name='name' component='div' />)
                 : <div className='h-4' />}
             </div>
-            {/* companyCode */}
+            {/* personalCode */}
             <div className='flex flex-col gap-[2px]'>
-              <Field name='companyCode'>
+              <Field name='personalCode'>
                 {({ field /* { name, value, onChange, onBlur } */ }) => (
                   <Input {...field} type='text' placeholder='Code' label='Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
-              {errors.companyCode && touched.companyCode
-                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='companyCode' component='div' />)
+              {errors.personalCode && touched.personalCode
+                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='personalCode' component='div' />)
+                : <div className='h-4' />}
+            </div>
+            {/* customerType */}
+            <div className='flex flex-col gap-[2px]'>
+              <Field name='customerType'>
+                {({ field /* { name, value, onChange, onBlur } */ }) => (
+                  <Input {...field} type='text' placeholder='Customer Type' label='Customer Type' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                )}
+              </Field>
+              {errors.customerType && touched.customerType
+                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='customerType' component='div' />)
                 : <div className='h-4' />}
             </div>
           </fieldset>

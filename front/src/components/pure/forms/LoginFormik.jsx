@@ -22,20 +22,23 @@ const loginSchema = Yup.object().shape({
     .required('Password is required')
 })
 
-export default function LoginFormik () {
+export default function LoginFormik() {
   const navigate = useNavigate()
   const [CommonError, setError] = useState('')
   const [login] = useLoginMutation()
   const { useCheckRealUser, useSetUser } = useUserActions()
 
   const sendError = (error) => {
-    setError(error)
+    setError(error.data ? error.data.message : 'Login failed')
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setError('')
-    }, 4000)
+    if (CommonError) {
+      const timer = setTimeout(() => {
+        setError('')
+      }, 4000)
+      return () => clearTimeout(timer)
+    }
   }, [CommonError])
 
   const initialCredentials = {
@@ -44,41 +47,47 @@ export default function LoginFormik () {
   }
 
   const handleSubmit = async (values) => {
-    await login(values).unwrap()
-      .then((res) => {
-        if (useCheckRealUser(res)) {
-          useSetUser(res)
-          navigate('/dashboard')
-        }
-      }).catch((error) => sendError(error))
+    try {
+      const res = await login(values).unwrap()
+      if (useCheckRealUser(res)) {
+        useSetUser(res)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      sendError(error)
+    }
   }
 
   return (
     <div className='w-full md:w-[50%] h-[100%] bg-black grid justify-items-center'>
       <Link to='/home'><img src={LogoMedium} alt='logo-md' className='w-[45vh] mt-[5vh]' /></Link>
-      <Typography variant='h3' color='white'>Log in to  Stock Master!</Typography>
+      <Typography variant='h3' color='white'>Log in to Stock Master!</Typography>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
-        {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+        {({ touched, errors }) => (
           <Form className='grid justify-items-center bg-black mb-[15vh]'>
             <Card className='w-96 bg-black text-white h-[100%]'>
-              <CardBody className='flex flex-col gap-2 h-40 '>
+              <CardBody className='flex flex-col gap-2 h-40'>
                 <Field name='email'>
-                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                  {({ field }) => (
                     <Input {...field} type='email' placeholder='Email' label='Email' size='lg' />
                   )}
                 </Field>
                 <Field name='password'>
-                  {({ field /* { name, value, onChange, onBlur } */ }) => (
+                  {({ field }) => (
                     <Input {...field} type='password' placeholder='Password' label='Password' size='lg' />
                   )}
                 </Field>
                 {/* Email Errors */}
-                {errors.email && touched.email &&
-                (<ErrorMessage className='text-white text-sm' name='email' component='div' />)}
+                {errors.email && touched.email && (
+                  <ErrorMessage className='text-white text-sm' name='email' component='div' />
+                )}
                 {/* Password Errors */}
-                {errors.password && touched.password &&
-                (<ErrorMessage className='text-white text-sm' name='password' component='div' />)}
-                <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div>
+                {errors.password && touched.password && (
+                  <ErrorMessage className='text-white text-sm' name='password' component='div' />
+                )}
+                {CommonError && (
+                  <div className='text-white text-sm text-center'>{CommonError}</div>
+                )}
               </CardBody>
               <CardFooter className='pt-0 mt-5'>
                 <Button type='submit' variant='filled' fullWidth color='black'>

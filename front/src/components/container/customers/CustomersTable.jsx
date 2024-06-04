@@ -2,7 +2,7 @@ import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 
-export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
+export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
@@ -20,7 +20,7 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
         <tr>
           {TABLE_HEAD.map(({ head, row }, index) =>
             <th
-              key={head}
+              key={index}
               className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
               onClick={() => index !== 0 && handleSort(row.toLowerCase())}
             >
@@ -50,7 +50,7 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
       </thead>
       <tbody>
         {TABLE_DATA.map(
-          ({ id, name, companyCode }, index) => {
+          ({ id, name, personalCode, customerType }, index) => {
             const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
               <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
@@ -76,13 +76,22 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
                     {name}
                   </Typography>
                 </td>
-                {/* companyCode */}
+                {/* personalCode */}
                 <td className={classes}>
                   <Typography
                     variant='small'
                     className='font-normal'
                   >
-                    {companyCode}
+                    {personalCode}
+                  </Typography>
+                </td>
+                {/* customerType */}
+                <td className={classes}>
+                  <Typography
+                    variant='small'
+                    className='font-normal'
+                  >
+                    {customerType}
                   </Typography>
                 </td>
                 {/* actions */}

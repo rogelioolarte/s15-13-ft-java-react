@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT, ROUTE_SUPPLIER, ROUTE_ALL_SALES, ROUTE_TAXES } from '../config/api_routes'
+import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT, ROUTE_SUPPLIER, ROUTE_SALES, ROUTE_TAXES, ROUTE_CUSTOMER } from '../config/api_routes'
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: MAIN_API.length !== 0 ? MAIN_API : 'https://reqres.in' }),
@@ -81,7 +81,7 @@ export const apiSlice = createApi({
     }), // Sales
     getAllSales: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_ALL_SALES : '/api/product',
+        url: MAIN_API.length !== 0 ? ROUTE_SALES + '/getbydate' : '/api/product',
         method: 'GET',
         redirect: 'follow',
         headers: { 'Content-type': 'application/json' },
@@ -126,6 +126,36 @@ export const apiSlice = createApi({
         headers: { 'Content-type': 'application/json' },
         param: data
       })
+    }), // Customers
+    getAllCustomers: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/allcustomer' : '/api/unknown'
+    }),
+    customerCreate: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/savecustomer' : '/api/unknown',
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
+    }),
+    customerUpdate: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/updatecustomer' : '/api/unknown',
+        method: 'PUT',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        body: data
+      })
+    }),
+    customerDelete: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER + '/deletecustomer' : '/api/unknown',
+        method: 'PATCH',
+        redirect: 'follow',
+        headers: { 'Content-type': 'application/json' },
+        param: data
+      })
     })
   })
 })
@@ -150,5 +180,10 @@ export const {
   useTaxeCreateMutation,
   useTaxeUpdateMutation,
   useTaxeEnableMutation,
-  useTaxeDisableMutation
+  useTaxeDisableMutation,
+  // Customers
+  useGetAllCustomersQuery,
+  useCustomerCreateMutation,
+  useCustomerUpdateMutation,
+  useCustomerDeleteMutation
 } = apiSlice
