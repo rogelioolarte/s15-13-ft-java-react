@@ -154,7 +154,7 @@ const TABLE_ROWS = [
   }
 ]
 
-export default function ProductsSection() {
+export default function ProductsSection () {
   const [productDelete] = useDeleteProductMutation()
   const { products, useInitProducts } = useProductsActions()
   console.log(products)
