@@ -1,7 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { Link, useNavigate } from 'react-router-dom'
-import LogoMedium from '../../../assets/logo-md.svg'
+import LogoMedium from '../../assets/logo-md.svg'
 import {
   Card,
   CardBody,
@@ -11,8 +11,8 @@ import {
   Button
 } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
-import { useLoginMutation } from '../../../store/apiSlice'
-import { useUserActions } from '../../../hooks/useUserActions'
+import { useLoginMutation } from '../../store/apiSlice'
+import { useUserActions } from '../../hooks/useUserActions'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()

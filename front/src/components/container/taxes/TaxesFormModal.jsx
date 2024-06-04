@@ -3,7 +3,7 @@ import {
   DialogBody
 } from '@material-tailwind/react'
 import { cloneElement, useState } from 'react'
-import { TaxesFormik } from '../../pure/forms/TaxesFormik'
+import { TaxesFormik } from '../../forms/TaxesFormik'
 
 export function TaxesFormModal ({ button, action, taxeToEdit }) {
   const [open, setOpen] = useState(false)

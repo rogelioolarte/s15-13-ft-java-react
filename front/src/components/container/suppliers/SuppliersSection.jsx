@@ -7,7 +7,7 @@ import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import SuppliersTable from './SuppliersTable'
 import SuppliersHeader from './SuppliersHeader'
 import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
-import { useGetAllSuppliersQuery, useSupplierDeleteMutation } from '../../../store/apiSlice.js'
+import { useGetAllSuppliersQuery, useDeleteSupplierMutation } from '../../../store/apiSlice.js'
 
 const TABLE_HEAD = [
   {
@@ -66,7 +66,7 @@ const TABLE_ROWS = [
 ]
 
 export default function SuppliersSection () {
-  const [supplierDelete] = useSupplierDeleteMutation()
+  const [deleteSupplier] = useDeleteSupplierMutation()
   const { suppliers, useInitSuppliers } = useSuppliersActions()
   // console.log(suppliers)
   const TABLE_DATA = suppliers.length !== 0 ? suppliers : TABLE_ROWS
@@ -106,7 +106,7 @@ export default function SuppliersSection () {
     const suppliers = getSelectedSuppliers()
     if (suppliers) {
       suppliers.map(async (supplier) => {
-        await supplierDelete(supplier.id).then((res) => {
+        await deleteSupplier(supplier.id).then((res) => {
           console.log(res)
           if (res.status === 201) {
             useDeleteSupplierById(supplier.id)

@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
-import { useTaxeCreateMutation, useTaxeUpdateMutation } from '../../../store/apiSlice.js'
-import { useTaxesActions } from '../../../hooks/useTaxesActions.js'
+import { useTaxesActions } from '../../hooks/useTaxesActions.js'
+import { useCreateTaxMutation, useUpdateTaxMutation } from '../../store/apiSlice.js'
 
 export function TaxesFormik ({ setOpen, action, taxeToEdit }) {
-  const [taxeCreate] = useTaxeCreateMutation()
-  const [taxeUpdate] = useTaxeUpdateMutation()
+  const [taxeCreate] = useCreateTaxMutation()
+  const [taxeUpdate] = useUpdateTaxMutation()
 
   const INPUT_BG = '#FFF8F8'
 

@@ -7,7 +7,7 @@ import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete.jsx'
 import TaxesTable from './TaxesTable.jsx'
 import TaxesHeader from './TaxesHeader.jsx'
 import { useTaxesActions } from '../../../hooks/useTaxesActions.js'
-import { useGetAllTaxesQuery, useTaxeDisableMutation } from '../../../store/apiSlice.js'
+import { useGetAllTaxesQuery, useDeleteTaxMutation } from '../../../store/apiSlice.js'
 
 const TABLE_HEAD = [
   {
@@ -101,7 +101,7 @@ const TABLE_ROWS = [
 ]
 
 export default function TaxesSection () {
-  const [taxeDelete] = useTaxeDisableMutation()
+  const [taxeDelete] = useDeleteTaxMutation()
   const { taxes, useInitTaxes } = useTaxesActions()
   const TABLE_DATA = taxes.length !== 0 ? taxes : TABLE_ROWS
   const { data: taxesData, isLoading, isSuccess, isError, error } = useGetAllTaxesQuery()

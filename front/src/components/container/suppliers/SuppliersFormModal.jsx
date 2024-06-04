@@ -3,7 +3,7 @@ import {
   DialogBody
 } from '@material-tailwind/react'
 import { cloneElement, useState } from 'react'
-import { SuppliersFormik } from '../../pure/forms/SuppliersFormik'
+import { SuppliersFormik } from '../../forms/SuppliersFormik'
 
 export function SuppliersFormModal ({ button, action, supplierToEdit }) {
   const [open, setOpen] = useState(false)

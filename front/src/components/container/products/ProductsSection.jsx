@@ -7,7 +7,7 @@ import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import ProductsTable from './ProductsTable'
 import ProductsHeader from './ProductsHeader'
 import { useProductsActions } from '../../../hooks/useProductsActions.js'
-import { useGetAllProductsQuery, useProductDeleteMutation } from '../../../store/apiSlice.js'
+import { useGetAllProductsQuery, useDeleteProductMutation } from '../../../store/apiSlice.js'
 
 const TABLE_HEAD = [
   {
@@ -154,8 +154,8 @@ const TABLE_ROWS = [
   }
 ]
 
-export default function ProductsSection () {
-  const [productDelete] = useProductDeleteMutation()
+export default function ProductsSection() {
+  const [productDelete] = useDeleteProductMutation()
   const { products, useInitProducts } = useProductsActions()
   console.log(products)
   // const TABLE_DATA = products.length !== 0 ? products : TABLE_ROWS

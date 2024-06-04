@@ -7,7 +7,7 @@ import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import CustomersTable from './CustomersTable'
 import CustomersHeader from './CustomersHeader'
 import { useCustomersActions } from '../../../hooks/useCustomersActions.js'
-import { useGetAllCustomersQuery, useCustomerDeleteMutation } from '../../../store/apiSlice.js'
+import { useGetAllCustomersQuery, useDeleteCustomerMutation } from '../../../store/apiSlice.js'
 
 const TABLE_HEAD = [
   {
@@ -77,7 +77,7 @@ const TABLE_ROWS = [
 ]
 
 export default function CustomersSection () {
-  const [customerDelete] = useCustomerDeleteMutation()
+  const [customerDelete] = useDeleteCustomerMutation()
   const { customers, useInitCustomers } = useCustomersActions()
   const TABLE_DATA = customers.length !== 0 ? customers : TABLE_ROWS
   const { data: customersData, isLoading, isSuccess, isError, error } = useGetAllCustomersQuery()

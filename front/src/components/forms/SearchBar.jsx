@@ -4,7 +4,7 @@ import {
   Button,
   Input
 } from '@material-tailwind/react'
-import LensIcon from '../LensIcon'
+import LensIcon from '../pure/LensIcon'
 import { useEffect, useState } from 'react'
 
 const loginSchema = Yup.object().shape({
@@ -20,10 +20,6 @@ export default function SearchBar () {
   }
 
   const handleSubmit = async (values) => {
-    /* const search = await search(values.search)
-    if (search) {
-      console.log(search)
-    } */
     console.log(values.search)
   }
 

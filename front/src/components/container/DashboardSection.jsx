@@ -1,5 +1,5 @@
 import ActualDate from '../pure/ActualDate'
-import SearchBar from '../pure/forms/SearchBar'
+import SearchBar from '../forms/SearchBar'
 import Shortcuts from '../pure/Shortcuts'
 import ShowUserData from '../pure/ShowUserData'
 import {

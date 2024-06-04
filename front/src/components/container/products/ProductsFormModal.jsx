@@ -3,7 +3,7 @@ import {
   DialogBody
 } from '@material-tailwind/react'
 import { cloneElement, useState } from 'react'
-import { ProductsFormik } from '../../pure/forms/ProductsFormik'
+import { ProductsFormik } from '../../forms/ProductsFormik'
 
 export function ProductsFormModal ({ button, action, productToEdit }) {
   const [open, setOpen] = useState(false)
