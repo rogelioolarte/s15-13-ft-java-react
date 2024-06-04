@@ -18,11 +18,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "purchase")
+//@IdClass(PurchaseProductId.class)
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long purchaseId;
 
     private String bill;
 
@@ -39,8 +40,8 @@ public class Purchase {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "purchase_products",
-            joinColumns = @JoinColumn(name = "purchase_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "id_purchase" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id")
     )
     private List<Product> products;
 

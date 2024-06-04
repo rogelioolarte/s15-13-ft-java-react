@@ -27,7 +27,7 @@ public class PurchaseProduct {
 
 
     @ManyToOne
-    @MapsId("productId")
+    @MapsId("id")
     @JoinColumn(name = "product_id")
     private Product product;
 

@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @ToString
 @Builder
+//@IdClass(PurchaseProductId.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
