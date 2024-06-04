@@ -1,9 +1,7 @@
 package com.stockmaster.service;
 
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
-import com.stockmaster.dto.Purchase.DtoResponseRequest;
 import com.stockmaster.entity.*;
-import com.stockmaster.repository.ProductRepository;
 import com.stockmaster.repository.PurchaseProductRepository;
 import com.stockmaster.repository.PurchaseRepository;
 import com.stockmaster.repository.SupplierRepository;
@@ -27,30 +25,13 @@ public class PurchaseService {
     @Autowired
     private PurchaseProductRepository purchaseProductRepository;
 
-    @Autowired
-    private ProductService productRepository;
-
     @Transactional
-    public DtoResponseRequest MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
-        List<Product> products = dtoPurchaseResponse.productList().stream().map(Product::new).toList();
+    public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
 
-        Integer suma = 0;
-        List<Product> productsDb = new ArrayList<>();
-        for( Product p : products){
-            var producto = productRepository.getProductById(p.getId());
-          BigDecimal precio = producto.getSalePrice();
-           suma += Integer.parseInt(String.valueOf(precio.intValue()));
-            productsDb.add(producto) ;
-        }
+        List<PurchaseProduct> products = dtoPurchaseResponse.productList().stream().map(PurchaseProduct::new).toList();
 
-
-
-
-
-        List<PurchaseProduct> purchaseProductsroducts =dtoPurchaseResponse.productList().stream().map(PurchaseProduct::new).toList();
-
-
-
+        BigDecimal suma = new BigDecimal(0);
+        products.stream().map(p -> suma.add(p.getProduct().getSalePrice()));
 
         Supplier supplier = supplierRepository.findById(dtoPurchaseResponse.supplier()).orElseThrow(() -> new EntityNotFoundException("no existe el supplier"));
 
@@ -58,16 +39,18 @@ public class PurchaseService {
                 .supplier(supplier)
                 .date(dtoPurchaseResponse.date())
                 .bill(dtoPurchaseResponse.bill())
-                // .productsPurchased(purchaseProductsroducts)
-                .total(new BigDecimal(suma))
+                .productsPurchased(products)
+                .total(suma)
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);
-
-        purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
-       List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
-         //purchaseDb.setPurchaseProduct(productsDb2);
-        purchaseDb.setProducts(productsDb);
-         return  new DtoResponseRequest(purchase.getPurchaseId(),purchase.getBill(),purchase.getDate(),supplier,products);
+        for (PurchaseProduct purchaseProduct : products) {
+            purchaseProduct.setPurchase(purchaseDb);
+            purchaseProductRepository.save(purchaseProduct);
+        }
+        // List<PurchaseProduct>  productsPurchaseDb =  products.stream().map(p -> p.setPurchase(purchaseDb));
+        // purchaseProductRepository.saveAll(productsPurchaseDb);
+        purchaseRepository.save(purchaseDb);
+        return purchaseDb;
     }
 
 }
