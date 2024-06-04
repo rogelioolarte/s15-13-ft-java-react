@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @ToString
 @Builder
@@ -45,7 +44,9 @@ public class Product {
     @ManyToMany(mappedBy="product")
     private List<Purchase> purchase;
 
-
+    public Product() {
+        this.active = true;
+    }
     public Product(DtoPurchaseProductResponse dtoPurchaseProductResponse) {
 
         this.id = dtoPurchaseProductResponse.id();
