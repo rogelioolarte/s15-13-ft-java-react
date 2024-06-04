@@ -65,7 +65,8 @@ public class PurchaseService {
         purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
        List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
          purchaseDb.setPurchaseProduct(productsDb2);
-         return purchaseDb;
+       // purchaseDb.setProducts(productsDb);
+         return  purchaseDb;
     }
 
 }
