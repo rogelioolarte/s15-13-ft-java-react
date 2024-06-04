@@ -1,6 +1,7 @@
 package com.stockmaster.service;
 
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
+import com.stockmaster.dto.Purchase.DtoResponseRequest;
 import com.stockmaster.entity.*;
 import com.stockmaster.repository.ProductRepository;
 import com.stockmaster.repository.PurchaseProductRepository;
@@ -30,7 +31,7 @@ public class PurchaseService {
     private ProductService productRepository;
 
     @Transactional
-    public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
+    public DtoResponseRequest MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
         List<Product> products = dtoPurchaseResponse.productList().stream().map(Product::new).toList();
 
         Integer suma = 0;
@@ -64,9 +65,9 @@ public class PurchaseService {
 
         purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
        List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
-         purchaseDb.setPurchaseProduct(productsDb2);
-       // purchaseDb.setProducts(productsDb);
-         return  purchaseDb;
+         //purchaseDb.setPurchaseProduct(productsDb2);
+        purchaseDb.setProducts(productsDb);
+         return  new DtoResponseRequest(purchase.getPurchaseId(),purchase.getBill(),purchase.getDate(),supplier,products);
     }
 
 }

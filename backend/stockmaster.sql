@@ -94,6 +94,7 @@ CREATE TABLE purchase (
 
 
 CREATE TABLE products_purchase (
+id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY;
     id_product BIGINT,
     id_purchase BIGINT,
     quantity INT,
