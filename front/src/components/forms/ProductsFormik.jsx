@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
-import { useProductCreateMutation, useProductUpdateMutation } from '../../../store/apiSlice.js'
 import { useProductsActions } from '../../../hooks/useProductsActions.js'
+import { useCreateProductMutation, useUpdateProductMutation } from '../../store/apiSlice.js'
 
 export function ProductsFormik ({ setOpen, action, productToEdit }) {
-  const [productCreate] = useProductCreateMutation()
-  const [productUpdate] = useProductUpdateMutation()
+  const [productCreate] = useCreateProductMutation()
+  const [productUpdate] = useUpdateProductMutation()
 
   const INPUT_BG = '#FFF8F8'
 

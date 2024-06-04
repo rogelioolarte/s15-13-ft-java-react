@@ -1,160 +1,184 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { MAIN_API, ROUTE_LOGIN, ROUTE_PURCHASES, ROUTE_PRODUCT, ROUTE_SUPPLIER, ROUTE_SALES, ROUTE_TAXES, ROUTE_CUSTOMER } from '../config/api_routes'
+import {
+  MAIN_API,
+  FAILED_ROUTE,
+  ROUTE_LOGIN,
+  ROUTE_GET_BY_DATE_PURCHASES,
+  ROUTE_PURCHASE,
+  ROUTE_GET_BY_DATE_SALES,
+  ROUTE_SALE,
+  ROUTE_GET_ALL_PRODUCTS,
+  ROUTE_PRODUCT,
+  ROUTE_GET_ALL_CUSTOMER,
+  ROUTE_CUSTOMER,
+  ROUTE_GET_ALL_SUPPLIERS,
+  ROUTE_SUPPLIER,
+  ROUTE_GET_ALL_TAXES,
+  ROUTE_TAX
+} from '../config/api_routes'
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: MAIN_API.length !== 0 ? MAIN_API : 'https://reqres.in' }),
   endpoints: (build) => ({
+    /**
+     * * Login Query
+     */
     login: build.mutation({
       query: (data) => ({
         url: MAIN_API.length !== 0 ? ROUTE_LOGIN : '/api/login',
         method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        body: data
-      })
-    }), // Purchases
-    purchases: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_PURCHASES : '/api/purchase',
-        method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        body: data
-      })
-    }), // Products
-    productCreate: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
-        method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
     }),
-    productUpdate: build.mutation({
+    /**
+     * * Purchases Queries
+     */
+    getPurchases: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
-        method: 'PUT',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        body: data
-      })
-    }),
-    productDelete: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : '/api/product',
-        method: 'PATCH',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        param: data
-      })
-    }), // Suppliers
-    getAllSuppliers: build.query({
-      query: () => MAIN_API.length !== 0 ? ROUTE_SUPPLIER + '/all' : '/api/unknown'
-    }),
-    supplierCreate: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER : '/api/unknown',
-        method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        body: data
-      })
-    }),
-    supplierUpdate: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER : '/api/unknown',
-        method: 'PUT',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        body: data
-      })
-    }),
-    supplierDelete: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER : '/api/unknown',
-        method: 'PATCH',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        param: data
-      })
-    }), // Sales
-    getAllSales: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_SALES + '/getbydate' : '/api/product',
+        url: MAIN_API.length !== 0 ? ROUTE_GET_BY_DATE_PURCHASES : FAILED_ROUTE,
         method: 'GET',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
-    }), // Taxes
-    getAllTaxes: build.query({
-      query: () => MAIN_API.length !== 0 ? ROUTE_TAXES + '/all' : '/api/unknown'
     }),
-    taxeCreate: build.mutation({
+    createPurchase: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_TAXES : '/api/unknown',
+        url: MAIN_API.length !== 0 ? ROUTE_PURCHASE : FAILED_ROUTE,
         method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
     }),
-    taxeUpdate: build.mutation({
+    /**
+     * * Sales Queries
+     */
+    getSales: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_TAXES : '/api/unknown',
+        url: MAIN_API.length !== 0 ? ROUTE_GET_BY_DATE_SALES : FAILED_ROUTE,
+        method: 'GET',
+        body: data
+      })
+    }),
+    createSale: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_SALE : FAILED_ROUTE,
+        method: 'POST',
+        body: data
+      })
+    }),
+    /**
+     * Products Queries
+     */
+    getAllProducts: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_PRODUCTS : FAILED_ROUTE
+    }),
+    findProductById: build.query({
+      query: id => MAIN_API.length !== 0 ? ROUTE_PRODUCT + `/${id}` : FAILED_ROUTE
+    }),
+    createProduct: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT : FAILED_ROUTE,
+        method: 'POST',
+        body: data
+      })
+    }),
+    updateProduct: build.mutation({
+      query: ({ id, data }) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT + `/${id}` : FAILED_ROUTE,
         method: 'PUT',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
     }),
-    taxeEnable: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_TAXES + '/enable' : '/api/unknown',
-        method: 'PATCH',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        param: data
+    deleteProduct: build.mutation({
+      query: (id) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_PRODUCT + `/${id}` : FAILED_ROUTE,
+        method: 'PATCH'
       })
     }),
-    taxeDisable: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_TAXES + '/disable' : '/api/unknown',
-        method: 'PATCH',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        param: data
-      })
-    }), // Customers
+    /**
+     * Customers Queries
+     */
     getAllCustomers: build.query({
-      query: () => MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/allcustomer' : '/api/unknown'
+      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_CUSTOMER : FAILED_ROUTE
     }),
-    customerCreate: build.mutation({
+    findCustomerById: build.query({
+      query: id => MAIN_API.length !== 0 ? ROUTE_CUSTOMER + `/${id}` : FAILED_ROUTE
+    }),
+    createCustomer: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/savecustomer' : '/api/unknown',
+        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER : FAILED_ROUTE,
         method: 'POST',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
     }),
-    customerUpdate: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + '/updatecustomer' : '/api/unknown',
+    updateCustomer: build.mutation({
+      query: ({ id, data }) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + `/${id}` : FAILED_ROUTE,
         method: 'PUT',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
         body: data
       })
     }),
-    customerDelete: build.mutation({
+    deleteCustomer: build.mutation({
+      query: (id) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_CUSTOMER + `/${id}` : FAILED_ROUTE,
+        method: 'PATCH'
+      })
+    }),
+    /**
+     * Suppliers Queries
+     */
+    getAllSuppliers: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_SUPPLIERS : FAILED_ROUTE
+    }),
+    findSupplierById: build.query({
+      query: id => MAIN_API.length !== 0 ? ROUTE_SUPPLIER + `/${id}` : FAILED_ROUTE
+    }),
+    createSupplier: build.mutation({
       query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER + '/deletecustomer' : '/api/unknown',
-        method: 'PATCH',
-        redirect: 'follow',
-        headers: { 'Content-type': 'application/json' },
-        param: data
+        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER : FAILED_ROUTE,
+        method: 'POST',
+        body: data
+      })
+    }),
+    updateSupplier: build.mutation({
+      query: ({ id, data }) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER + `/${id}` : FAILED_ROUTE,
+        method: 'PUT',
+        body: data
+      })
+    }),
+    deleteSupplier: build.mutation({
+      query: (id) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_SUPPLIER + `/${id}` : FAILED_ROUTE,
+        method: 'PATCH'
+      })
+    }),
+    /**
+     * Taxes Queries
+     */
+    getAllTaxes: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_TAXES : FAILED_ROUTE
+    }),
+    findTaxById: build.query({
+      query: id => MAIN_API.length !== 0 ? ROUTE_TAX + `/${id}` : FAILED_ROUTE
+    }),
+    createTax: build.mutation({
+      query: (data) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_TAX : FAILED_ROUTE,
+        method: 'POST',
+        body: data
+      })
+    }),
+    updateTax: build.mutation({
+      query: ({ id, data }) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_TAX + `/${id}` : FAILED_ROUTE,
+        method: 'PUT',
+        body: data
+      })
+    }),
+    deleteTax: build.mutation({
+      query: (id) => ({
+        url: MAIN_API.length !== 0 ? ROUTE_TAX + `/${id}` : FAILED_ROUTE,
+        method: 'PATCH'
       })
     })
   })
@@ -162,28 +186,34 @@ export const apiSlice = createApi({
 
 export const {
   useLoginMutation,
-  // Products
-  useProductCreateMutation,
-  useProductUpdateMutation,
-  useProductDeleteMutation,
-  // Suppliers
-  useGetAllSuppliersQuery,
-  useSupplierCreateMutation,
-  useSupplierUpdateMutation,
-  useSupplierDeleteMutation,
-  // Sales
-  useGetAllSalesMutation,
-  // Purchases
-  usePurchasesMutation,
-  // Taxes
-  useGetAllTaxesQuery,
-  useTaxeCreateMutation,
-  useTaxeUpdateMutation,
-  useTaxeEnableMutation,
-  useTaxeDisableMutation,
-  // Customers
+  // Purchases Queries
+  useGetPurchasesMutation,
+  useCreatePurchaseMutation,
+  // Sales Queries
+  useGetSalesMutation,
+  useCreateSaleMutation,
+  // Products Queries
+  useGetAllProductsQuery,
+  useFindProductByIdQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+  // Customers Queries
   useGetAllCustomersQuery,
-  useCustomerCreateMutation,
-  useCustomerUpdateMutation,
-  useCustomerDeleteMutation
+  useFindCustomerByIdQuery,
+  useCreateCustomerMutation,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,
+  // Suppliers Queries
+  useGetAllSuppliersQuery,
+  useFindSupplierByIdQuery,
+  useCreateSupplierMutation,
+  useUpdateSupplierMutation,
+  useDeleteSupplierMutation,
+  // Taxes Queries
+  useGetAllTaxesQuery,
+  useFindTaxByIdQuery,
+  useCreateTaxMutation,
+  useUpdateTaxMutation,
+  useDeleteTaxMutation
 } = apiSlice

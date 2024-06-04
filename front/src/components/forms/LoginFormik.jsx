@@ -22,7 +22,7 @@ const loginSchema = Yup.object().shape({
     .required('Password is required')
 })
 
-export default function LoginFormik() {
+export default function LoginFormik () {
   const navigate = useNavigate()
   const [CommonError, setError] = useState('')
   const [login] = useLoginMutation()

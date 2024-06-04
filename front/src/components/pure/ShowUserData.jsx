@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import UserRandom from '../../assets/user_random.png'
 import { useUserActions } from '../../hooks/useUserActions'
 
-export default function ShowUserData() {
+export default function ShowUserData () {
   const { user } = useUserActions()
   console.log(user)
   return (

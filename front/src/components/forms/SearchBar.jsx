@@ -20,10 +20,6 @@ export default function SearchBar () {
   }
 
   const handleSubmit = async (values) => {
-    /* const search = await search(values.search)
-    if (search) {
-      console.log(search)
-    } */
     console.log(values.search)
   }
 
