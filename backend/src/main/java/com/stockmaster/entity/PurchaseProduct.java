@@ -48,7 +48,7 @@ public class PurchaseProduct {
     private int quantity;
 
     public PurchaseProduct(DtoPurchaseProductResponse dtoPurchaseResponse){
-      //  this.product = Product.builder().id(dtoPurchaseResponse.id()).build();
+        this.product = Product.builder().id(dtoPurchaseResponse.id()).build();
         this.quantity = dtoPurchaseResponse.quantity();
     }
 

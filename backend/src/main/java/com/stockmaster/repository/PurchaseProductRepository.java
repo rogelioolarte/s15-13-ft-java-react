@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface ProductPurchaseRepository extends JpaRepository<PurchaseProduct, Long> {
+public interface PurchaseProductRepository extends JpaRepository<PurchaseProduct, Long> {
 }
