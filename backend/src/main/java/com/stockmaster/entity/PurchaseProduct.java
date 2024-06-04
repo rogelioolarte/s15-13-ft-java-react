@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="products_purchase")
 public class PurchaseProduct {
-    @EmbeddedId
-   private PurchaseProductId id;
+   @EmbeddedId
+ private PurchaseProductId id;
 
  /* @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,4 +53,7 @@ public class PurchaseProduct {
     }
 
 
+    public PurchaseProduct(Product product) {
+        this.product = product;
+    }
 }

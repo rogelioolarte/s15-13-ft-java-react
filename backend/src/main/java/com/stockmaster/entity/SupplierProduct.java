@@ -24,11 +24,13 @@ public class SupplierProduct {
     private Supplier supplier;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "id_product")
     private Product product;
 
 
 
     @Column(name = "price_cost", nullable = false)
     private double priceCost;
+
+    
 }
