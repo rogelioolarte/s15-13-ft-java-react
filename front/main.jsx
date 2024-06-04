@@ -4,7 +4,6 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import DashboardPage from './src/pages/DashboardPage'
 import SalesPage from './src/pages/SalesPage'
 import SuppliersPage from './src/pages/SuppliersPage'
-import PurchasesPage from './src/pages/PurchasesPage'
 import NotFoundPage from './src/pages/NotFoundPage'
 import LoginPage from './src/pages/LoginPage'
 import { ThemeProvider } from '@material-tailwind/react'
@@ -14,6 +13,8 @@ import HomePage from './src/pages/HomePage'
 import ProductsPage from './src/pages/ProductsPage.jsx'
 import TaxesPage from './src/pages/TaxesPage.jsx'
 import CustomersPage from './src/pages/CustomersPage.jsx'
+import PurchasesPage from './src/pages/PurchasesPage.jsx'
+import InquiriesPage from './src/pages/InquiriesPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       { path: '/', element: <Navigate to='/home' /> },
       { path: '/dashboard', element: <DashboardPage /> },
       { path: '/sales', element: <SalesPage /> },
-      /* { path: '/inquiries', element: <InquiriesPage /> }, */
+      { path: '/inquiries', element: <InquiriesPage /> },
       { path: '/suppliers', element: <SuppliersPage /> },
       { path: '/purchases', element: <PurchasesPage /> },
       { path: '/products', element: <ProductsPage /> },

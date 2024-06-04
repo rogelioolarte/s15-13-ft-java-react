@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
-import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
+import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
 import { useCreateSupplierMutation, useUpdateSupplierMutation } from '../../store/apiSlice.js'
 
 export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {

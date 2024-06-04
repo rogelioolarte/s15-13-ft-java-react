@@ -5,7 +5,7 @@ import SimplePagination from '../../pure/pagination/SimplePagination'
 import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import ProductsTable from './ProductsTable'
 import ProductsHeader from './ProductsHeader'
-import { useProductDeleteMutation } from '../../../store/apiSlice.js'
+import { useDeleteProductMutation } from '../../../store/apiSlice.js'
 import { useProductsActions } from '../../../hooks/useProductsActions.js'
 
 export default function ProductsSection () {
@@ -155,7 +155,7 @@ export default function ProductsSection () {
     }
   ]
   const TABLE_DATA = TABLE_ROWS
-  const [productDelete] = useProductDeleteMutation()
+  const [productDelete] = useDeleteProductMutation()
   const { useDeleteProductById } = useProductsActions()
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)

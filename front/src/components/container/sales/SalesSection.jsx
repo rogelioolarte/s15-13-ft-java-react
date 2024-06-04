@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react
 import SimplePagination from '../../pure/pagination/SimplePagination'
 import PaginationGroup from '../../pure/pagination/PaginationGroup'
 import { useSalesActions } from '../../../hooks/useSalesActions'
-import { useGetAllSalesMutation } from '../../../store/apiSlice'
+import { useGetSalesMutation } from '../../../store/apiSlice'
 import { toast } from 'sonner'
 import SalesHeader from './SalesHeader'
 import { SalesTable } from './SalesTable'
@@ -103,7 +103,7 @@ export default function SalesSection () {
   const { sales, useInitSales } = useSalesActions()
   const TABLE_DATA = sales.length !== 0 ? sales : TABLE_ROWS
   const defaultDate = { from: 'first', to: 'last' }
-  const { data: salesList, isLoading, isSuccess, isError, error } = useGetAllSalesMutation(defaultDate)
+  const { data: salesList, isLoading, isSuccess, isError, error } = useGetSalesMutation(defaultDate)
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
