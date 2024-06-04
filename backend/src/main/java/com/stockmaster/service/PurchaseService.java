@@ -45,10 +45,8 @@ public class PurchaseService {
 
 
 
-     //   productsDb.forEach(p -> suma.add(p.getSalePrice()));
 
-
-        List<PurchaseProduct> purchaseProductsroducts =products.stream().map(PurchaseProduct::new).toList();
+        List<PurchaseProduct> purchaseProductsroducts =dtoPurchaseResponse.productList().stream().map(PurchaseProduct::new).toList();
 
 
 
@@ -59,13 +57,13 @@ public class PurchaseService {
                 .supplier(supplier)
                 .date(dtoPurchaseResponse.date())
                 .bill(dtoPurchaseResponse.bill())
-                // .productsPurchased(products)
+                 .productsPurchased(purchaseProductsroducts)
                 .total(new BigDecimal(suma))
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);
 
-        purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
-      //  List<PurchaseProduct> productsDb = purchaseProductRepository.saveAll(products);
+       // purchaseProductsroducts.forEach(p-> p.setPurchase(purchaseDb));
+       //List<PurchaseProduct> productsDb2 = purchaseProductRepository.saveAll(purchaseProductsroducts);
         return purchaseDb;
     }
 

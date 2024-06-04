@@ -38,9 +38,11 @@ public class Supplier {
         @OneToMany(mappedBy = "supplier")
         private List<Purchase> purchases;*/
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<SupplierProduct> products;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Purchase> purchases;
 
     public boolean isActive() {
