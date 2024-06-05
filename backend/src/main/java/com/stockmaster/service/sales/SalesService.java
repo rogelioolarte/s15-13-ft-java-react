@@ -145,7 +145,6 @@ public class SalesService {
         return salesResponses;
     }
 
-
     @Transactional
     public Sales save(SalesSavingRequest request) {
         Customer customer = customerRepository.findById(request.getId_customer())

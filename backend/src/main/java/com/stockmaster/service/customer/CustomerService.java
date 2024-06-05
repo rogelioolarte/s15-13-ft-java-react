@@ -56,6 +56,7 @@ public class CustomerService {
         } else if (customerSavingRequest.getCustomerType() == null ) {
             throw new RequestException("The customer type is null or non-existent");
         }
+
         if(customerRepository.findByName(customerSavingRequest.getName()).isPresent()){
             Customer customerDisable = customerRepository
                     .findByName(customerSavingRequest.getName())

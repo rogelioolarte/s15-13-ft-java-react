@@ -32,11 +32,7 @@ public class CustomerController {
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.findByAll());
     }
-//    @GetMapping("/allactive")
-//    public ResponseEntity<?> getActiveCustomers() {
-//        List<Customer> customers = customerRepository.findAllActive();
-//        return new ResponseEntity<>(customers, HttpStatus.OK);
-//    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {

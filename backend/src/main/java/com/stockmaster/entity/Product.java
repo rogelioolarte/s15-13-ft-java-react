@@ -45,8 +45,13 @@ public class Product {
     @ManyToMany(mappedBy="products")
     private List<Purchase> purchase;
 
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy="products")
     private List<PurchaseProduct> PurchaseProduct;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<SalesProduct> salesProducts;
+    @ManyToMany(mappedBy="product")
+    private List<SalesProduct> sales;
 
     public Product() {
         this.active = true;
