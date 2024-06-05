@@ -167,6 +167,12 @@ public class SalesService {
             Product product = productRepository.findById(productRequest.getIdProduct())
                     .orElseThrow(()-> new RequestException("Product not found"));
 
+            if (productRequest.getQuantity() > product.getStock()) {
+                int currentStock = product.getStock();
+                throw new RequestException("Not enough stock for product '" + product.getName() + "'. Current stock: " + currentStock);
+
+            }
+
             SalesProduct salesProduct = SalesProduct.builder()
                     .sales(sales)
                     .product(product)
