@@ -15,4 +15,8 @@ import java.util.List;
 public interface SalesRepository extends JpaRepository<Sales, Long> {
     @Query(value = "CALL sp_getByDate(:date)", nativeQuery = true)
     List<Object[]> findByDate(@Param("date") String date);
+
+    @Query(value = "CALL sp_getByDateRange(:startDate, :endDate)", nativeQuery = true)
+    List<Object[]> findByDateRange(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
 }

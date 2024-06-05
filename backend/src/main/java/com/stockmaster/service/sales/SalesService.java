@@ -108,6 +108,43 @@ public class SalesService {
         }
         return salesResponses;
     }
+    public List<SalesDateResponse> findByDateRange(Date startDate, Date endDate) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedStartDate = dateFormat.format(startDate);
+        String formattedEndDate = dateFormat.format(endDate);
+
+        logger.info("Formatted start date: {}", formattedStartDate);
+        logger.info("Formatted end date: {}", formattedEndDate);
+
+        List<Object[]> results = salesRepository.findByDateRange(formattedStartDate, formattedEndDate);
+
+        if (results.isEmpty()) {
+            logger.info("No results found for date range: {} - {}", formattedStartDate, formattedEndDate);
+            return Collections.emptyList();
+        }
+
+        List<SalesDateResponse> salesResponses = new ArrayList<>();
+        for (Object[] result : results) {
+            logger.info("Result: {}", Arrays.toString(result));
+
+            Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
+
+            SalesDateResponse response = SalesDateResponse.builder()
+                    .sale_id(saleId)
+                    .customerName((String) result[1])
+                    .personalCode((String) result[2])
+                    .product_name((String) result[3])
+                    .quantity((Integer) result[4])
+                    .discount((BigDecimal) result[5])
+                    .price((BigDecimal) result[6])
+                    .tax_name((String) result[7])
+                    .total((BigDecimal) result[8])
+                    .build();
+            salesResponses.add(response);
+        }
+        return salesResponses;
+    }
+
 
     @Transactional
     public Sales save(SalesSavingRequest request) {
@@ -154,12 +191,6 @@ public class SalesService {
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    /*
-    private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
-        return products.stream()
-                .map(ProductSavingRequest::getTotalProduct)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }*/
 
     private BigDecimal addTaxToTotal(BigDecimal total, Taxes tax) {
         BigDecimal taxAmount = total.multiply
