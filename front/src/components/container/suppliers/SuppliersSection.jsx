@@ -8,122 +8,74 @@ import SuppliersTable from './SuppliersTable'
 import SuppliersHeader from './SuppliersHeader'
 import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
 import { useGetAllSuppliersQuery, useDeleteSupplierMutation } from '../../../store/apiSlice.js'
+import { useAppSelector } from '../../../hooks/store.js'
+import { selectSuppliers } from '../../../store/suppliersSlice.js'
 
 const TABLE_HEAD = [
-  {
-    head: 'checkbox',
-    row: 'checkbox'
-  },
-  {
-    head: 'Supplier Name',
-    row: 'name'
-  },
-  {
-    head: 'Company Code N°',
-    row: 'companyCode'
-  },
-  {
-    head: '',
-    row: 'actions'
-  }
-]
-const TABLE_ROWS = [
-  {
-    id: '11111',
-    name: 'AText',
-    companyCode: '123123'
-  },
-  {
-    id: '22222',
-    name: 'BText',
-    companyCode: '456456'
-  },
-  {
-    id: '33333',
-    name: 'CText',
-    companyCode: '888888'
-  },
-  {
-    id: '44444',
-    name: 'DText',
-    companyCode: '444444'
-  },
-  {
-    id: '55555',
-    name: 'EText',
-    companyCode: '666666'
-  },
-  {
-    id: '6',
-    name: 'FText',
-    companyCode: '555555'
-  },
-  {
-    id: '7',
-    name: 'GText',
-    companyCode: '777777'
-  }
+  { head: 'checkbox', row: 'checkbox' },
+  { head: 'Supplier Name', row: 'name' },
+  { head: 'Company Code N°', row: 'companyCode' },
+  { head: '', row: 'actions' }
 ]
 
 export default function SuppliersSection () {
   const [deleteSupplier] = useDeleteSupplierMutation()
-  const { suppliers, useInitSuppliers } = useSuppliersActions()
-  // console.log(suppliers)
-  const TABLE_DATA = suppliers.length !== 0 ? suppliers : []
+  const { useInitSuppliers } = useSuppliersActions()
   const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
-
-  useEffect(() => {
-    if (isLoading) {
-      console.log('Loading - Poner un espiner en la tabla')
-    } else if (isSuccess) {
-      useInitSuppliers(suppliersData)
-      console.log('finalizo')
-    } else if (isError) {
-      toast.error(`Error while conecting: ${error}`)
-    }
-  }, [])
-
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
+  const suppliers = useAppSelector(selectSuppliers)
+  const [checkedItems, setCheckedItems] = useState([])
+  const selectedItems = checkedItems.filter(value => value === true)
   const { useDeleteSupplierById } = useSuppliersActions()
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
-  const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
+  const [searchFilter, setSearchFilter] = useState([])
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
-  const selectedItems = checkedItems.filter((value) => value === true)
+
+  useEffect(() => {
+    if (isSuccess && !isLoading) {
+      useInitSuppliers(suppliersData)
+    } else if (isError) {
+      toast.error(`Error while connecting: ${error}`)
+    }
+  }, [isLoading, isSuccess])
+
+  useEffect(() => {
+    setSearchFilter(suppliers.slice())
+    setCheckedItems(new Array(suppliers.length).fill(false))
+  }, [suppliers])
 
   const findSelectedSupplier = () => {
-    const index = checkedItems.findIndex((value) => value === true)
-    return TABLE_DATA[index]
+    const index = checkedItems.findIndex(value => value === true)
+    return suppliers[index]
   }
 
   const getSelectedSuppliers = () => {
     return checkedItems
-      .map((isChecked, index) => (isChecked ? TABLE_DATA[index] : null))
+      .map((isChecked, index) => (isChecked ? suppliers[index] : null))
       .filter(supplier => supplier !== null)
   }
 
   const handleDelete = async () => {
-    const suppliers = getSelectedSuppliers()
-    if (suppliers) {
-      suppliers.map(async (supplier) => {
+    const suppliersToDelete = getSelectedSuppliers()
+    if (suppliersToDelete.length) {
+      for (const supplier of suppliersToDelete) {
         await deleteSupplier(supplier.id).then((res) => {
-          console.log(res)
           if (res.status === 201) {
             useDeleteSupplierById(supplier.id)
             setIsDeleteConfirmationOpen(false)
           }
         }).catch((error) => {
-          console.log(error)
+          toast.error(`Error deleting supplier: ${error}`)
         })
-      })
+      }
     }
   }
 
   const handleOpen = () => setOpen(!open)
 
   const handleSearch = (searchTerm) => {
-    const filteredSuppliers = TABLE_DATA.filter(supplier =>
+    const filteredSuppliers = suppliers.filter(supplier =>
       supplier.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       supplier.companyCode.toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -132,14 +84,9 @@ export default function SuppliersSection () {
 
   const supplierToEdit = selectedItems.length === 1 && findSelectedSupplier()
 
-  useEffect(() => {
-    // Restablecer suppliers seleccionados al cambiar de página
-    setCheckedItems(new Array(TABLE_DATA.length).fill(false))
-  }, [page])
-
   const suppliersPerPage = 7
   const startIndex = (page - 1) * suppliersPerPage
-  const endIndex = Math.min(startIndex + suppliersPerPage, TABLE_DATA.length)
+  const endIndex = Math.min(startIndex + suppliersPerPage, searchFilter.length)
 
   const handleSort = (key) => {
     let direction = 'ascending'
@@ -150,21 +97,19 @@ export default function SuppliersSection () {
   }
 
   const sortedRows = [...searchFilter].sort((a, b) => {
-    if (!sortConfig) return TABLE_DATA
+    if (!sortConfig) return 0
 
     const { key, direction } = sortConfig
 
     if (typeof a[key] === 'string' && typeof b[key] === 'string') {
-      // Orden alfabético
       return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
     } else {
-      // Orden numérico
       return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
     }
   })
 
   const visibleSuppliers = sortedRows.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(TABLE_DATA.length / suppliersPerPage)
+  const totalPages = Math.ceil(searchFilter.length / suppliersPerPage)
 
   return (
     <main className='w-full flex justify-center overflow-hidden px-6 py-5'>

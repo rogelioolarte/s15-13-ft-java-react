@@ -23,12 +23,20 @@ module.exports = withMT({
           90: '#2E90FA90'
         },
         warning: {
-          DEFAULT: '#8D8543',
-          20: '#8D854320',
-          40: '#8D854340',
-          60: '#8D854360',
-          80: '#8D854380',
-          90: '#8D854390'
+          DEFAULT: '#D1D4FA',
+          20: '#D1D4FA20',
+          40: '#D1D4FA40',
+          60: '#D1D4FA60',
+          80: '#D1D4FA80',
+          90: '#D1D4FA90'
+        },
+        form: {
+          DEFAULT: '#D1D4FA',
+          20: '#D1D4FA20',
+          40: '#D1D4FA40',
+          60: '#D1D4FA60',
+          80: '#D1D4FA80',
+          90: '#D1D4FA90'
         }
       },
       fontFamily: {

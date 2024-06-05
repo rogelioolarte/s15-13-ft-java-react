@@ -17,7 +17,7 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
     barcode: Yup.string().required('Barcode is required'),
     description: Yup.string(),
     price: Yup.string().required('Price is required'),
-    minimal: Yup.string().required('Stock minimal is required'),
+    minimal: Yup.string().required('Minimal Stock is required'),
     stock: Yup.string().required('Stock is required')
 
   })

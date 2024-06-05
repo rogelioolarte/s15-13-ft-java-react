@@ -17,8 +17,8 @@ export default function SuppliersHeader ({ onSearch, supplierToEdit, selectedIte
         </div>
         {/* Buttons */}
         <div className='flex flex-wrap items-center gap-2'>
-          <SuppliersFormModal button={<Button className='min-w-fit flex-1 bg-secondary-40 text-gray-900 shadow-none hover:shadow-none hover:bg-secondary-60 transition-all duration-300 ease-in-out'>Add New</Button>} action='create' />
-          <SuppliersFormModal button={<Button disabled={selectedItems.length !== 1} className='min-w-fit flex-1 bg-secondary-40 text-gray-900 shadow-none hover:shadow-none hover:bg-secondary-60 transition-all duration-300 ease-in-out'>Modify</Button>} action='edit' supplierToEdit={supplierToEdit} />
+          <SuppliersFormModal button={<Button className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-secondary-60 transition-all duration-300 ease-in-out'>Add New</Button>} action='create' />
+          <SuppliersFormModal button={<Button disabled={selectedItems.length !== 1} className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-secondary-60 transition-all duration-300 ease-in-out'>Modify</Button>} action='edit' supplierToEdit={supplierToEdit} />
           <Button disabled={selectedItems.length < 1} onClick={() => setIsDeleteConfirmationOpen(true)} className='min-w-fit flex-1 bg-warning-40 text-gray-900 shadow-none hover:shadow-none hover:bg-warning-60 transition-all duration-300 ease-in-out'>Delete</Button>
         </div>
       </div>

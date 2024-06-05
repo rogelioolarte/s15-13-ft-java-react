@@ -19,16 +19,22 @@ export const suppliersSlice = createSlice({
     },
     updateSupplierById: (state, action) => {
       const { id, newData } = action.payload
-      return state.map(supplier => (supplier.id === id ? { ...supplier, ...newData } : supplier))
+      const index = state.findIndex(supplier => supplier.id === id)
+      if (index !== -1) {
+        state[index] = { ...state[index], ...newData }
+      }
     },
     deleteSupplierById: (state, action) => {
       return state.filter(supplier => supplier.id !== action.payload)
     },
-    resetSuppliers: (state, action) => {
+    resetSuppliers: () => {
       return DEFAULT_STATE
     }
   }
 })
+
+// Selector
+export const selectSuppliers = state => state.suppliers
 
 export default suppliersSlice.reducer
 export const {

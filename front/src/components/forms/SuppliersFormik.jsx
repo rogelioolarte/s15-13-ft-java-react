@@ -8,14 +8,13 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
   const [supplierCreate] = useCreateSupplierMutation()
   const [supplierUpdate] = useUpdateSupplierMutation()
 
-  const INPUT_BG = '#FFF8F8'
+  const { useAddSupplier, useUpdateSupplierById } = useSuppliersActions()
 
-  const { useAddSupplier } = useSuppliersActions()
+  const INPUT_BG = '#FFF8F8'
 
   const supplierSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    companyCode: Yup.string().required('Code is required')
-
+    companyCode: Yup.string().required('Code is required') // Agregar validación por code -> no pueden haber dos suppliers con el mismo code
   })
 
   const initialValues = {
@@ -24,41 +23,41 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
   }
 
   const createSupplier = async (values) => {
-    await supplierCreate(values).unwrap()
-      .then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          useAddSupplier(res.data)
-        }
-      }).catch((error) => console.log(error))
+    try {
+      const res = await supplierCreate(values).unwrap()
+      console.log(res)
+      useAddSupplier(res)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const editSupplier = async (values) => {
-    await supplierUpdate(values).unwrap()
-      .then((res) => {
-        console.log(res)
-        if (res.status === 201) {
-          useAddSupplier(res.data)
-        }
-      }).catch((error) => console.log(error))
+    try {
+      const res = await supplierUpdate({ id: supplierToEdit.id, data: values }).unwrap()
+      useUpdateSupplierById({ id: supplierToEdit.id, newData: res })
+      setOpen(false)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    action === 'create' && await createSupplier(values)
-    action === 'edit' && await editSupplier(values)
+    if (action === 'create') {
+      await createSupplier(values)
+    } else if (action === 'edit') {
+      await editSupplier(values)
+    }
   }
 
   return (
     <Formik initialValues={initialValues} validationSchema={supplierSchema} onSubmit={handleSubmit}>
-
-      {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+      {({ errors, touched }) => (
         <Form className='flex flex-col gap-2'>
           <fieldset className='flex flex-col gap-2'>
-            {/* name */}
             <div className='flex flex-col gap-[2px]'>
               <Field name='name'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
+                {({ field }) => (
                   <Input {...field} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
@@ -66,10 +65,9 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
                 ? (<ErrorMessage className='ml-2 text-red-600 text-xs' name='name' component='div' />)
                 : <div className='h-4' />}
             </div>
-            {/* companyCode */}
             <div className='flex flex-col gap-[2px]'>
               <Field name='companyCode'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
+                {({ field }) => (
                   <Input {...field} type='text' placeholder='Code' label='Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
@@ -79,11 +77,11 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
             </div>
           </fieldset>
           <div className='flex justify-evenly gap-2'>
-            <Button type='submit' className='bg-[#D1D4FA] text-gray-900'>
-              Save
-            </Button>
             <Button onClick={() => setOpen(false)} color='black'>
               Cancel
+            </Button>
+            <Button type='submit' className='bg-warning text-gray-900'>
+              Save
             </Button>
           </div>
         </Form>
