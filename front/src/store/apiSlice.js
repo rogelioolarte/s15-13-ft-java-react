@@ -188,8 +188,6 @@ export const apiSlice = createApi({
 
 export const {
   useLoginMutation,
-  // Sales
-  useGetAllSalesMutation,
   // Purchases Queries
   useGetPurchasesMutation,
   useCreatePurchaseMutation,

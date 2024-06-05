@@ -1,3 +1,6 @@
+/**
+ * Route for the Main API
+ */
 export const MAIN_API = 'https://s15-13-ft-java-react-deploy.up.railway.app'
 /**
  * Login Route

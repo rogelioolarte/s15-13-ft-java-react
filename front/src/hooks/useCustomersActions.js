@@ -13,7 +13,7 @@ export const useCustomersActions = () => {
 
   /**
    * This method add a List of Customers
-   * @param {[]} data This parameter required a array of Customers
+   * @param {[]} data This parameter required an array of Customers
    */
   const useInitCustomers = (data) => {
     dispatch(initCustomers(data))

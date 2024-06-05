@@ -8,8 +8,6 @@ import SuppliersTable from './SuppliersTable'
 import SuppliersHeader from './SuppliersHeader'
 import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
 import { useGetAllSuppliersQuery, useDeleteSupplierMutation } from '../../../store/apiSlice.js'
-import { useAppSelector } from '../../../hooks/store.js'
-import { selectSuppliers } from '../../../store/suppliersSlice.js'
 
 const TABLE_HEAD = [
   { head: 'checkbox', row: 'checkbox' },
@@ -20,9 +18,8 @@ const TABLE_HEAD = [
 
 export default function SuppliersSection () {
   const [deleteSupplier] = useDeleteSupplierMutation()
-  const { useInitSuppliers } = useSuppliersActions()
+  const { suppliers, useInitSuppliers } = useSuppliersActions()
   const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
-  const suppliers = useAppSelector(selectSuppliers)
   const [checkedItems, setCheckedItems] = useState([])
   const selectedItems = checkedItems.filter(value => value === true)
   const { useDeleteSupplierById } = useSuppliersActions()
