@@ -36,7 +36,22 @@ public class Purchase {
 
     private BigDecimal total;
 
-    //@NotFound(action = NotFoundAction.IGNORE)
+
+    @ManyToMany
+    @JoinTable(
+            name = "products_purchase",
+            joinColumns = @JoinColumn(name = "id_purchase"),
+            inverseJoinColumns = @JoinColumn(name = "id_product")
+    )
+    private List<Product> products;
+
+
+    @OneToMany(mappedBy = "purchase")
+    private List<PurchaseProduct> products2;
+
+
+
+    /*@NotFound(action = NotFoundAction.IGNORE)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "purchase_products",
@@ -52,6 +67,6 @@ public class Purchase {
 
 
     @OneToMany(mappedBy="purchase")
-    private List<PurchaseProduct> PurchaseProduct;
+    private List<PurchaseProduct> PurchaseProduct;*/
 
 }

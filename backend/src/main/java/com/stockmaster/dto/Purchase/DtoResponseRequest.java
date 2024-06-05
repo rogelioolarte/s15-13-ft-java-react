@@ -24,7 +24,5 @@ public record DtoResponseRequest(Long id,
                                  Supplier supplier,
 
                                  List<Product> productList) {
-    public DtoResponseRequest (){
-        this(null,null,null,null,null);
-    }
+
 }

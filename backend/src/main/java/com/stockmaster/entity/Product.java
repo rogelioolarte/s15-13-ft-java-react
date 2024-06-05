@@ -42,11 +42,18 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @ManyToMany(mappedBy="products")
+    @OneToMany(mappedBy = "product")
+    private List<PurchaseProduct> purchase;
+
+
+    @ManyToMany(mappedBy = "products")
+    private List<Purchase> purchases;
+
+ /*   @ManyToMany(mappedBy="products")
     private List<Purchase> purchase;
 
     @OneToMany(mappedBy="product")
-    private List<PurchaseProduct> PurchaseProduct;
+    private List<PurchaseProduct> PurchaseProduct;*/
 
     public Product() {
         this.active = true;

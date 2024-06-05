@@ -39,7 +39,7 @@ public class PurchaseService {
                 .supplier(supplier)
                 .date(dtoPurchaseResponse.date())
                 .bill(dtoPurchaseResponse.bill())
-                .productsPurchased(products)
+                .products2(products)
                 .total(suma)
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);

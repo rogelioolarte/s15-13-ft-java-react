@@ -12,21 +12,16 @@ import lombok.*;
 @Table(name = "products_purchase")
 public class PurchaseProduct {
 
-    // @EmbeddedId
-    //private PurchaseProductId id;
 
-    /* @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long id;*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @ManyToOne
-    //@MapsId("id")
     @JoinColumn(name = "id_product", referencedColumnName = "id")
     private Product product;
+
 
   /*
     @ManyToMany
@@ -38,7 +33,6 @@ public class PurchaseProduct {
     private List<Product> products;*/
 
     @ManyToOne
-    // @MapsId("purchaseId")
     @JoinColumn(name = "id_purchase", referencedColumnName = "id")
     private Purchase purchase;
 
