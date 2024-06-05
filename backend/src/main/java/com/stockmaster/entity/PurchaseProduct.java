@@ -4,6 +4,9 @@ import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
+@Builder
 @Entity
 @Getter
 @Setter
@@ -51,4 +54,7 @@ public class PurchaseProduct {
     public void setPurchase(Purchase purchase) {
         this.purchase = Purchase.builder().purchaseId(purchase.getPurchaseId()).build();
     }
+
+
+
 }

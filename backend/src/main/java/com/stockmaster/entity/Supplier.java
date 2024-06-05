@@ -42,7 +42,7 @@ public class Supplier {
     private List<SupplierProduct> products;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    @ToString.Exclude
+   // @ToString.Exclude
     private List<Purchase> purchases;
 
     public boolean isActive() {
