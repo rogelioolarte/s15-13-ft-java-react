@@ -3,6 +3,7 @@ package com.stockmaster.service;
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
 import com.stockmaster.dto.Purchase.DtoResponseRequest;
 import com.stockmaster.dto.Purchase.ProductDtoResponsePUrchase;
+import com.stockmaster.dto.Purchase.dtoSupplierPurchase;
 import com.stockmaster.entity.*;
 import com.stockmaster.repository.ProductRepository;
 import com.stockmaster.repository.PurchaseProductRepository;
@@ -53,7 +54,7 @@ public class PurchaseService {
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);
         List<ProductDtoResponsePUrchase> productResponse = productsDb.stream().map(ProductDtoResponsePUrchase::new).toList();
-        return new DtoResponseRequest(purchaseDb.getPurchaseId(),purchaseDb.getBill(),purchaseDb.getDate(), purchaseDb.getSupplier(),productResponse,purchaseDb.getTotal());
+        return new DtoResponseRequest(purchaseDb.getPurchaseId(),purchaseDb.getBill(),purchaseDb.getDate(), new dtoSupplierPurchase(supplier),productResponse,purchaseDb.getTotal());
     }
 
 }

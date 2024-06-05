@@ -21,7 +21,7 @@ public record DtoResponseRequest(Long id,
                                  @JsonFormat(pattern = "MM-dd-yyyy")
                                  Date date,
 
-                                 Supplier supplier,
+                                 dtoSupplierPurchase supplier,
 
                                  List<ProductDtoResponsePUrchase> productList,
                                  BigDecimal total)

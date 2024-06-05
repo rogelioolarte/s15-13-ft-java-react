@@ -42,18 +42,13 @@ public class Product {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<PurchaseProduct> purchase;
 
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Purchase> purchases;
 
- /*   @ManyToMany(mappedBy="products")
-    private List<Purchase> purchase;
-
-    @OneToMany(mappedBy="product")
-    private List<PurchaseProduct> PurchaseProduct;*/
 
     public Product() {
         this.active = true;

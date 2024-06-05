@@ -28,21 +28,12 @@ public class Supplier {
 
     @Column
     private boolean active = true;
-    /*
-        @ManyToMany
-        @JoinTable(name = "supplier_product",
-                joinColumns = @JoinColumn(name = "supplier_id"),
-                inverseJoinColumns = @JoinColumn(name = "supplier_product_id"))
-        private List<SupplierProduct> products;
 
-        @OneToMany(mappedBy = "supplier")
-        private List<Purchase> purchases;*/
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<SupplierProduct> products;
 
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-   // @ToString.Exclude
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Purchase> purchases;
 
     public boolean isActive() {

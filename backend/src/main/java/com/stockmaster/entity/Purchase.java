@@ -18,7 +18,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "purchase")
-//@IdClass(PurchaseProductId.class)
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +36,7 @@ public class Purchase {
     private BigDecimal total;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "products_purchase",
             joinColumns = @JoinColumn(name = "id_purchase"),
@@ -46,27 +45,10 @@ public class Purchase {
     private List<Product> products;
 
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<PurchaseProduct> products2;
 
 
 
-    /*@NotFound(action = NotFoundAction.IGNORE)
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "purchase_products",
-            joinColumns = @JoinColumn(name = "id_purchase" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id")
-    )
-    private List<Product> products;
-
-    @Column(insertable=false, updatable=false)
-    @ElementCollection
-    @CollectionTable(name = "products_purchase", joinColumns = @JoinColumn(name = "id_purchase"))
-    private List<PurchaseProduct> productsPurchased;
-
-
-    @OneToMany(mappedBy="purchase")
-    private List<PurchaseProduct> PurchaseProduct;*/
 
 }
