@@ -40,6 +40,8 @@ public class PurchaseService {
             Product pDb = productService.getProductById(p.getProduct().getId());
             suma += pDb.getSalePrice().intValue();
             productsDb.add( PurchaseProduct.builder().product(pDb).quantity(p.getQuantity()).build());
+            pDb.setStock(pDb.getStock()+p.getQuantity());
+            productService.updateProduct(pDb);
         }
 
 
