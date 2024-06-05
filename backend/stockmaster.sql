@@ -51,6 +51,7 @@ CREATE TABLE supplier (
 );
 
 CREATE TABLE supplier_product (
+ id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_product BIGINT,
     id_supplier BIGINT,
     price_cost DECIMAL(18,2) NOT NULL,
