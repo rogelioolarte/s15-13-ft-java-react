@@ -34,10 +34,10 @@ public class SupplierController {
         return supplierService.getSupplierById(id);
     }
 
-    @GetMapping
-    public List<SupplierResponseDTO> findSuppliersByName(@RequestBody String name) {//provar endpoind
-        return supplierService.findSuppliersByName(name);
-    }
+//    @GetMapping
+//    public List<SupplierResponseDTO> findSuppliersByName(@RequestBody String name) {//provar endpoind
+//        return supplierService.findSuppliersByName(name);
+//    }
 
     @GetMapping("/all")
     public List<SupplierResponseDTO> getAllSuppliers() {
@@ -49,10 +49,8 @@ public class SupplierController {
         return supplierService.deactivateSupplier(id);
     }
 
-    //fondbyname
 
-
-    @PostMapping("/product")
+    @PostMapping("/products")
     public SupplierResponseDTO addProductsToSupplier(@RequestParam Long supplierId, @RequestBody List<Long> productIds) {
         return supplierService.addProductsToSupplier(supplierId, productIds);
     }

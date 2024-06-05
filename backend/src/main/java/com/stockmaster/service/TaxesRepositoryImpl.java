@@ -28,6 +28,11 @@ public class TaxesRepositoryImpl {
 
     public DtoTaxesResponse taxRegister(DtoTaxesRquest dtoTaxesRquest) {
         try {
+            if (!taxesRepository.findByName(dtoTaxesRquest.name()).getActive() ) {
+                Taxes tax = taxesRepository.findByName(dtoTaxesRquest.name());
+                tax.setActive(true);
+                return new DtoTaxesResponse(taxesRepository.save(tax));
+            }
             Taxes tax = taxesRepository.save(new Taxes(dtoTaxesRquest));
             return new DtoTaxesResponse(tax);
         } catch (EntityNotFoundException en) {
@@ -56,11 +61,11 @@ public class TaxesRepositoryImpl {
         return new DtoTaxesResponse(taxesRepository.save(tax));
     }
 
-    public DtoTaxesResponse activeTax(Long id) {
-        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
-        tax.setActive(true);
-        return new DtoTaxesResponse(taxesRepository.save(tax));
-    }
+//    public DtoTaxesResponse activeTax(Long id) {
+//        Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
+//        tax.setActive(true);
+//        return new DtoTaxesResponse(taxesRepository.save(tax));
+//    }
 
 
 }

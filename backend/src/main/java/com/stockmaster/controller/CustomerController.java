@@ -28,17 +28,17 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
 
     //Metodos Get
-    @GetMapping("/allcustomer")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.findByAll());
     }
-    @GetMapping("/allactive")
-    public ResponseEntity<?> getActiveCustomers() {
-        List<Customer> customers = customerRepository.findAllActive();
-        return new ResponseEntity<>(customers, HttpStatus.OK);
-    }
+//    @GetMapping("/allactive")
+//    public ResponseEntity<?> getActiveCustomers() {
+//        List<Customer> customers = customerRepository.findAllActive();
+//        return new ResponseEntity<>(customers, HttpStatus.OK);
+//    }
 
-    @GetMapping("/findby/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
     }
@@ -53,7 +53,7 @@ public class CustomerController {
         return ResponseEntity.ok(searchResult);
     }
     //Metodos Post
-    @PostMapping("/savecustomer")
+    @PostMapping
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerSavingRequest customer, BindingResult result){
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors()
@@ -66,19 +66,19 @@ public class CustomerController {
         return ResponseEntity.ok( customerService.save(customer) );
     }
     //Metodos Put
-    @PutMapping("/updatecustomer")
+    @PutMapping
     public ResponseEntity<?> updateCustomer(@Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
         return ResponseEntity.ok(customerService.update(customer));
     }
     //Metodo Patch
-    @PatchMapping("/deletecustomer/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-    @PatchMapping("/enable/{id}")
-    public ResponseEntity<?> enableCustomer(@PathVariable Long id){
-        customerService.activate(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
+//    @PatchMapping("/enable/{id}")
+//    public ResponseEntity<?> enableCustomer(@PathVariable Long id){
+//        customerService.activate(id);
+//        return ResponseEntity.ok(HttpStatus.OK);
+//    }
 }
