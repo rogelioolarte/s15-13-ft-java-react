@@ -46,3 +46,37 @@ END //
 
 DELIMITER ;
 
+
+
+
+
+----------------------------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_getByDateRange(IN start_date DATE, IN end_date DATE)
+BEGIN
+    SELECT
+        s.id AS sale_id,
+        c.name AS customer_name,
+        c.personalcode AS customer_personalcode,
+        p.name AS product_name,
+        sp.quantity,
+        sp.discount,
+        p.sale_price AS price,
+        t.name AS tax_name,
+        s.total
+    FROM
+        sales s
+        JOIN customer c ON s.id_customer = c.id
+        JOIN sales_products sp ON s.id = sp.id_sales
+        JOIN product p ON sp.id_product = p.id
+        JOIN taxes t ON s.id_taxes = t.id
+    WHERE
+        s.date BETWEEN start_date AND end_date;
+END //
+
+DELIMITER ;
+
+

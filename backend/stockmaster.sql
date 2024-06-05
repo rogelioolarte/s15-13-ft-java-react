@@ -61,10 +61,6 @@ CREATE TABLE supplier_product (
 
 
 
-
-
-
-
 CREATE TABLE sales (
   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_customer BIGINT,
@@ -76,13 +72,14 @@ FOREIGN KEY (id_taxes) REFERENCES taxes(id)
 );
 
 CREATE TABLE sales_products (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_sales BIGINT,
-	 id_product BIGINT,
+    id_product BIGINT,
     quantity INT,
     discount DECIMAL(18,2),
     FOREIGN KEY (id_product) REFERENCES product(id),
     FOREIGN KEY (id_sales) REFERENCES sales(id)
-); 
+);
 
 CREATE TABLE purchase (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,

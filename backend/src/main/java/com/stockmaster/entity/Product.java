@@ -50,6 +50,7 @@ public class Product {
     private List<Purchase> purchases;
 
 
+
     public Product() {
         this.active = true;
     }

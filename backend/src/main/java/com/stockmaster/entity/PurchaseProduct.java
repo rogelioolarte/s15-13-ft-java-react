@@ -26,14 +26,6 @@ public class PurchaseProduct {
     private Product product;
 
 
-  /*
-    @ManyToMany
-    @JoinTable(
-            name = "products_purchase_mapping",
-            joinColumns = @JoinColumn(name = "id_purchase_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_product")
-    )
-    private List<Product> products;*/
 
     @ManyToOne
     @JoinColumn(name = "id_purchase", referencedColumnName = "id")
