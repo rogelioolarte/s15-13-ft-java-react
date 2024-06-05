@@ -23,6 +23,9 @@ public record DtoResponseRequest(Long id,
 
                                  Supplier supplier,
 
-                                 List<Product> productList) {
+                                 List<ProductDtoResponsePUrchase> productList,
+                                 BigDecimal total)
+
+{
 
 }

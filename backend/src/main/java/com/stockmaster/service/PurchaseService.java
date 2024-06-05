@@ -1,6 +1,8 @@
 package com.stockmaster.service;
 
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
+import com.stockmaster.dto.Purchase.DtoResponseRequest;
+import com.stockmaster.dto.Purchase.ProductDtoResponsePUrchase;
 import com.stockmaster.entity.*;
 import com.stockmaster.repository.ProductRepository;
 import com.stockmaster.repository.PurchaseProductRepository;
@@ -27,8 +29,8 @@ public class PurchaseService {
     private ProductService productService;
 
     @Transactional
-    public Purchase MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
-
+    public DtoResponseRequest MakeAPurchase(DtoPurchaseResponse dtoPurchaseResponse) {
+        List<Product> productsMaper = dtoPurchaseResponse.productList().stream().map(Product::new).toList();
         List<PurchaseProduct> products = dtoPurchaseResponse.productList().stream().map(PurchaseProduct::new).toList();
         List<PurchaseProduct> productsDb = new ArrayList<>();
         Integer suma = 0;
@@ -36,7 +38,6 @@ public class PurchaseService {
         for(PurchaseProduct p : products ){
             Product pDb = productService.getProductById(p.getProduct().getId());
             suma += pDb.getSalePrice().intValue();
-
             productsDb.add( PurchaseProduct.builder().product(pDb).quantity(p.getQuantity()).build());
         }
 
@@ -51,8 +52,8 @@ public class PurchaseService {
                 .total(new BigDecimal(suma))
                 .build();
         Purchase purchaseDb = purchaseRepository.save(purchase);
-
-        return purchaseDb;
+        List<ProductDtoResponsePUrchase> productResponse = productsDb.stream().map(ProductDtoResponsePUrchase::new).toList();
+        return new DtoResponseRequest(purchaseDb.getPurchaseId(),purchaseDb.getBill(),purchaseDb.getDate(), purchaseDb.getSupplier(),productResponse,purchaseDb.getTotal());
     }
 
 }
