@@ -38,6 +38,15 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found."));
         return customerMapper.toCustomerResponse(customer);
     }
+
+    public CustomerResponse findByName(String name){
+        if (name == null || name.isBlank()) {
+            throw new RequestException("The Id is invalid.");
+        }
+        Customer customer = customerRepository.findByName(name).orElseThrow(() -> new RuntimeException("Customer not found."));
+        return customerMapper.toCustomerResponse(customer);
+    }
+
     //Save
     public CustomerResponse save(CustomerSavingRequest customerSavingRequest){
         if (customerSavingRequest.getName() == null || customerSavingRequest.getName().isEmpty()) {
@@ -46,6 +55,13 @@ public class CustomerService {
             throw new RequestException("The personal code is null or empty");
         } else if (customerSavingRequest.getCustomerType() == null ) {
             throw new RequestException("The customer type is null or non-existent");
+        }
+        if(customerRepository.findByName(customerSavingRequest.getName()).isPresent()){
+            Customer customerDisable = customerRepository
+                    .findByName(customerSavingRequest.getName())
+                    .orElseThrow(()-> new RequestException("Customer not disable but It's present"));
+            customerDisable.setActive(true);
+            return customerMapper.toCustomerResponse(customerRepository.save(customerDisable));
         }
         Customer customer = customerMapper.customerRequestToPost(customerSavingRequest);
 

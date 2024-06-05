@@ -27,8 +27,6 @@ public class SupplierProduct {
     @JoinColumn(name = "id_product")
     private Product product;
 
-
-
     @Column(name = "price_cost", nullable = false)
     private double priceCost;
 

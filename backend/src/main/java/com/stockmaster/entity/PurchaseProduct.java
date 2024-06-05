@@ -1,15 +1,8 @@
 package com.stockmaster.entity;
 
 import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
-import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.math.BigDecimal;
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Getter
@@ -57,8 +50,11 @@ public class PurchaseProduct {
         this.quantity = dtoPurchaseResponse.quantity();
     }
 
-
     public PurchaseProduct(Product product) {
         this.product = product;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = Purchase.builder().purchaseId(purchase.getPurchaseId()).build();
     }
 }

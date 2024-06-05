@@ -21,4 +21,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> searchProjectByPersonalCode(@Param("searchTerm") String searchTerm);
 
     Customer findByPersonalCode(String personalCode);
+
+    @Query("SELECT c FROM Customer c WHERE c.name = :name AND c.active = false")
+    Optional<Customer> findByName(String name);
 }

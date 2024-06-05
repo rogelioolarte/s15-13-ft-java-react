@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/taxes")
+@RequestMapping("/api/tax")
 @CrossOrigin("*")
 public class TaxesController {
     @Lazy
@@ -27,7 +27,7 @@ public class TaxesController {
     }
 
 
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity<?> getAll() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAllTaxes());
@@ -50,7 +50,7 @@ public class TaxesController {
 
     }
 
-    @PatchMapping(value = "/disable/{id}",produces = "application/json")
+    @PatchMapping(value = "/{id}",produces = "application/json")
     public ResponseEntity<?> disableTax(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.delete(id));
@@ -61,13 +61,13 @@ public class TaxesController {
     }
 
 
-    @PatchMapping(value = "/enable/{id}")
-    public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
-        }
-
-    }
+//    @PatchMapping(value = "/enable/{id}")
+//    public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
+//        try {
+//            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+//        }
+//
+//    }
 }

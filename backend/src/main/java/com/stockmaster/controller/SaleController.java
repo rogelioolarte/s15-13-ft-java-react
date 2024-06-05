@@ -8,6 +8,7 @@ import com.stockmaster.service.sales.SalesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -42,7 +43,7 @@ public class SaleController {
         if(result.hasErrors()){
             List<String>errorMessages = result.getAllErrors()
                     .stream()
-                    .map(error -> error.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
