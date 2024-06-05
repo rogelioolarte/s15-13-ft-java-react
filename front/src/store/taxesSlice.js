@@ -12,7 +12,7 @@ export const taxesSlice = createSlice({
   initialState,
   reducers: {
     initTaxes: (state, action) => {
-      return [...state, ...action.payload]
+      return [...action.payload]
     },
     addTax: (state, action) => {
       return [...state, { ...action.payload }]

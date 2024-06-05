@@ -12,7 +12,7 @@ export const purchasesSlice = createSlice({
   initialState,
   reducers: {
     initPurchases: (state, action) => {
-      return [...state, ...action.payload]
+      return [...action.payload]
     },
     addPurchase: (state, action) => {
       return [...state, { ...action.payload }]

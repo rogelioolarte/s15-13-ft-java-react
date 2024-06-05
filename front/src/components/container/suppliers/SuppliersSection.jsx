@@ -69,7 +69,7 @@ export default function SuppliersSection () {
   const [deleteSupplier] = useDeleteSupplierMutation()
   const { suppliers, useInitSuppliers } = useSuppliersActions()
   // console.log(suppliers)
-  const TABLE_DATA = suppliers.length !== 0 ? suppliers : TABLE_ROWS
+  const TABLE_DATA = suppliers.length !== 0 ? suppliers : []
   const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
 
   useEffect(() => {
@@ -77,6 +77,7 @@ export default function SuppliersSection () {
       console.log('Loading - Poner un espiner en la tabla')
     } else if (isSuccess) {
       useInitSuppliers(suppliersData)
+      console.log('finalizo')
     } else if (isError) {
       toast.error(`Error while conecting: ${error}`)
     }

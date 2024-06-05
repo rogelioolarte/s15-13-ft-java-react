@@ -12,7 +12,7 @@ export const customersSlice = createSlice({
   initialState,
   reducers: {
     initCustomers: (state, action) => {
-      return [...state, ...action.payload]
+      return [...action.payload]
     },
     addCustomer: (state, action) => {
       return [...state, { ...action.payload }]
