@@ -16,7 +16,7 @@ const TABLE_HEAD = [
   { head: '', row: 'actions' }
 ]
 
-export default function SuppliersSection() {
+export default function SuppliersSection () {
   const [deleteSupplier] = useDeleteSupplierMutation()
   const { suppliers, useInitSuppliers, useDeleteSupplierById } = useSuppliersActions()
   const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
@@ -24,7 +24,6 @@ export default function SuppliersSection() {
   const selectedItems = checkedItems.filter(value => value === true)
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
-  const [open, setOpen] = useState(false)
   const [searchFilter, setSearchFilter] = useState([])
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
 
@@ -40,12 +39,7 @@ export default function SuppliersSection() {
     setSearchFilter(suppliers.slice())
     setCheckedItems(new Array(suppliers.length).fill(false))
   }, [suppliers])
-
-  const findSelectedSupplier = () => {
-    const index = checkedItems.findIndex(value => value === true)
-    return suppliers[index]
-  }
-
+  // console.log(suppliers)
   const getSelectedSuppliers = () => {
     return checkedItems
       .map((isChecked, index) => (isChecked ? suppliers[index] : null))
@@ -68,8 +62,6 @@ export default function SuppliersSection() {
     }
   }
 
-  const handleOpen = () => setOpen(!open)
-
   const handleSearch = (searchTerm) => {
     const filteredSuppliers = suppliers.filter(supplier =>
       supplier.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -77,8 +69,6 @@ export default function SuppliersSection() {
     )
     setSearchFilter(filteredSuppliers)
   }
-
-  const supplierToEdit = selectedItems.length === 1 && findSelectedSupplier()
 
   const suppliersPerPage = 7
   const startIndex = (page - 1) * suppliersPerPage
@@ -111,12 +101,12 @@ export default function SuppliersSection() {
     <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
-          <SuppliersHeader onSearch={handleSearch} supplierToEdit={supplierToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
+          <SuppliersHeader onSearch={handleSearch} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
         </CardHeader>
         <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg flex justify-center items-center'>
           {isLoading
             ? (<div className='w-full h-[200px] flex items-center justify-center bg-white'><Spinner className='h-16 w-16 text-gray-900/50' /></div>)
-            : <SuppliersTable TABLE_DATA={visibleSuppliers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} handleOpen={handleOpen} />}
+            : <SuppliersTable TABLE_DATA={visibleSuppliers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />}
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />

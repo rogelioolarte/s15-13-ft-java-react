@@ -3,6 +3,7 @@ import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
 import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
 import { useCreateSupplierMutation, useUpdateSupplierMutation } from '../../store/apiSlice.js'
+import { toast } from 'sonner'
 
 export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
   const [supplierCreate] = useCreateSupplierMutation()
@@ -25,9 +26,11 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
   const createSupplier = async (values) => {
     try {
       const res = await supplierCreate(values).unwrap()
-      console.log(res)
       useAddSupplier(res)
+      toast.success('Supplier created successfully')
+      setOpen(false)
     } catch (error) {
+      toast.error(`Error creating supplier: ${error}`)
       console.log(error)
     }
   }
@@ -36,8 +39,10 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
     try {
       const res = await supplierUpdate({ id: supplierToEdit.id, data: values }).unwrap()
       useUpdateSupplierById({ id: supplierToEdit.id, newData: res })
+      toast.success('Supplier updated successfully')
       setOpen(false)
     } catch (error) {
+      toast.error(`Error updating supplier: ${error}`)
       console.error(error)
     }
   }

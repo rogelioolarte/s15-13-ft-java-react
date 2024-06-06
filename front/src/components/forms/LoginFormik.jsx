@@ -59,7 +59,7 @@ export default function LoginFormik() {
   }
 
   return (
-    <div className='w-full md:w-1/2 h-full bg-black grid justify-items-center px-4 py-8'>
+    <div className='w-full md:w-1/2 h-full min-h-screen bg-black grid justify-items-center px-4 py-8'>
       <Link to='/home'><img src={LogoMedium} alt='logo-md' className='w-[45vh]' /></Link>
       <Typography className='text-center' variant='h3' color='white'>Log in to Stock Master!</Typography>
       <Formik initialValues={initialCredentials} validationSchema={loginSchema} onSubmit={handleSubmit}>
@@ -93,7 +93,7 @@ export default function LoginFormik() {
                   <div className='text-white text-sm text-center'>{CommonError}</div>
                 )}
               </CardBody>
-              <CardFooter className='pt-0 mt-5'>
+              <CardFooter className='pt-0'>
                 <Button type='submit' variant='filled' fullWidth color='white'>
                   Sign in!
                 </Button>

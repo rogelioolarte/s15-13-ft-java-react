@@ -6,8 +6,10 @@ import {
   MenuList,
   MenuItem
 } from '@material-tailwind/react'
+import SuppliersFormModal from '../container/suppliers/SuppliersFormModal'
+import ModalViewItem from './ModalViewItem'
 
-export default function MenuActionsTable ({ handleOpen }) {
+export default function MenuActionsTable ({ supplierToEdit }) {
   return (
     <Menu
       placement='left'
@@ -19,13 +21,13 @@ export default function MenuActionsTable ({ handleOpen }) {
       <MenuHandler>
         <IconButton
           className='h-5 rounded bg-transparent shadow-none text-gray-900 text-lg hover:shadow-none hover:text-gray-800 transition-colors duration-300 ease-in-out'
-          onClick={() => handleOpen()}
         >
           <HiOutlineDotsVertical />
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <MenuItem>See More</MenuItem>
+        <SuppliersFormModal button={<MenuItem>Modify</MenuItem>} action='edit' supplierToEdit={supplierToEdit} />
+        <ModalViewItem button={<MenuItem>See More</MenuItem>} supplierToEdit={supplierToEdit} />
       </MenuList>
     </Menu>
   )
