@@ -16,4 +16,6 @@ public class CustomerUpdateRequest {
     private String name;
     @NotBlank
     private String personalCode;
+    @NotBlank
+    private String customerType;
 }
