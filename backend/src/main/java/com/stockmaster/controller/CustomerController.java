@@ -58,7 +58,6 @@ public class CustomerController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-         // Aquí se lanzará la CustomRequestException si hay un error
         return ResponseEntity.ok( customerService.save(customer) );
     }
     //Metodos Put

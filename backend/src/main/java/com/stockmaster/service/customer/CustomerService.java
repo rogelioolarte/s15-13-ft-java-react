@@ -65,7 +65,7 @@ public class CustomerService {
             return customerMapper.toCustomerResponse(customerRepository.save(customerDisable));
         }
         Customer customer = customerMapper.customerRequestToPost(customerSavingRequest);
-
+        customer.setActive(true);
         try {
             return customerMapper.toCustomerResponse(customerRepository.save(customer));
         } catch (DataIntegrityViolationException e) {

@@ -25,5 +25,4 @@ public class CustomerSavingRequest {
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
-
 }
