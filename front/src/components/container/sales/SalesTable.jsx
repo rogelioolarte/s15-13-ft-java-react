@@ -1,6 +1,6 @@
-import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
+import MenuActionsTableSupplier from '../suppliers/MenuActionsTableSupplier'
 
 function formatProductList (productList) {
   return productList.map(product => `${product.name} x ${product.quantity}`).join(', ')
@@ -126,7 +126,7 @@ export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedIt
               </td>
               {/* actions */}
               <td className={classes}>
-                <MenuActionsTable handleOpen={handleOpen} />
+                <MenuActionsTableSupplier handleOpen={handleOpen} />
               </td>
             </tr>
           )

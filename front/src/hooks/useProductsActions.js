@@ -8,7 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from './store'
 
 export const useProductsActions = () => {
-  const purchases = useAppSelector(state => state.purchases)
+  const products = useAppSelector(state => state.products)
   const dispatch = useAppDispatch()
 
   /**
@@ -56,6 +56,6 @@ export const useProductsActions = () => {
     useUpdateProductById,
     useDeleteProductById,
     useResetProducts,
-    purchases
+    products
   }
 }

@@ -2,10 +2,11 @@ import {
   Dialog,
   DialogBody
 } from '@material-tailwind/react'
-import { cloneElement, useState } from 'react'
-import { CustomersFormik } from '../../forms/CustomersFormik'
+import { cloneElement, forwardRef, useState } from 'react'
+import { CustomersFormikEdit } from '../../forms/CustomersFormikEdit'
+import { CustomersFormikCreate } from '../../forms/CustomerFormikCreate'
 
-export function CustomersFormModal ({ button, action, customersToEdit }) {
+const CustomersFormModal = forwardRef(({ button, action, customerToEdit, setOpenMenu }, ref) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(!open)
@@ -15,14 +16,18 @@ export function CustomersFormModal ({ button, action, customersToEdit }) {
   return (
     <>
       {buttonWithClick}
-      <Dialog open={open} handler={handleOpen} size='xs' className='m-1 max-h-[calc(100vh-0.5rem)] md:max-h-[initial] overflow-y-scroll md:overflow-y-auto'>
+      <Dialog ref={ref} open={open} handler={handleOpen} size='xs' className='m-1 max-h-[calc(100vh-0.5rem)] md:max-h-[initial] overflow-y-scroll md:overflow-y-auto'>
         <DialogBody className='flex flex-col gap-3 p-8'>
           {action === 'create'
             ? (<h3 className='text-gray-900 font-bold text-2xl leading-none'>New Customer</h3>)
             : (<h3 className='text-gray-900 font-bold text-2xl leading-none'>Modify Customer</h3>)}
-          <CustomersFormik setOpen={setOpen} action={action} customersToEdit={customersToEdit} />
+          {action === 'create'
+            ? (<CustomersFormikCreate setOpen={setOpen} setOpenMenu={setOpenMenu} action={action} customerToEdit={customerToEdit} />)
+            : (<CustomersFormikEdit setOpen={setOpen} setOpenMenu={setOpenMenu} action={action} customerToEdit={customerToEdit} />)}
         </DialogBody>
       </Dialog>
     </>
   )
-}
+})
+
+export default CustomersFormModal

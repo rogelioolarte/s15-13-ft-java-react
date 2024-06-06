@@ -31,7 +31,7 @@ export default function SuppliersSection () {
     if (isSuccess && !isLoading) {
       useInitSuppliers(suppliersData.filter(supplier => supplier.active === true))
     } else if (isError) {
-      toast.error(`Error while connecting: ${error}`)
+      toast.error(`Error while connecting: ${error}`, { duration: 2000 })
     }
   }, [isLoading, isSuccess])
 

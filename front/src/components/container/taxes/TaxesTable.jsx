@@ -1,6 +1,6 @@
-import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
+import MenuActionsTableSupplier from '../suppliers/MenuActionsTableSupplier'
 
 export default function TaxesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
   const handleCheckAll = () => {
@@ -87,7 +87,7 @@ export default function TaxesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setC
                 </td>
                 {/* actions */}
                 <td className={classes}>
-                  <MenuActionsTable handleOpen={handleOpen} />
+                  <MenuActionsTableSupplier handleOpen={handleOpen} />
                 </td>
               </tr>
             )

@@ -30,12 +30,14 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
     try {
       const res = await supplierCreate(values).unwrap()
       useAddSupplier(res)
-      toast.success('Supplier created successfully')
-      setOpen(false)
-      setOpenMenu(false)
+      toast.success('Supplier created successfully', { duration: 1500 })
+      handleClose()
     } catch (error) {
-      toast.error(`Error creating supplier: ${error}`)
-      console.log(error)
+      if (error.data) {
+        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+      } else {
+        toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+      }
     }
   }
 
@@ -43,12 +45,14 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
     try {
       const res = await supplierUpdate({ id: supplierToEdit.id, data: values }).unwrap()
       useUpdateSupplierById({ id: supplierToEdit.id, newData: res })
-      toast.success('Supplier updated successfully')
-      setOpen(false)
-      setOpenMenu(false)
+      toast.success('Supplier updated successfully', { duration: 1500 })
+      handleClose()
     } catch (error) {
-      toast.error(`Error updating supplier: ${error}`)
-      console.error(error)
+      if (error.data) {
+        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+      } else {
+        toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+      }
     }
   }
 

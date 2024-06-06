@@ -1,13 +1,17 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, Input } from '@material-tailwind/react'
+import { toast } from 'sonner'
 import * as Yup from 'yup'
-import { useCreateCustomerMutation, useUpdateCustomerMutation } from '../../store/apiSlice'
+import { useCreateCustomerMutation } from '../../store/apiSlice'
 import { useCustomersActions } from '../../hooks/useCustomersActions'
 
-export function CustomersFormik ({ setOpen, action, customerToEdit }) {
+export function CustomersFormikCreate ({ setOpen, setOpenMenu, action, customerToEdit }) {
   const [customerCreate] = useCreateCustomerMutation()
-  const [customerUpdate] = useUpdateCustomerMutation()
 
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMenu(false)
+  }
   const INPUT_BG = '#FFF8F8'
 
   const { useAddCustomer } = useCustomersActions()
@@ -15,7 +19,7 @@ export function CustomersFormik ({ setOpen, action, customerToEdit }) {
   const customerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     personalCode: Yup.string().required('Code is required'),
-    customerType: Yup.string().required('Customer type is required')
+    customerType: Yup.string().required('Customer type is required only can be LEGAL or PHYSICAL')
   })
 
   const initialValues = {
@@ -27,27 +31,22 @@ export function CustomersFormik ({ setOpen, action, customerToEdit }) {
   const createCustomer = async (values) => {
     await customerCreate(values).unwrap()
       .then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          useAddCustomer(res.data)
+        if (res) {
+          useAddCustomer(res)
+          toast.success('Customer created successfully', { duration: 1500 })
+          handleClose()
         }
-      }).catch((error) => console.log(error))
-  }
-
-  const editCustomer = async (values) => {
-    await customerUpdate(values).unwrap()
-      .then((res) => {
-        console.log(res)
-        if (res.status === 201) {
-          useAddCustomer(res.data)
+      }).catch((error) => {
+        if (error.data) {
+          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+        } else {
+          toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
         }
-      }).catch((error) => console.log(error))
+      })
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
     action === 'create' && await createCustomer(values)
-    action === 'edit' && await editCustomer(values)
   }
 
   return (

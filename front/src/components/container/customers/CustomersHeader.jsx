@@ -1,5 +1,5 @@
 import { Button, Typography } from '@material-tailwind/react'
-import { CustomersFormModal } from './CustomersFormModal'
+import CustomersFormModal from './CustomersFormModal'
 import SearchTables from '../../pure/SearchTables'
 
 export default function CustomersHeader ({ onSearch, selectedItems, setIsDeleteConfirmationOpen }) {

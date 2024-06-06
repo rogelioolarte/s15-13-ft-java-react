@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import { IconButton, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
-import SuppliersFormModal from '../container/suppliers/SuppliersFormModal'
-import ModalViewItem from './ModalViewItem'
+import CustomersFormModal from './CustomersFormModal'
+import ModalViewItemCustomer from './ModalViewItemCustomer'
 
-export default function MenuActionsTable ({ supplierToEdit }) {
+export default function MenuActionsTableCustomer ({ customerToEdit }) {
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpenMenu = () => { setOpenMenu(!openMenu) }
@@ -27,8 +27,8 @@ export default function MenuActionsTable ({ supplierToEdit }) {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <SuppliersFormModal button={<MenuItem>Modify</MenuItem>} action='edit' supplierToEdit={supplierToEdit} setOpenMenu={setOpenMenu} />
-        <ModalViewItem button={<MenuItem>See More</MenuItem>} supplierToEdit={supplierToEdit} setOpenMenu={setOpenMenu} />
+        <CustomersFormModal button={<MenuItem>Modify</MenuItem>} action='edit' customerToEdit={customerToEdit} setOpenMenu={setOpenMenu} />
+        <ModalViewItemCustomer button={<MenuItem>See More</MenuItem>} customerToEdit={customerToEdit} setOpenMenu={setOpenMenu} />
       </MenuList>
     </Menu>
   )

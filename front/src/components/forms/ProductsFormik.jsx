@@ -3,6 +3,7 @@ import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
 import { useProductsActions } from '../../hooks/useProductsActions.js'
 import { useCreateProductMutation, useUpdateProductMutation } from '../../store/apiSlice.js'
+import { toast } from 'sonner'
 
 export function ProductsFormik ({ setOpen, action, productToEdit }) {
   const [productCreate] = useCreateProductMutation()
@@ -16,29 +17,28 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
     name: Yup.string().required('Name is required'),
     barcode: Yup.string().required('Barcode is required'),
     description: Yup.string(),
-    price: Yup.string().required('Price is required'),
-    minimal: Yup.string().required('Minimal Stock is required'),
-    stock: Yup.string().required('Stock is required')
-
+    salePrice: Yup.number().required('Price is required').typeError('Price must be a number'),
+    minimal: Yup.number().required('Minimal Stock is required').typeError('Minimal Stock must be a number'),
+    stock: Yup.number().required('Stock is required').typeError('Stock must be a number')
   })
 
   const initialValues = {
     name: productToEdit?.name ?? '',
     barcode: productToEdit?.barCode ?? '',
     description: productToEdit?.description ?? '',
-    price: productToEdit?.precioVenta ?? '',
-    minimal: productToEdit?.minimal ?? '',
-    stock: productToEdit?.stock ?? ''
+    salePrice: productToEdit?.precioVenta ?? 0,
+    minimal: productToEdit?.minimal ?? 0,
+    stock: productToEdit?.stock ?? 0
   }
 
   const createProduct = async (values) => {
     await productCreate(values).unwrap()
       .then((res) => {
         console.log(res)
-        if (res.status === 200) {
-          useAddProduct(res.data)
+        if (res) {
+          useAddProduct(res)
         }
-      }).catch((error) => console.log(error))
+      }).catch((error) => toast.error(`Error while adding: ${JSON.stringify(error)}`))
   }
 
   const editProduct = async (values) => {
@@ -52,9 +52,17 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    action === 'create' && await createProduct(values)
-    action === 'edit' && await editProduct(values)
+    // Convert the stock, salePrice, and minimal values to numbers
+    const updatedValues = {
+      ...values,
+      stock: Number(values.stock),
+      salePrice: Number(values.salePrice),
+      minimal: Number(values.minimal)
+    }
+
+    console.log(updatedValues)
+    action === 'create' && await createProduct(updatedValues)
+    action === 'edit' && await editProduct(updatedValues)
   }
 
   return (
@@ -96,13 +104,13 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
             </div>
             {/* price */}
             <div className='flex flex-col gap-[2px]'>
-              <Field name='price'>
+              <Field name='salePrice'>
                 {({ field /* { name, value, onChange, onBlur } */ }) => (
                   <Input {...field} type='text' placeholder='Price' label='Price' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
-              {errors.price && touched.price
-                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='price' component='div' />)
+              {errors.salePrice && touched.salePrice
+                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='salePrice' component='div' />)
                 : <div className='h-4' />}
             </div>
             {/* minimal */}

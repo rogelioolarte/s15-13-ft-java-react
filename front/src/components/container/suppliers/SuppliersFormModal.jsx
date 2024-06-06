@@ -5,9 +5,7 @@ import { SuppliersFormik } from '../../forms/SuppliersFormik'
 const SuppliersFormModal = forwardRef(({ button, action, supplierToEdit, setOpenMenu }, ref) => {
   const [open, setOpen] = useState(false)
 
-  const handleOpen = () => {
-    setOpen(!open)
-  }
+  const handleOpen = () => setOpen(!open)
 
   const buttonWithClick = cloneElement(button, { onClick: handleOpen })
 

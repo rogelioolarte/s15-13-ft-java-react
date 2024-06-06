@@ -1,6 +1,6 @@
-import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
+import MenuActionsTableSupplier from './MenuActionsTableSupplier'
 
 export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {
@@ -87,7 +87,7 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
                 </td>
                 {/* actions */}
                 <td className={classes}>
-                  <MenuActionsTable supplierToEdit={item} />
+                  <MenuActionsTableSupplier supplierToEdit={item} />
                 </td>
               </tr>
             )

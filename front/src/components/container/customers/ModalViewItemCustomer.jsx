@@ -1,7 +1,7 @@
 import { forwardRef, useState, cloneElement } from 'react'
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter } from '@material-tailwind/react'
 
-const ModalViewItem = forwardRef(({ button, supplierToEdit, setOpenMenu }, ref) => {
+const ModalViewItemCustomer = forwardRef(({ button, customerToEdit, setOpenMenu }, ref) => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpen = () => {
     setOpenModal(!openModal)
@@ -13,12 +13,13 @@ const ModalViewItem = forwardRef(({ button, supplierToEdit, setOpenMenu }, ref) 
       {buttonWithClick}
       <Dialog ref={ref} open={openModal} size='xs' handler={handleOpen} className='flex flex-col justify-center gap-4 p-5'>
         <DialogHeader className='justify-center p-0'>
-          <h3 className='uppercase text-gray-900 font-bold'>Supplier</h3>
+          <h3 className='uppercase text-gray-900 font-bold'>Customer</h3>
         </DialogHeader>
         <DialogBody className='text-gray-900 text-center p-0'>
-          <p>Supplier Name: {supplierToEdit.name}</p>
-          <p>Company Code N°: {supplierToEdit.companyCode}</p>
-          {/* <p>Active: {supplierToEdit.active ? 'Enabled' : 'Disabled'}</p> */}
+          <p>Customer Name: {customerToEdit.name}</p>
+          <p>Personal Code N°: {customerToEdit.personalCode}</p>
+          <p>Customer Type: {customerToEdit.customerType}</p>
+          {/* <p>Active: {customerToEdit.active ? 'Enabled' : 'Disabled'}</p> */}
         </DialogBody>
         <DialogFooter className='p-0'>
           <Button
@@ -35,4 +36,4 @@ const ModalViewItem = forwardRef(({ button, supplierToEdit, setOpenMenu }, ref) 
     </>
   )
 })
-export default ModalViewItem
+export default ModalViewItemCustomer
