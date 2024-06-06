@@ -63,7 +63,7 @@ public class CustomerController {
     //Metodos Put
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCustomer((@PathVariable Long id, @Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
-        return ResponseEntity.ok(customerService.update(customer));
+        return ResponseEntity.ok(customerService.update(id, customer));
     }
     //Metodo Patch
     @PatchMapping("/{id}")
