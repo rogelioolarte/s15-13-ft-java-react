@@ -29,5 +29,5 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
-    private boolean active;
+    private boolean active = true;
 }
