@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerUpdateRequest {
-    @NotNull
-    private Long id;
     @NotBlank
     private String name;
     @NotBlank
     private String personalCode;
-    private boolean active;
 }
