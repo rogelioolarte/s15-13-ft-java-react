@@ -53,6 +53,7 @@ export default function SuppliersSection () {
         await deleteSupplier(supplier.id).then((res) => {
           if (res.data) {
             useDeleteSupplierById(supplier.id)
+            toast.success('Supplier/s deleted successfully', { duration: 1500 })
             setIsDeleteConfirmationOpen(false)
           }
         }).catch((error) => {

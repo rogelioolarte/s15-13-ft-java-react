@@ -1,6 +1,6 @@
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
-import MenuActionsTableCustomer from './MenuActionstableCustomer'
+import MenuActionsTableCustomer from './MenuActionsTableCustomer'
 
 export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {

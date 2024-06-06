@@ -5,50 +5,72 @@ import { useProductsActions } from '../../hooks/useProductsActions.js'
 import { useCreateProductMutation, useUpdateProductMutation } from '../../store/apiSlice.js'
 import { toast } from 'sonner'
 
-export function ProductsFormik ({ setOpen, action, productToEdit }) {
+export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit }) {
   const [productCreate] = useCreateProductMutation()
   const [productUpdate] = useUpdateProductMutation()
 
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMenu(false)
+  }
   const INPUT_BG = '#FFF8F8'
 
-  const { useAddProduct } = useProductsActions()
+  const { useAddProduct, useUpdateProductById } = useProductsActions()
 
   const productSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     barcode: Yup.string().required('Barcode is required'),
-    description: Yup.string(),
+    description: Yup.string().required('Description is required'),
     salePrice: Yup.number().required('Price is required').typeError('Price must be a number'),
-    minimal: Yup.number().required('Minimal Stock is required').typeError('Minimal Stock must be a number'),
-    stock: Yup.number().required('Stock is required').typeError('Stock must be a number')
+    minimal: Yup.number().required('Minimal Stock is required').typeError('Minimal Stock must be a number')
+    /* stock: Yup.number().required('Stock is required').typeError('Stock must be a number') */
   })
 
   const initialValues = {
     name: productToEdit?.name ?? '',
-    barcode: productToEdit?.barCode ?? '',
+    barcode: productToEdit?.barcode ?? '',
     description: productToEdit?.description ?? '',
-    salePrice: productToEdit?.precioVenta ?? 0,
-    minimal: productToEdit?.minimal ?? 0,
-    stock: productToEdit?.stock ?? 0
+    salePrice: productToEdit?.salePrice ?? 0,
+    minimal: productToEdit?.minimal ?? 0
+    /* stock: productToEdit?.stock ?? 0 */
   }
 
   const createProduct = async (values) => {
-    await productCreate(values).unwrap()
+    const updatedValues = { ...values, stock: 0 }
+    await productCreate(updatedValues).unwrap()
       .then((res) => {
         console.log(res)
         if (res) {
           useAddProduct(res)
+          toast.success('Customer updated successfully', { duration: 1500 })
+          handleClose()
         }
-      }).catch((error) => toast.error(`Error while adding: ${JSON.stringify(error)}`))
+      }).catch((error) => {
+        if (error.data) {
+          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+        } else {
+          toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        }
+      })
   }
 
   const editProduct = async (values) => {
-    await productUpdate(values).unwrap()
+    const updatedValues = { ...values, stock: productToEdit.stock }
+    await productUpdate({ id: productToEdit.id, data: updatedValues }).unwrap()
       .then((res) => {
         console.log(res)
-        if (res.status === 201) {
-          useAddProduct(res.data)
+        if (res) {
+          useUpdateProductById({ id: productToEdit.id, data: res })
+          toast.success('Customer updated successfully', { duration: 1500 })
+          handleClose()
         }
-      }).catch((error) => console.log(error))
+      }).catch((error) => {
+        if (error.data) {
+          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+        } else {
+          toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        }
+      })
   }
 
   const handleSubmit = async (values) => {
@@ -125,16 +147,6 @@ export function ProductsFormik ({ setOpen, action, productToEdit }) {
                 : <div className='h-4' />}
             </div>
             {/* stock */}
-            <div className='flex flex-col gap-[2px]'>
-              <Field name='stock'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Stock' label='Stock' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
-                )}
-              </Field>
-              {errors.stock && touched.stock
-                ? (<ErrorMessage className='ml-2 text-red-500 text-xs' name='stock' component='div' />)
-                : <div className='h-4' />}
-            </div>
             {/* <div className='text-white text-sm text-center'>{CommonError.toUpperCase()}</div> */}
           </fieldset>
           <div className='flex justify-evenly gap-2'>

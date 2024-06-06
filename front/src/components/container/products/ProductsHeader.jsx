@@ -1,5 +1,5 @@
 import { Button, Typography } from '@material-tailwind/react'
-import { ProductsFormModal } from './ProductsFormModal'
+import ProductsFormModal from './ProductsFormModal'
 import SearchTables from '../../pure/SearchTables'
 
 export default function ProductsHeader ({ onSearch, productToEdit, selectedItems, setIsDeleteConfirmationOpen }) {

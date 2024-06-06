@@ -61,6 +61,7 @@ export default function CustomersSection () {
           if (res.data) {
             useDeleteCustomerById(customer.id)
             setIsDeleteConfirmationOpen(false)
+            toast.success('Customer/s deleted successfully', { duration: 1500 })
           }
         }).catch((error) => {
           toast.error(`Error deleting customer: ${error}`)

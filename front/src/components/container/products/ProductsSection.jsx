@@ -12,11 +12,11 @@ import ProductsTable from './ProductsTable'
 const TABLE_HEAD = [
   { head: 'checkbox', row: 'checkbox' },
   { head: 'Product', row: 'name' },
-  { head: 'Code', row: 'barcode' },
+  { head: 'BarCode', row: 'barcode' },
   { head: 'Description', row: 'description' },
   { head: 'Sell Price', row: 'salePrice' },
   { head: 'Minimal Stock', row: 'minimal' },
-  { head: 'Stock', row: 'stock' },
+  /* { head: 'Actual Stock', row: 'stock' }, */
   { head: '', row: 'actions' }
 ]
 

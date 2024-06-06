@@ -14,7 +14,7 @@ export function CustomersFormikEdit ({ setOpen, setOpenMenu, action, customerToE
   }
   const INPUT_BG = '#FFF8F8'
 
-  const { useAddCustomer } = useCustomersActions()
+  const { useUpdateCustomerById } = useCustomersActions()
 
   const customerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -29,8 +29,8 @@ export function CustomersFormikEdit ({ setOpen, setOpenMenu, action, customerToE
   const editCustomer = async (values) => {
     await customerUpdate({ id: customerToEdit.id, data: values }).unwrap()
       .then((res) => {
-        if (res.data) {
-          useAddCustomer(res.data)
+        if (res) {
+          useUpdateCustomerById({ id: customerToEdit.id, newData: res })
           toast.success('Customer updated successfully', { duration: 1500 })
           handleClose()
         }
