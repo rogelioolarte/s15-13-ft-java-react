@@ -32,7 +32,6 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit })
     description: productToEdit?.description ?? '',
     salePrice: productToEdit?.salePrice ?? 0,
     minimal: productToEdit?.minimal ?? 0
-    /* stock: productToEdit?.stock ?? 0 */
   }
 
   const createProduct = async (values) => {
@@ -49,7 +48,7 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit })
         if (error.data) {
           toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
         } else {
-          toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+          console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
         }
       })
   }
@@ -58,9 +57,8 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit })
     const updatedValues = { ...values, stock: productToEdit.stock }
     await productUpdate({ id: productToEdit.id, data: updatedValues }).unwrap()
       .then((res) => {
-        console.log(res)
         if (res) {
-          useUpdateProductById({ id: productToEdit.id, data: res })
+          useUpdateProductById({ id: res.id, newData: res })
           toast.success('Customer updated successfully', { duration: 1500 })
           handleClose()
         }
@@ -68,7 +66,7 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit })
         if (error.data) {
           toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
         } else {
-          toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+          console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
         }
       })
   }
@@ -77,7 +75,6 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, productToEdit })
     // Convert the stock, salePrice, and minimal values to numbers
     const updatedValues = {
       ...values,
-      stock: Number(values.stock),
       salePrice: Number(values.salePrice),
       minimal: Number(values.minimal)
     }

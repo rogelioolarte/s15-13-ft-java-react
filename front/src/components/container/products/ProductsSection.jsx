@@ -16,7 +16,7 @@ const TABLE_HEAD = [
   { head: 'Description', row: 'description' },
   { head: 'Sell Price', row: 'salePrice' },
   { head: 'Minimal Stock', row: 'minimal' },
-  /* { head: 'Actual Stock', row: 'stock' }, */
+  { head: 'Actual Stock', row: 'stock' },
   { head: '', row: 'actions' }
 ]
 

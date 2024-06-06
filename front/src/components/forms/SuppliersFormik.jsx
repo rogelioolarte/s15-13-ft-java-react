@@ -36,7 +36,7 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
       if (error.data) {
         toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
       } else {
-        toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
       }
     }
   }
@@ -51,7 +51,7 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
       if (error.data) {
         toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
       } else {
-        toast.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
       }
     }
   }

@@ -3,8 +3,7 @@ import {
   DialogBody
 } from '@material-tailwind/react'
 import { cloneElement, forwardRef, useState } from 'react'
-import { CustomersFormikEdit } from '../../forms/CustomersFormikEdit'
-import { CustomersFormikCreate } from '../../forms/CustomerFormikCreate'
+import { CustomersFormik } from '../../forms/CustomerFormikCreate'
 
 const CustomersFormModal = forwardRef(({ button, action, customerToEdit, setOpenMenu }, ref) => {
   const [open, setOpen] = useState(false)
@@ -21,9 +20,7 @@ const CustomersFormModal = forwardRef(({ button, action, customerToEdit, setOpen
           {action === 'create'
             ? (<h3 className='text-gray-900 font-bold text-2xl leading-none'>New Customer</h3>)
             : (<h3 className='text-gray-900 font-bold text-2xl leading-none'>Modify Customer</h3>)}
-          {action === 'create'
-            ? (<CustomersFormikCreate setOpen={setOpen} setOpenMenu={setOpenMenu} action={action} customerToEdit={customerToEdit} />)
-            : (<CustomersFormikEdit setOpen={setOpen} setOpenMenu={setOpenMenu} action={action} customerToEdit={customerToEdit} />)}
+          <CustomersFormik setOpen={setOpen} setOpenMenu={setOpenMenu} action={action} customerToEdit={customerToEdit} />
         </DialogBody>
       </Dialog>
     </>
