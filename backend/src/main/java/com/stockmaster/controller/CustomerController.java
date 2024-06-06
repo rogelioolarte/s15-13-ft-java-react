@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -62,7 +61,7 @@ public class CustomerController {
     }
     //Metodos Put
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomer((@PathVariable Long id, @Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
+    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
         return ResponseEntity.ok(customerService.update(id, customer));
     }
     //Metodo Patch
