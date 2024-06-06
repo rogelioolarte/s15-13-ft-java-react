@@ -21,7 +21,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
           {TABLE_HEAD.map(({ head, row }, index) =>
             <th
               key={head}
-              className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
+              className='first:flex items-center h-12 first:cursor-default last:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9] last:hover:bg-[#F1F3F9]'
               onClick={() => index !== 0 && handleSort(row)}
             >
               {head === 'checkbox'
@@ -50,14 +50,14 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
       </thead>
       <tbody>
         {TABLE_DATA.map(
-          ({ name, barcode, description, salePrice, minimal, stock }, index) => {
+          (item, index) => {
             const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
-              <tr key={barcode} className='even:bg-[#F8F9FC] odd:bg-white'>
+              <tr key={item.barcode} className='even:bg-[#F8F9FC] odd:bg-white'>
                 {/* checked */}
                 <td className={classes}>
                   <Checkbox
-                    id={barcode}
+                    id={item.barcode}
                     ripple={false}
                     className='hover:before:opacity-0'
                     containerProps={{
@@ -73,7 +73,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    {name}
+                    {item.name}
                   </Typography>
                 </td>
                 {/* barcode */}
@@ -82,7 +82,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    {barcode}
+                    {item.barcode}
                   </Typography>
                 </td>
                 {/* description */}
@@ -91,7 +91,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    {description}
+                    {item.description}
                   </Typography>
                 </td>
                 {/* salePrice */}
@@ -100,7 +100,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    ${salePrice}
+                    ${item.salePrice}
                   </Typography>
                 </td>
                 {/* minimal */}
@@ -109,7 +109,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    {minimal}
+                    {item.minimal}
                   </Typography>
                 </td>
                 {/* stock */}
@@ -118,7 +118,7 @@ export default function ProductsTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, s
                     variant='small'
                     className='font-normal'
                   >
-                    {stock}
+                    {item.stock}
                   </Typography>
                 </td>
                 {/* actions */}
