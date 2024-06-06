@@ -1,5 +1,8 @@
 package com.stockmaster.dto.customer;
 
+import com.stockmaster.entity.customer.CustomerType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,5 +21,9 @@ public class CustomerUpdateRequest {
     private String name;
     @NotBlank
     private String personalCode;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private CustomerType customerType;
     private boolean active;
 }

@@ -4,6 +4,7 @@ import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
+import com.stockmaster.entity.customer.CustomerType;
 import com.stockmaster.exception.BusinessException;
 import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.CustomerRepository;
@@ -102,8 +103,14 @@ public class CustomerService {
             throw new BadRequestException("Personal code is already in use by another customer.");
         }
 
+        CustomerType customerType = customerRequest.getCustomerType();
+        if (customerType == null) {
+            throw new BadRequestException("Customer type cannot be null.");
+        }
+
         customer.setName(name);
         customer.setPersonalCode(personalCode);
+        customer.setCustomerType(customerType);
         customer.setActive(customerRequest.isActive());
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
