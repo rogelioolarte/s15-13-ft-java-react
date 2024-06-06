@@ -78,8 +78,7 @@ public class CustomerService {
     }
 
     //Update
-    public CustomerResponse update(CustomerUpdateRequest customerRequest) throws BadRequestException {
-        Long id = customerRequest.getId();
+    public CustomerResponse update(Long id, CustomerUpdateRequest customerRequest) throws BadRequestException {
         if (id == null || id <= 0) {
             throw new BadRequestException("Invalid customer ID.");
         }
@@ -110,8 +109,11 @@ public class CustomerService {
 
         customer.setName(name);
         customer.setPersonalCode(personalCode);
+<<<<<<< HEAD
         customer.setCustomerType(customerType);
         customer.setActive(customerRequest.isActive());
+=======
+>>>>>>> a41fc7d252c33a693fa6b5015b4e8547a8d3a794
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
     }
