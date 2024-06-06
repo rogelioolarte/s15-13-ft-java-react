@@ -1,9 +1,11 @@
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '@material-tailwind/react'
 import { Provider } from 'react-redux'
-import { store } from './src/store'
-import { router } from './src/config/routes.js'
-import { RouterProvider } from 'react-router-dom'
+import { store } from './src/store/index'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import routes from './src/config/routes.jsx'
+
+const router = createBrowserRouter(routes)
 
 const root = createRoot(document.getElementById('app'))
 root.render(

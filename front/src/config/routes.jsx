@@ -1,18 +1,18 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import App from '../App'
 import DashboardPage from '../pages/DashboardPage'
 import SalesPage from '../pages/SalesPage'
-import InquiriesPage from '../pages/InquiriesPage'
 import SuppliersPage from '../pages/SuppliersPage'
-import PurchasesPage from '../pages/PurchasesPage'
-import ProductsPage from '../pages/ProductsPage'
-import CustomersPage from '../pages/CustomersPage'
-import TaxesPage from '../pages/TaxesPage'
-import HomePage from '../pages/HomePage'
-import LoginPage from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
+import LoginPage from '../pages/LoginPage'
+import HomePage from '../pages/HomePage'
+import ProductsPage from '../pages/ProductsPage'
+import TaxesPage from '../pages/TaxesPage'
+import CustomersPage from '../pages/CustomersPage'
+import PurchasesPage from '../pages/PurchasesPage'
+import InquiriesPage from '../pages/InquiriesPage'
 
-export const router = createBrowserRouter([
+const routes = [
   {
     path: '/',
     element: <App />,
@@ -31,4 +31,6 @@ export const router = createBrowserRouter([
   { path: '/home', element: <HomePage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '*', element: <NotFoundPage /> }
-])
+]
+
+export default routes
