@@ -1,17 +1,18 @@
+import { useState } from 'react'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
-import {
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem
-} from '@material-tailwind/react'
+import { IconButton, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import SuppliersFormModal from '../container/suppliers/SuppliersFormModal'
 import ModalViewItem from './ModalViewItem'
 
 export default function MenuActionsTable ({ supplierToEdit }) {
+  const [openMenu, setOpenMenu] = useState(false)
+
+  const handleOpenMenu = () => { setOpenMenu(!openMenu) }
+
   return (
     <Menu
+      open={openMenu}
+      handler={handleOpenMenu}
       placement='left'
       animate={{
         mount: { x: 0 },
@@ -26,8 +27,8 @@ export default function MenuActionsTable ({ supplierToEdit }) {
         </IconButton>
       </MenuHandler>
       <MenuList>
-        <SuppliersFormModal button={<MenuItem>Modify</MenuItem>} action='edit' supplierToEdit={supplierToEdit} />
-        <ModalViewItem button={<MenuItem>See More</MenuItem>} supplierToEdit={supplierToEdit} />
+        <SuppliersFormModal button={<MenuItem>Modify</MenuItem>} action='edit' supplierToEdit={supplierToEdit} setOpenMenu={setOpenMenu} />
+        <ModalViewItem button={<MenuItem>See More</MenuItem>} supplierToEdit={supplierToEdit} setOpenMenu={setOpenMenu} />
       </MenuList>
     </Menu>
   )

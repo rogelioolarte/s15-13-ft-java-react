@@ -5,12 +5,15 @@ import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
 import { useCreateSupplierMutation, useUpdateSupplierMutation } from '../../store/apiSlice.js'
 import { toast } from 'sonner'
 
-export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
+export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit }) {
   const [supplierCreate] = useCreateSupplierMutation()
   const [supplierUpdate] = useUpdateSupplierMutation()
 
   const { useAddSupplier, useUpdateSupplierById } = useSuppliersActions()
-
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMenu(false)
+  }
   const INPUT_BG = '#FFF8F8'
 
   const supplierSchema = Yup.object().shape({
@@ -29,6 +32,7 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
       useAddSupplier(res)
       toast.success('Supplier created successfully')
       setOpen(false)
+      setOpenMenu(false)
     } catch (error) {
       toast.error(`Error creating supplier: ${error}`)
       console.log(error)
@@ -41,6 +45,7 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
       useUpdateSupplierById({ id: supplierToEdit.id, newData: res })
       toast.success('Supplier updated successfully')
       setOpen(false)
+      setOpenMenu(false)
     } catch (error) {
       toast.error(`Error updating supplier: ${error}`)
       console.error(error)
@@ -63,7 +68,7 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
             <div className='flex flex-col gap-[2px]'>
               <Field name='name'>
                 {({ field }) => (
-                  <Input {...field} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                  <Input {...field} error={errors.name && touched.name && true} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
               {errors.name && touched.name
@@ -73,7 +78,7 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
             <div className='flex flex-col gap-[2px]'>
               <Field name='companyCode'>
                 {({ field }) => (
-                  <Input {...field} type='text' placeholder='Code' label='Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                  <Input {...field} error={errors.companyCode && touched.companyCode && true} type='text' placeholder='Code' label='Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
               {errors.companyCode && touched.companyCode
@@ -82,7 +87,7 @@ export function SuppliersFormik ({ setOpen, action, supplierToEdit }) {
             </div>
           </fieldset>
           <div className='flex justify-evenly gap-2'>
-            <Button onClick={() => setOpen(false)} color='black'>
+            <Button onClick={() => handleClose()} color='black'>
               Cancel
             </Button>
             <Button type='submit' className='bg-warning text-gray-900'>

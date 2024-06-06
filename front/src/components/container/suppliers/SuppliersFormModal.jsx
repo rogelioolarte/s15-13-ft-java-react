@@ -2,10 +2,12 @@ import { forwardRef, cloneElement, useState } from 'react'
 import { Dialog, DialogBody } from '@material-tailwind/react'
 import { SuppliersFormik } from '../../forms/SuppliersFormik'
 
-const SuppliersFormModal = forwardRef(({ button, action, supplierToEdit }, ref) => {
+const SuppliersFormModal = forwardRef(({ button, action, supplierToEdit, setOpenMenu }, ref) => {
   const [open, setOpen] = useState(false)
 
-  const handleOpen = () => setOpen(!open)
+  const handleOpen = () => {
+    setOpen(!open)
+  }
 
   const buttonWithClick = cloneElement(button, { onClick: handleOpen })
 
@@ -17,7 +19,7 @@ const SuppliersFormModal = forwardRef(({ button, action, supplierToEdit }, ref) 
           {action === 'create'
             ? (<h3 className='text-gray-900 font-bold text-2xl leading-none'>New Supplier</h3>)
             : (<h3 className='text-gray-900 font-bold text-2xl leading-none'>Modify Supplier</h3>)}
-          <SuppliersFormik setOpen={handleOpen} action={action} supplierToEdit={supplierToEdit} />
+          <SuppliersFormik setOpen={handleOpen} setOpenMenu={setOpenMenu} action={action} supplierToEdit={supplierToEdit} />
         </DialogBody>
       </Dialog>
     </>

@@ -39,7 +39,7 @@ export default function SuppliersSection () {
     setSearchFilter(suppliers.slice())
     setCheckedItems(new Array(suppliers.length).fill(false))
   }, [suppliers])
-  // console.log(suppliers)
+
   const getSelectedSuppliers = () => {
     return checkedItems
       .map((isChecked, index) => (isChecked ? suppliers[index] : null))

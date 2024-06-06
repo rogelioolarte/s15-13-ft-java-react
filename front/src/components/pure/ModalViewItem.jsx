@@ -1,7 +1,7 @@
 import { forwardRef, useState, cloneElement } from 'react'
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter } from '@material-tailwind/react'
 
-const ModalViewItem = forwardRef(({ button, supplierToEdit }, ref) => {
+const ModalViewItem = forwardRef(({ button, supplierToEdit, setOpenMenu }, ref) => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpen = () => {
     setOpenModal(!openModal)
@@ -21,7 +21,13 @@ const ModalViewItem = forwardRef(({ button, supplierToEdit }, ref) => {
           <p>Active: {supplierToEdit.active ? 'Enabled' : 'Disabled'}</p>
         </DialogBody>
         <DialogFooter className='p-0'>
-          <Button onClick={handleOpen} className='bg-[#212529]'>
+          <Button
+            onClick={() => {
+              handleOpen()
+              setOpenMenu(false)
+            }}
+            className='bg-[#212529]'
+          >
             <span>Close</span>
           </Button>
         </DialogFooter>
