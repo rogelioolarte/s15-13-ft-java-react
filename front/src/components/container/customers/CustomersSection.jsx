@@ -31,7 +31,7 @@ export default function CustomersSection () {
 
   useEffect(() => {
     if (isSuccess && !isLoading) {
-      useInitCustomers(customersData)
+      useInitCustomers(customersData.filter(customer => customer.active === true))
     } else if (isError) {
       toast.error(`Error while connecting: ${error}`)
     }
@@ -58,7 +58,7 @@ export default function CustomersSection () {
     if (customersToDelete.length) {
       for (const customer of customersToDelete) {
         await deleteCustomer(customer.id).then((res) => {
-          if (res.status === 201) {
+          if (res.data) {
             useDeleteCustomerById(customer.id)
             setIsDeleteConfirmationOpen(false)
           }

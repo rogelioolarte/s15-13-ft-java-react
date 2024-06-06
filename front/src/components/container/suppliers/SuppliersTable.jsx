@@ -22,7 +22,7 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
             <th
               key={head}
               className='first:flex items-center h-12 first:cursor-default last:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9] last:hover:bg-[#F1F3F9]'
-              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
+              onClick={() => index !== 0 && handleSort(row)}
             >
               {head === 'checkbox'
                 ? (
@@ -53,7 +53,7 @@ export default function SuppliersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
           (item, index) => {
             const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
             return (
-              <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
+              <tr key={index} className={`even:bg-[#F8F9FC] odd:bg-white ${!item.active ? 'opacity-50' : ''}`}>
                 {/* checked */}
                 <td className={classes}>
                   <Checkbox
