@@ -61,8 +61,8 @@ public class CustomerController {
         return ResponseEntity.ok( customerService.save(customer) );
     }
     //Metodos Put
-    @PutMapping
-    public ResponseEntity<?> updateCustomer(@Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCustomer((@PathVariable Long id, @Valid @RequestBody CustomerUpdateRequest customer) throws BadRequestException {
         return ResponseEntity.ok(customerService.update(customer));
     }
     //Metodo Patch
