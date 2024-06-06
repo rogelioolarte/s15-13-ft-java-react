@@ -1,8 +1,8 @@
-import MenuActionsTable from '../../pure/MenuActionsTable'
 import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
+import MenuActionsTableB from '../../pure/MenuActionsTableB'
 
-export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen }) {
+export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort, handleOpen, customerToEdit }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
@@ -22,7 +22,7 @@ export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
             <th
               key={index}
               className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
-              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
+              onClick={() => index !== 0 && handleSort(row)}
             >
               {head === 'checkbox'
                 ? (
@@ -50,14 +50,15 @@ export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
       </thead>
       <tbody>
         {TABLE_DATA.map(
-          ({ id, name, personalCode, customerType }, index) => {
+          (item, index) => {
             const classes = 'first:flex items-center h-12 px-4 text-[#1D2433]'
+            const rowClasses = `even:bg-[#F8F9FC] odd:bg-white ${!item.active ? 'opacity-50' : ''}`
             return (
-              <tr key={index} className='even:bg-[#F8F9FC] odd:bg-white'>
+              <tr key={index} className={rowClasses}>
                 {/* checked */}
                 <td className={classes}>
                   <Checkbox
-                    id={id}
+                    id={item.id}
                     ripple={false}
                     className='hover:before:opacity-0'
                     containerProps={{
@@ -73,7 +74,7 @@ export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
                     variant='small'
                     className='font-normal'
                   >
-                    {name}
+                    {item.name}
                   </Typography>
                 </td>
                 {/* personalCode */}
@@ -82,7 +83,7 @@ export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
                     variant='small'
                     className='font-normal'
                   >
-                    {personalCode}
+                    {item.personalCode}
                   </Typography>
                 </td>
                 {/* customerType */}
@@ -91,12 +92,12 @@ export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, 
                     variant='small'
                     className='font-normal'
                   >
-                    {customerType}
+                    {item.customerType}
                   </Typography>
                 </td>
                 {/* actions */}
                 <td className={classes}>
-                  <MenuActionsTable handleOpen={handleOpen} />
+                  <MenuActionsTableB handleOpen={handleOpen} customerToEdit={customerToEdit} />
                 </td>
               </tr>
             )

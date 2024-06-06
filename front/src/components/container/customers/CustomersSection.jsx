@@ -1,138 +1,78 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
-import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react'
+import { Card, CardHeader, CardBody, CardFooter, Spinner } from '@material-tailwind/react'
 import PaginationGroup from '../../pure/pagination/PaginationGroup'
 import SimplePagination from '../../pure/pagination/SimplePagination'
 import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import CustomersTable from './CustomersTable'
-import CustomersHeader from './CustomersHeader'
+import { useDeleteCustomerMutation, useGetAllCustomersQuery } from '../../../store/apiSlice.js'
+import CustomersHeader from './CustomersHeader.jsx'
 import { useCustomersActions } from '../../../hooks/useCustomersActions.js'
-import { useGetAllCustomersQuery, useDeleteCustomerMutation } from '../../../store/apiSlice.js'
 
 const TABLE_HEAD = [
-  {
-    head: 'checkbox',
-    row: 'checkbox'
-  },
-  {
-    head: 'Customer',
-    row: 'name'
-  },
-  {
-    head: 'Code',
-    row: 'personalCode'
-  },
-  {
-    head: 'Customer',
-    row: 'customerType'
-  },
-  {
-    head: '',
-    row: 'actions'
-  }
-]
-const TABLE_ROWS = [
-  {
-    id: '11111',
-    name: 'ACustom',
-    personalCode: '123123',
-    customerType: 'customer1'
-  },
-  {
-    id: '22222',
-    name: 'BCustom',
-    personalCode: '456456',
-    customerType: 'customer2'
-  },
-  {
-    id: '33333',
-    name: 'CCustom',
-    personalCode: '678678',
-    customerType: 'customer3'
-  },
-  {
-    id: '44444',
-    name: 'DCustom',
-    personalCode: '444444',
-    customerType: 'customer4'
-  },
-  {
-    id: '55555',
-    name: 'EACustom',
-    personalCode: '666666',
-    customerType: 'customer5'
-  },
-  {
-    id: '6',
-    name: 'FECustom',
-    personalCode: '345345',
-    customerType: 'customer1'
-  },
-  {
-    id: '7',
-    name: 'GFCustom',
-    personalCode: '777777',
-    customerType: 'customer2'
-  }
+  { head: 'checkbox', row: 'checkbox' },
+  { head: 'Customer Name', row: 'name' },
+  { head: 'Personal Code N°', row: 'personalCode' },
+  { head: 'Customer Type', row: 'customerType' },
+  { head: '', row: 'actions' }
 ]
 
 export default function CustomersSection () {
-  const [customerDelete] = useDeleteCustomerMutation()
-  const { customers, useInitCustomers } = useCustomersActions()
-  const TABLE_DATA = customers.length !== 0 ? customers : TABLE_ROWS
+  const [deleteCustomer] = useDeleteCustomerMutation()
+  const { customers, useInitCustomers, useDeleteCustomerById } = useCustomersActions()
   const { data: customersData, isLoading, isSuccess, isError, error } = useGetAllCustomersQuery()
-
-  useEffect(() => {
-    if (isLoading) {
-      console.log('Loading - Poner un espiner en la tabla')
-    } else if (isSuccess) {
-      useInitCustomers(customersData)
-    } else if (isError) {
-      toast.error(`Error while conecting: ${error}`)
-    }
-  }, [])
-
-  const [checkedItems, setCheckedItems] = useState(new Array(TABLE_ROWS.length).fill(false))
-  const { useDeleteCustomerById } = useCustomersActions()
-  const [sortConfig, setSortConfig] = useState(null)
+  const [checkedItems, setCheckedItems] = useState([])
+  const selectedItems = checkedItems.filter(value => value === true)
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' })
   const [page, setPage] = useState(1)
   const [open, setOpen] = useState(false)
-  const [searchFilter, setSearchFilter] = useState(TABLE_DATA.slice())
+  const [searchFilter, setSearchFilter] = useState([])
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
-  const selectedItems = checkedItems.filter((value) => value === true)
+
+  useEffect(() => {
+    if (isSuccess && !isLoading) {
+      useInitCustomers(customersData)
+    } else if (isError) {
+      toast.error(`Error while connecting: ${error}`)
+    }
+  }, [isLoading, isSuccess])
+
+  useEffect(() => {
+    setSearchFilter(customers)
+    setCheckedItems(new Array(customers.length).fill(false))
+  }, [customers])
 
   const findSelectedCustomer = () => {
-    const index = checkedItems.findIndex((value) => value === true)
-    return TABLE_DATA[index]
+    const index = checkedItems.findIndex(value => value === true)
+    return customers[index]
   }
 
   const getSelectedCustomers = () => {
     return checkedItems
-      .map((isChecked, index) => (isChecked ? TABLE_DATA[index] : null))
+      .map((isChecked, index) => (isChecked ? customers[index] : null))
       .filter(customer => customer !== null)
   }
 
   const handleDelete = async () => {
-    const customers = getSelectedCustomers()
-    if (customers) {
-      customers.map(async (customer) => {
-        await customerDelete(customer.id).then((res) => {
-          console.log(res)
+    const customersToDelete = getSelectedCustomers()
+    if (customersToDelete.length) {
+      for (const customer of customersToDelete) {
+        await deleteCustomer(customer.id).then((res) => {
           if (res.status === 201) {
             useDeleteCustomerById(customer.id)
             setIsDeleteConfirmationOpen(false)
           }
         }).catch((error) => {
-          console.log(error)
+          toast.error(`Error deleting customer: ${error}`)
         })
-      })
+      }
     }
   }
 
   const handleOpen = () => setOpen(!open)
 
   const handleSearch = (searchTerm) => {
-    const filteredCustomers = TABLE_DATA.filter(customer =>
+    const filteredCustomers = customers.filter(customer =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.personalCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.customerType.toLowerCase().includes(searchTerm.toLowerCase())
@@ -142,48 +82,53 @@ export default function CustomersSection () {
 
   const customerToEdit = selectedItems.length === 1 && findSelectedCustomer()
 
-  useEffect(() => {
-    // Restablecer customers seleccionados al cambiar de página
-    setCheckedItems(new Array(TABLE_DATA.length).fill(false))
-  }, [page])
-
   const customersPerPage = 7
   const startIndex = (page - 1) * customersPerPage
-  const endIndex = Math.min(startIndex + customersPerPage, TABLE_DATA.length)
+  const endIndex = Math.min(startIndex + customersPerPage, searchFilter.length)
 
   const handleSort = (key) => {
     let direction = 'ascending'
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+    if (sortConfig && sortConfig.key === (key) && sortConfig.direction === 'ascending') {
       direction = 'descending'
     }
     setSortConfig({ key, direction })
   }
 
   const sortedRows = [...searchFilter].sort((a, b) => {
-    if (!sortConfig) return TABLE_DATA
-
+    if (!sortConfig.key.length) return 0
     const { key, direction } = sortConfig
+    const dirMultiplier = direction === 'ascending' ? 1 : -1
+    const valA = a[key] != null ? a[key] : '' // Handle null/undefined values
+    const valB = b[key] != null ? b[key] : '' // Handle null/undefined values
 
-    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
-      // Orden alfabético
-      return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
+    let comparison = 0
+    if (typeof valA === 'string' && typeof valB === 'string') {
+      comparison = valA.localeCompare(valB)
+    } else if (typeof valA === 'number' && typeof valB === 'number') {
+      comparison = valA - valB
     } else {
-      // Orden numérico
-      return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
+      comparison = valA.toString().localeCompare(valB.toString())
     }
+
+    if (comparison !== 0) {
+      return dirMultiplier * comparison
+    }
+    return 0
   })
 
   const visibleCustomers = sortedRows.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(TABLE_DATA.length / customersPerPage)
+  const totalPages = Math.ceil(searchFilter.length / customersPerPage)
 
   return (
     <main className='w-full flex justify-center overflow-hidden px-6 py-5'>
       <Card className='h-full w-full max-w-screen-xl rounded-none bg-transparent shadow-none'>
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
-          <CustomersHeader onSearch={handleSearch} customerToEdit={customerToEdit} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
+          <CustomersHeader onSearch={handleSearch} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
         </CardHeader>
-        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg'>
-          <CustomersTable TABLE_DATA={visibleCustomers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} handleOpen={handleOpen} />
+        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg flex justify-center items-center'>
+          {isLoading
+            ? (<div className='w-full h-[200px] flex items-center justify-center bg-white'><Spinner className='h-16 w-16 text-gray-900/50' /></div>)
+            : <CustomersTable TABLE_DATA={visibleCustomers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} handleOpen={handleOpen} customerToEdit={customerToEdit} />}
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />
