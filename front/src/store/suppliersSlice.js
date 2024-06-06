@@ -19,10 +19,7 @@ export const suppliersSlice = createSlice({
     },
     updateSupplierById: (state, action) => {
       const { id, newData } = action.payload
-      const index = state.findIndex(supplier => supplier.id === id)
-      if (index !== -1) {
-        state[index] = { ...state[index], ...newData }
-      }
+      return state.map(supplier => (supplier.id === id ? { ...supplier, ...newData } : supplier))
     },
     deleteSupplierById: (state, action) => {
       return state.filter(supplier => supplier.id !== action.payload)

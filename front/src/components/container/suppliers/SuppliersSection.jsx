@@ -29,7 +29,7 @@ export default function SuppliersSection () {
 
   useEffect(() => {
     if (isSuccess && !isLoading) {
-      useInitSuppliers(suppliersData)
+      useInitSuppliers(suppliersData.filter(supplier => supplier.active === true))
     } else if (isError) {
       toast.error(`Error while connecting: ${error}`)
     }
@@ -51,7 +51,7 @@ export default function SuppliersSection () {
     if (suppliersToDelete.length) {
       for (const supplier of suppliersToDelete) {
         await deleteSupplier(supplier.id).then((res) => {
-          if (res.status === 201) {
+          if (res.data) {
             useDeleteSupplierById(supplier.id)
             setIsDeleteConfirmationOpen(false)
           }
