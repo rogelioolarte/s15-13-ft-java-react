@@ -1,6 +1,6 @@
 import LoginFormik from '../components/forms/LoginFormik'
 
-export default function LoginPage() {
+export default function LoginPage () {
   return (
     <div className='flex flex-col-reverse md:flex-row w-full min-h-screen h-full items-center'>
       <div className='w-full md:w-1/2 h-full flex items-center place-content-center py-7'>

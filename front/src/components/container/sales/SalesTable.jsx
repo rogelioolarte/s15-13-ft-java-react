@@ -26,7 +26,7 @@ export function SalesTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedIt
             <th
               key={head}
               className='first:flex items-center h-12 first:cursor-default cursor-pointer bg-[#F1F3F9] p-4 transition-colors hover:bg-[#e4e7ee] first:hover:bg-[#F1F3F9]'
-              onClick={() => index !== 0 && handleSort(row.toLowerCase())}
+              onClick={() => index !== 0 && handleSort(row)}
             >
               {head === 'checkbox'
                 ? (
