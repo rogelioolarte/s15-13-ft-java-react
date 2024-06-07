@@ -19,7 +19,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping
+    @PostMapping//agregar verificacion para ver si existe el producto y esta desactivado lo active y devuelva el producto, si no existe lo crea
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
         try {
             Product product = new Product();

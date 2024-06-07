@@ -9,6 +9,7 @@ Ecommerce
 La Plataforma para el manejo de inventarios y ventas para pymes es una aplicación web diseñada para facilitar el manejo de inventarios y ventas, permite gestionar distintos tipos de inventarios de productos y generar informes de ventas e inventarios que permitiran a las pymes controlar mucho mas su negocio y tomar mejores decisiones.
 
 ## Colaboradores
+<img src="./proyecto/foto_equipo.jpeg">
 - **Rosario** - Designer UX UI
   [LinkedIn]()
 - **Mariano** - QA
