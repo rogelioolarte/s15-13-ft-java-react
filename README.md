@@ -21,7 +21,7 @@ La Plataforma para el manejo de inventarios y ventas para pymes es una aplicaci√
   [LinkedIn](https://www.linkedin.com/in/jeisonfonseca/)
 - **Lionel Staricoff**  - Backend
   [LinkedIn](https://www.linkedin.com/in/lionel-staricoff/)
-   **David Sandoval**  - Backend
+- **David Sandoval**  - Backend
   [LinkedIn]()
 
 
