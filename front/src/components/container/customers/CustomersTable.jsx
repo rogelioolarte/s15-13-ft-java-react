@@ -2,7 +2,7 @@ import { Checkbox, Typography } from '@material-tailwind/react'
 import { LuChevronsUpDown } from 'react-icons/lu'
 import MenuActionsTableCustomer from './MenuActionsTableCustomer'
 
-export default function CustomersTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
+export default function CustomersTable({ TABLE_DATA, TABLE_HEAD, checkedItems, setCheckedItems, handleSort }) {
   const handleCheckAll = () => {
     const allChecked = checkedItems.every((item) => item)
     setCheckedItems(new Array(TABLE_DATA.length).fill(!allChecked))
