@@ -1,73 +1,54 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap";
 
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Inter"),
-    local("./assets/fonts/Inter-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 300;
-  src: local("Inter Light"),
-    local("./assets/fonts/Inter-Light.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  src: local("Inter Medium"),
-    local("./assets/fonts/Inter-Medium.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  src: local("Inter SemiBold"),
-    local("./assets/fonts/Inter-SemiBold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  src: local("Inter Bold"),
-    local("./assets/fonts/Inter-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 800;
-  src: local("Inter ExtraBold"),
-    local("./assets/fonts/Inter-ExtraBold.ttf") format("truetype");
-}
-
-body {
-  font-family: "Inter", "Roboto",
-    "Helvetica Neue", Arial, sans-serif, system-ui;
-  background-color: #fff8f8;
-  min-height: 100vh;
-}
-
-.sidebar {
-  &::-webkit-scrollbar {
-    width: 0.5rem;
+@layer base {
+  body {
+    @apply font-sans;
+    font-family: "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif,
+      system-ui;
+    background-color: #fff8f8;
+    min-height: 100vh;
   }
 
-  &::-webkit-scrollbar-track {
-    background: #000000;
+  .sidebar {
+    @apply max-w-xs; /* max-width: 250px; */
+
+    &::-webkit-scrollbar {
+      @apply w-2; /* width: 0.5rem; */
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-black; /* background: #000000; */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-gray-600 rounded-lg; /* background: #374151; border-radius: 10px; */
+    }
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: #374151;
-    border-radius: 10px;
+  @media (min-width: 540px) {
+    .sidebar {
+      @apply max-w-sm; /* max-width: 300px; */
+    }
+  }
+
+  .tableBody {
+    &::-webkit-scrollbar {
+      @apply w-2 h-2; /* width: 0.5rem; height: 0.5rem; */
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-200; /* background: #eaedf7; */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-blue-600 rounded-lg; /* background: #698abe; border-radius: 10px; */
+    }
+  }
+
+  .menu {
+    @apply sticky; /* position: sticky; */
   }
 }

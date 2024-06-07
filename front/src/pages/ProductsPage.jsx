@@ -1,7 +1,10 @@
+// import useProtectedRoutes from '../hooks/useProtectedRoutes'
+import ProductsSection from '../components/container/products/ProductsSection.jsx'
+
 export default function ProductsPage () {
+  /* useProtectedRoutes() */
+
   return (
-    <div>
-      <h1>Products</h1>
-    </div>
+    <ProductsSection />
   )
 }
