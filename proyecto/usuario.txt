@@ -1,0 +1,13 @@
+usuario{
+name: "Pepe",
+lastname: "Guayabas", 
+email: "PepenGuayabas@gmail.com",
+password: "1234"
+}
+
+
+url:
+https://s15-13-ft-java-react-deploy.up.railway.app/api/user/login
+
+swagger:
+https://s15-13-ft-java-react-deploy.up.railway.app/swagger-ui/index.html
