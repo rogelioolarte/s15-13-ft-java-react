@@ -1,5 +1,6 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.taxes.DtoTaxesResponse;
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.service.TaxesRepositoryImpl;
 import jakarta.validation.Valid;
@@ -36,7 +37,11 @@ public class TaxesController {
         }
 
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<DtoTaxesResponse> findTaxById(@PathVariable Long id) {
+        DtoTaxesResponse response = taxesRepositoryImpl.findTaxById(id);
+        return ResponseEntity.ok(response);
+    }
 
     @PutMapping(value = "/{id}", produces = "application/json")
 

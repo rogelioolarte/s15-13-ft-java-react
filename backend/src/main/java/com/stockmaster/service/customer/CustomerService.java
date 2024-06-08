@@ -110,7 +110,7 @@ public class CustomerService {
         customer.setName(name);
         customer.setPersonalCode(personalCode);
         customer.setCustomerType(customerType);
-        customer.setActive(customerRequest.isActive());
+//        customer.setActive(customerRequest.isActive());
 
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));
