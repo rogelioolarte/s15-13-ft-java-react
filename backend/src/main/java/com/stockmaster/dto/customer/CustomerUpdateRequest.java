@@ -23,5 +23,7 @@ public class CustomerUpdateRequest {
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
+    private Boolean active;
+
 
 }

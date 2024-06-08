@@ -5,14 +5,12 @@ import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
 import com.stockmaster.entity.customer.CustomerType;
-import com.stockmaster.exception.BusinessException;
 import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +47,7 @@ public class CustomerService {
     }
 
     //Save
+    
     public CustomerResponse save(CustomerSavingRequest customerSavingRequest){
         if (customerSavingRequest.getName() == null || customerSavingRequest.getName().isEmpty()) {
             throw new RequestException("The name is null or empty");
@@ -58,13 +57,18 @@ public class CustomerService {
             throw new RequestException("The customer type is null or non-existent");
         }
 
-        if(customerRepository.findByName(customerSavingRequest.getName()).isPresent()){
-            Customer customerDisable = customerRepository
-                    .findByName(customerSavingRequest.getName())
-                    .orElseThrow(()-> new RequestException("Customer not disable but It's present"));
+        Optional<Customer> customerOptional = customerRepository.findByName(customerSavingRequest.getName());
+        if (!customerOptional.isPresent()) {
+            Customer customerByPersonalCode = customerRepository.findByPersonalCode(customerSavingRequest.getPersonalCode());
+            customerOptional = Optional.ofNullable(customerByPersonalCode);
+        }
+
+        if (customerOptional.isPresent()) {
+            Customer customerDisable = customerOptional.orElseThrow(() -> new RequestException("Customer not disable but It's present"));
             customerDisable.setActive(true);
             return customerMapper.toCustomerResponse(customerRepository.save(customerDisable));
         }
+
         Customer customer = customerMapper.customerRequestToPost(customerSavingRequest);
         customer.setActive(true);
         try {
@@ -110,7 +114,10 @@ public class CustomerService {
         customer.setName(name);
         customer.setPersonalCode(personalCode);
         customer.setCustomerType(customerType);
-        customer.setActive(customerRequest.isActive());
+        Boolean isActive = customerRequest.getActive();
+        if (isActive != null) {
+            customer.setActive(isActive);
+        }
 
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));

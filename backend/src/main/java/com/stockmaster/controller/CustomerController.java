@@ -48,6 +48,7 @@ public class CustomerController {
         return ResponseEntity.ok(searchResult);
     }
     //Metodos Post
+
     @PostMapping
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerSavingRequest customer, BindingResult result){
         if (result.hasErrors()) {
