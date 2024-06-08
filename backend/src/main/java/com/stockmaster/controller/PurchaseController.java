@@ -3,6 +3,7 @@ package com.stockmaster.controller;
 
 
 import com.stockmaster.service.PurchaseService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.stockmaster.dto.Purchase.DtoPurchaseResponse;
 
@@ -28,6 +29,15 @@ public class PurchaseController {
             return ResponseEntity.status(HttpStatus.CREATED).body(purchaseService.MakeAPurchase(dtoPurchaseResponse));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! purchase not created: "+e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> gelAll(){
+        try {
+            return ResponseEntity.ok().body(purchaseService.getAllPurchases());
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Algo salio mal"+e.getMessage());
         }
     }
 }

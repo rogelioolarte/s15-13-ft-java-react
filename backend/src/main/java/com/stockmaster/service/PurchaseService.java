@@ -5,8 +5,6 @@ import com.stockmaster.dto.Purchase.DtoResponseRequest;
 import com.stockmaster.dto.Purchase.ProductDtoResponsePUrchase;
 import com.stockmaster.dto.Purchase.dtoSupplierPurchase;
 import com.stockmaster.entity.*;
-import com.stockmaster.repository.ProductRepository;
-import com.stockmaster.repository.PurchaseProductRepository;
 import com.stockmaster.repository.PurchaseRepository;
 import com.stockmaster.repository.SupplierRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -59,6 +57,11 @@ public class PurchaseService {
         return new DtoResponseRequest(purchaseDb.getPurchaseId(),purchaseDb.getBill(),purchaseDb.getDate(), new dtoSupplierPurchase(supplier),productResponse,purchaseDb.getTotal());
     }
 
+    public List<DtoResponseRequest> getAllPurchases() {
+      List<Purchase> productos =  purchaseRepository.findAll();
+        List<DtoResponseRequest> dtoResponseRequest = productos.stream().map(DtoResponseRequest::new).toList();
+        return dtoResponseRequest;
+    }
 }
 
 
