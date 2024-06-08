@@ -114,10 +114,12 @@ public class CustomerService {
         customer.setName(name);
         customer.setPersonalCode(personalCode);
         customer.setCustomerType(customerType);
+
         Boolean isActive = customerRequest.getActive();
         if (isActive != null) {
             customer.setActive(isActive);
         }
+
 
 
         return customerMapper.toCustomerResponse(customerRepository.save(customer));

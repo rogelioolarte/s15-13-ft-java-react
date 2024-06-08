@@ -20,7 +20,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO) {
         try {
             Product product = new Product();
             product.setName(productDTO.getName());
@@ -28,8 +28,10 @@ public class ProductController {
             product.setDescription(productDTO.getDescription());
             product.setSalePrice(productDTO.getSalePrice());
             product.setMinimal(productDTO.getMinimal());
-            Product savedProduct = productService.saveProduct(product);
-            return new ResponseEntity<>(mapToDTO(savedProduct), HttpStatus.CREATED);
+            productService.saveProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Producto creado con éxito");
+        } catch (ProductService.ProductException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

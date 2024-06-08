@@ -40,10 +40,7 @@ public class TaxesRepositoryImpl {
         }
     }
 
-    public List<DtoTaxesResponse> findAllTaxes() {
-        List<Taxes> list = taxesRepository.findAll();
-        return list.stream().map(DtoTaxesResponse::new).toList();
-    }
+
 
     public DtoTaxesResponse updateById(Long id, DtoTaxesRquest dtoTaxesRquest) {
 
@@ -54,6 +51,18 @@ public class TaxesRepositoryImpl {
         return new DtoTaxesResponse(taxesRepository.save(tax));
 
     }
+
+    public List<DtoTaxesResponse> findAllTaxes() {
+        List<Taxes> list = taxesRepository.findAll();
+        return list.stream().map(DtoTaxesResponse::new).toList();
+    }
+
+    public DtoTaxesResponse findTaxById(Long id) {
+        Taxes tax = taxesRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tax not found with id: " + id));
+        return new DtoTaxesResponse(tax);
+    }
+
 
     public DtoTaxesResponse delete(Long id) {
         Taxes tax = taxesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Try again, the order has not been saved"));
