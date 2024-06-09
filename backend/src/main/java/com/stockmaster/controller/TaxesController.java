@@ -1,6 +1,5 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.taxes.DtoTaxesResponse;
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.service.TaxesRepositoryImpl;
 import jakarta.validation.Valid;
@@ -11,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/tax")
+@RequestMapping("/api/taxes")
 @CrossOrigin("*")
 public class TaxesController {
     @Lazy
@@ -28,7 +27,7 @@ public class TaxesController {
     }
 
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public ResponseEntity<?> getAll() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.findAllTaxes());
@@ -37,11 +36,7 @@ public class TaxesController {
         }
 
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<DtoTaxesResponse> findTaxById(@PathVariable Long id) {
-        DtoTaxesResponse response = taxesRepositoryImpl.findTaxById(id);
-        return ResponseEntity.ok(response);
-    }
+
 
     @PutMapping(value = "/{id}", produces = "application/json")
 
@@ -55,7 +50,7 @@ public class TaxesController {
 
     }
 
-    @PatchMapping(value = "/{id}",produces = "application/json")
+    @PatchMapping(value = "/disable/{id}",produces = "application/json")
     public ResponseEntity<?> disableTax(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.delete(id));
@@ -66,13 +61,13 @@ public class TaxesController {
     }
 
 
-//    @PatchMapping(value = "/enable/{id}")
-//    public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
-//        try {
-//            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
-//        }
-//
-//    }
+    @PatchMapping(value = "/enable/{id}")
+    public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taxesRepositoryImpl.activeTax(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+        }
+
+    }
 }
