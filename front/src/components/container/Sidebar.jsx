@@ -1,87 +1,113 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/logo-md.svg'
-import { AiOutlineDashboard, AiOutlineSetting } from 'react-icons/ai'
-import { BsReceipt, BsCartCheck, BsTruck, BsCalendarDate, BsBoxArrowRight } from 'react-icons/bs'
+import { AiOutlineDashboard, AiOutlineProduct } from 'react-icons/ai'
+import { BsReceipt, BsTruck, BsBoxArrowRight } from 'react-icons/bs'
+import { TbReceiptTax, TbUser } from 'react-icons/tb'
+import {
+  List,
+  ListItem,
+  ListItemPrefix,
+  Drawer,
+  Card
+} from '@material-tailwind/react'
+import { useUserActions } from '../../hooks/useUserActions'
 
-import { TbPresentationAnalytics } from 'react-icons/tb'
-
-export default function Sidebar ({ openSidebar, setOpenSidebar }) {
+export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
+  const { useResetUser } = useUserActions()
   const navigate = useNavigate()
   const propertiesProfile = [
     {
       name: 'Dashboard',
       url: '/dashboard',
-      icon: <AiOutlineDashboard className='text-2xl' />
+      icon: <AiOutlineDashboard className='h-5 w-5' />
     },
     {
-      name: 'Ventas',
-      url: '/ventas',
-      icon: <BsReceipt className='text-2xl' />
+      name: 'Sales',
+      url: '/sales',
+      icon: <BsReceipt className='h-5 w-5' />
+    },
+    // {
+    //   name: 'Purchases',
+    //   url: '/purchases',
+    //   icon: <BsCartCheck className='h-5 w-5' />
+    // },
+    {
+      name: 'Products',
+      url: '/products',
+      icon: <AiOutlineProduct className='h-5 w-5' />
     },
     {
-      name: 'Compras',
-      url: '/compras',
-      icon: <BsCartCheck className='text-2xl' />
+      name: 'Suppliers',
+      url: '/suppliers',
+      icon: <BsTruck className='h-5 w-5' />
     },
     {
-      name: 'Proovedores',
-      url: '/proovedores',
-      icon: <BsTruck className='text-2xl' />
+      name: 'Customers',
+      url: '/customers',
+      icon: <TbUser className='h-5 w-5' />
     },
     {
-      name: 'Analíticas',
-      url: '/analiticas',
-      icon: <TbPresentationAnalytics className='text-2xl' />
-    },
-    {
-      name: 'Consultas',
-      url: '/consultas',
-      icon: <BsCalendarDate className='text-2xl' />
-    },
-    {
-      name: 'Ajustes',
-      url: '/ajustes',
-      icon: <AiOutlineSetting className='text-2xl' />
+      name: 'Taxes',
+      url: '/taxes',
+      icon: <TbReceiptTax className='h-5 w-5' />
     }
+    /* {
+      name: 'Analytics',
+      url: '/analytics',
+      icon: <TbPresentationAnalytics className='h-5 w-5' />
+    },
+    {
+      name: 'Inquiries',
+      url: '/inquiries',
+      icon: <BsCalendarDate className='h-5 w-5' />
+    } */
   ]
   const navigateRoutes = (url) => {
     navigate(url)
-    setOpenSidebar(false)
+    setIsDrawerOpen(false)
   }
 
+  const closeDrawer = () => setIsDrawerOpen(false)
+
   return (
-    <div
-      className={`${openSidebar ? 'w-0' : 'w-60 sm:w-80'} h-full transition-all duration-500 ease-in-out`}
-    >
-      <div className='sidebar flex h-full min-h-svh gap-2 flex-col bg-black overflow-y-scroll'>
-        <header className='px-6 pt-10 pb-5'>
-          <img
-            className='w-24 object-cover sm:w-32'
-            src={Logo}
-            alt=''
-          />
-        </header>
-        <div className='flex h-2/3 w-full flex-col gap-1'>
-          {propertiesProfile.map((properties) => (
-            <button
-              className='w-full text-white px-6 py-2 2xl:py-3 flex items-center gap-2'
-              key={properties.name}
-              onClick={() => navigateRoutes(properties.url)}
-            >
-              {properties.icon}
-              {properties.name}
-            </button>
-          ))}
-          <button
-            className='w-full text-white px-6 py-2 flex items-center gap-2'
-            onClick={() => {
-              // resetAllSlices(), navigate('/')
-            }}
-          >
-            <BsBoxArrowRight className='text-2xl' />Cerrar sesión
-          </button>
-        </div>
-      </div>
-    </div>
+    <>
+      <Drawer open={isDrawerOpen} onClose={closeDrawer} className='sidebar bg-black overflow-y-scroll ps-2 py-4'>
+        <Card
+          color='transparent'
+          shadow={false}
+          className='h-[calc(100vh-2rem)] w-full'
+        >
+          <header className='mb-5 flex justify-center'>
+            <img
+              className='w-24 object-cover sm:w-32'
+              src={Logo}
+              alt=''
+            />
+          </header>
+          <List className='p-0'>
+            {propertiesProfile.map((properties) => (
+              <ListItem
+                className='text-white hover:text-black'
+                key={properties.name}
+                onClick={() => navigateRoutes(properties.url)}
+              >
+                <ListItemPrefix>
+                  {properties.icon}
+                </ListItemPrefix>
+                {properties.name}
+              </ListItem>
+            ))}
+            <Link to='/login' onClick={() => useResetUser()}>
+              <ListItem className='text-white hover:text-black'>
+                <ListItemPrefix>
+                  <BsBoxArrowRight className='h-5 w-5' />
+                </ListItemPrefix>
+                Log Out
+              </ListItem>
+            </Link>
+          </List>
+        </Card>
+      </Drawer>
+    </>
   )
-};
+}

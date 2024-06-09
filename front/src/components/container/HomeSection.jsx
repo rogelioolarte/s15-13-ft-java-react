@@ -1,28 +1,23 @@
-import ActualDate from '../pure/ActualDate'
-import SearchBar from '../pure/SearchBar'
-import ShowUserData from '../pure/ShowUserData'
-import {
-  Navbar,
-  Typography
-} from '@material-tailwind/react'
+import { Button } from '@material-tailwind/react'
+import Background from '../../assets/background.svg'
+import PhoneMedium from '../../assets/phone.svg'
 
 export default function HomeSection () {
   return (
-    <div className='flex flex-col items-center justify-items-center w-[100%] h-[90%] '>
-      <Navbar className='mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-2 my-3 '>
-        <div className='container mx-auto flex flex-wrap items-center justify-between
-          text-blue-gray-900'
-        >
-          <Typography as='a' className='mr-4 cursor-pointer py-1.5 font-medium'>
-            <ActualDate />
-          </Typography>
-          <SearchBar />
-        </div>
-      </Navbar>
-      <ShowUserData />
-      <div className='h-[90%] w-[80%] mt-[5%] border border-black border-solid'>
-        Area de graficas u otros
+    <div
+      className='md:h-[80%] md:w-full px-5 flex flex-col md:flex-row items-center justify-center content-center'
+      style={{
+        backgroundImage: `url(${Background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className='md:w-[95vh]'>
+        <h1 className='mt-6 md:mt-0 text-4xl md:text-5xl font-black w-[60%]'>The easiest way to organize your inventory</h1>
+        <p className='md:text-[2.6vh]'>OPTIMIZE YOUR PRODUCT MANAGEMENT AND INVENTORY CONTROL</p>
+        <Button className='mb-7 md:mb-0 mt-6 bg-[#8D8543] text-gray-900'>CONTACT A REPRESENTATIVE</Button>
       </div>
+      <img src={PhoneMedium} alt='phone-md' className='md:h-[70vh]' />
     </div>
   )
 }

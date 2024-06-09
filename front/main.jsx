@@ -1,27 +1,17 @@
 import { createRoot } from 'react-dom/client'
-import App from './src/App'
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomePage from './src/pages/HomePage'
-import ProductsPage from './src/pages/ProductsPage'
-import NotFoundPage from './src/pages/NotFoundPage'
-import LoginPage from './src/pages/LoginPage'
-import ErrorPage from './src/pages/ErrorPage'
 import { ThemeProvider } from '@material-tailwind/react'
+import { Provider } from 'react-redux'
+import { store } from './src/store/index'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import routes from './src/config/routes.jsx'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    children: [
-      { path: '/', element: <Navigate to='/login' /> },
-      { path: '/login', element: <LoginPage /> },
-      { path: '/home', element: <HomePage /> },
-      { path: '/products', element: <ProductsPage /> }
-    ]
-  },
-  { path: '/error', element: <ErrorPage /> },
-  { path: '*', element: <NotFoundPage /> }
-])
+const router = createBrowserRouter(routes)
 
 const root = createRoot(document.getElementById('app'))
-root.render(<ThemeProvider><RouterProvider router={router} /></ThemeProvider>)
+root.render(
+  <ThemeProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </ThemeProvider>
+)
