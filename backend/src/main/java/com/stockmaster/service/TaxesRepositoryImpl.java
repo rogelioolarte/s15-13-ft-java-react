@@ -28,11 +28,21 @@ public class TaxesRepositoryImpl {
 
     public DtoTaxesResponse taxRegister(DtoTaxesRquest dtoTaxesRquest) {
         try {
-            Taxes tax = taxesRepository.save(new Taxes(dtoTaxesRquest));
+            Taxes tax = buscarTaxes(dtoTaxesRquest);
+            if(tax == null)  tax = taxesRepository.save(new Taxes(dtoTaxesRquest));
             return new DtoTaxesResponse(tax);
         } catch (EntityNotFoundException en) {
             throw new EntityNotFoundException("Try again, the order has not been saved");
         }
+    }
+
+    private Taxes buscarTaxes(DtoTaxesRquest dtoTaxesRquest) {
+        Taxes tax = taxesRepository.findByName(dtoTaxesRquest.name());
+        if(tax == null) return null;
+        if(tax.getActive().booleanValue()) throw new RuntimeException("ya existe la entidad y esta activa");
+
+        tax.setActive(true);
+        return taxesRepository.save(tax);
     }
 
     public List<DtoTaxesResponse> findAllTaxes() {

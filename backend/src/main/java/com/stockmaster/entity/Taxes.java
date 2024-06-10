@@ -32,6 +32,7 @@ public class Taxes {
     public Taxes(DtoTaxesRquest dtoTaxesRquest) {
         this.name = dtoTaxesRquest.name();
         this.percentage = dtoTaxesRquest.percentage();
+        this.active = true;
     }
     public Taxes(DtoTaxesResponse dtoTaxesResponse) {
         this.name = dtoTaxesResponse.name();
