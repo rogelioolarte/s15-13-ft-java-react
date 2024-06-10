@@ -2,14 +2,10 @@ package com.stockmaster.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Builder
 @Entity
@@ -22,12 +18,13 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long purchaseId;
+    private Long id;
 
     private String bill;
 
     @Temporal(TemporalType.DATE)
     private Date date = new Date();
+
 
     @ManyToOne
     @JoinColumn(name = "id_supplier", referencedColumnName = "id")
@@ -45,9 +42,8 @@ public class Purchase {
     private List<Product> products;
 
 
-    @OneToMany(mappedBy = "purchase",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "purchase",cascade = CascadeType.ALL)
     private List<PurchaseProduct> products2;
-
 
 
 

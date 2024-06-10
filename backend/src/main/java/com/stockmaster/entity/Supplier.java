@@ -1,5 +1,6 @@
 package com.stockmaster.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,9 +30,11 @@ public class Supplier {
     @Column
     private boolean active = true;
 
+
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<SupplierProduct> products;
+
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Purchase> purchases;

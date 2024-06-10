@@ -43,12 +43,11 @@ public class Product {
     private boolean active;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<PurchaseProduct> purchase;
+    private List<PurchaseProduct> purchaseProducts;
 
 
     @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Purchase> purchases;
-
 
 
     public Product() {

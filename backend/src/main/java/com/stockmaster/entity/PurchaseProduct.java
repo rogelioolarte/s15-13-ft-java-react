@@ -4,8 +4,6 @@ import com.stockmaster.dto.Purchase.DtoPurchaseProductResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Builder
 @Entity
 @Getter
@@ -25,8 +23,6 @@ public class PurchaseProduct {
     @JoinColumn(name = "id_product", referencedColumnName = "id")
     private Product product;
 
-
-
     @ManyToOne
     @JoinColumn(name = "id_purchase", referencedColumnName = "id")
     private Purchase purchase;
@@ -44,7 +40,7 @@ public class PurchaseProduct {
     }
 
     public void setPurchase(Purchase purchase) {
-        this.purchase = Purchase.builder().purchaseId(purchase.getPurchaseId()).build();
+        this.purchase = Purchase.builder().id(purchase.getId()).build();
     }
 
 
