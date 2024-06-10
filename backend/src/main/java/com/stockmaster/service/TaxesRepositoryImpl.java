@@ -61,6 +61,11 @@ public class TaxesRepositoryImpl {
         tax.setActive(true);
         return new DtoTaxesResponse(taxesRepository.save(tax));
     }
+    public DtoTaxesResponse findById(Long id) {
+        Taxes tax = taxesRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tax not found with id: " + id));
+        return new DtoTaxesResponse(tax);
+    }
 
 
 }
