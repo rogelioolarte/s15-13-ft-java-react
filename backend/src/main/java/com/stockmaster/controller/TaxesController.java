@@ -1,7 +1,9 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.taxes.DtoTaxesResponse;
 import com.stockmaster.dto.taxes.DtoTaxesRquest;
 import com.stockmaster.service.TaxesRepositoryImpl;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -39,7 +41,6 @@ public class TaxesController {
 
 
     @PutMapping(value = "/{id}", produces = "application/json")
-
     public ResponseEntity<?> updateTax( @RequestBody  DtoTaxesRquest dtoTaxesRquest,@PathVariable Long id) {
         try {
 
@@ -69,5 +70,14 @@ public class TaxesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
         }
 
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<DtoTaxesResponse> getTaxById(@PathVariable Long id) {
+        try {
+            DtoTaxesResponse taxResponse = taxesRepositoryImpl.findById(id);
+            return ResponseEntity.ok(taxResponse);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
