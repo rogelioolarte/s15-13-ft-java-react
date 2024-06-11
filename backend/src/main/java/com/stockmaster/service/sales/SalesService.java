@@ -1,7 +1,9 @@
 package com.stockmaster.service.sales;
 
 import com.stockmaster.dto.product.ProductSavingRequest;
+import com.stockmaster.dto.product.ProductResponse;
 import com.stockmaster.dto.sales.SalesDateResponse;
+import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Taxes;
@@ -12,8 +14,6 @@ import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -43,90 +44,68 @@ public class SalesService {
     @Lazy
     @Autowired
     private final SalesProductRepository salesProductRepository;
-    /*
-    public List<SalesResponse>findByAll(){
-        List<Sales> customers = salesRepository.findAll();
-        return salesRepository.findAll().stream()
-                .map(salesMapper::toSalesResponse).toList();
-    }*/
-    /*
-    public List<SalesDateResponse> findByDate(Date date) {
 
-        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        String formattedDate = dateFormat.format(date);
-        List<Object[]>results = salesRepository.findByDate(formattedDate);
-
-        List<SalesDateResponse> salesResponses = new ArrayList<>();
-        for (Object[] result : results){
-            SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(((BigInteger)result[0]))
-                    .customerName((String) result[1])
-                    .personalCode((String) result[2])
-                    .product_name((String) result[3])
-                    .quantity((Integer) result[4])
-                    .discount((BigDecimal) result[5])
-                    .price((BigDecimal) result[6])
-                    .tax_name((String) result[7])
-                    .total((BigDecimal) result[8])
-                    .build();
-            salesResponses.add(response);
-        }
-        return salesResponses;
-    }*/
-    private static final Logger logger = LoggerFactory.getLogger(SalesService.class);
-    public List<SalesDateResponse> findByDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(date);
-
-        logger.info("Formatted date: {}", formattedDate); // Logging
-
-        List<Object[]> results = salesRepository.findByDate(formattedDate);
+    public List<SalesResponse> findAllSales() throws ParseException {
+        List<Object[]> results = salesRepository.findAllSales();
 
         if (results.isEmpty()) {
-            logger.info("No results found for date: {}", formattedDate); // Logging
             return Collections.emptyList();
         }
 
-        List<SalesDateResponse> salesResponses = new ArrayList<>();
+        Map<Long, SalesResponse> salesMap = new HashMap<>();
+
         for (Object[] result : results) {
-            logger.info("Result: {}", Arrays.toString(result)); // Logging each result
+            Long saleId = ((Number) result[0]).longValue();
+            String customerName = (String) result[1];
+            String personalCode = (String) result[2];
+            String productName = (String) result[3];
+            Integer quantity = (Integer) result[4];
+            BigDecimal discount = (BigDecimal) result[5];
+            BigDecimal price = (BigDecimal) result[6];
+            String taxName = (String) result[7];
+            Double total = ((BigDecimal) result[8]).doubleValue();
+            String formattedSaleDate = (String) result[9];
+            String description = (String) result[10];  // Nueva columna para la descripción del producto
+            String barcode = (String) result[11];      // Nueva columna para el código de barras del producto
+            int stock = (Integer) result[12];          // Nueva columna para el stock del producto
 
-            Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
+            SalesResponse saleResponse = salesMap.get(saleId);
+            if (saleResponse == null) {
+                saleResponse = SalesResponse.builder()
+                        .id_customer(saleId)
+                        .tax(taxName)
+                        .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
+                        .productSize(new ArrayList<>())
+                        .totalPrice(BigDecimal.valueOf(total))
+                        .build();
+                salesMap.put(saleId, saleResponse);
+            }
 
-            SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(saleId)
-                    .customerName((String) result[1])
-                    .personalCode((String) result[2])
-                    .product_name((String) result[3])
-                    .quantity((Integer) result[4])
-                    .discount((BigDecimal) result[5])
-                    .price((BigDecimal) result[6])
-                    .tax_name((String) result[7])
-                    .total((BigDecimal) result[8])
+            ProductResponse productResponse = ProductResponse.builder()
+                    .productName(productName)
+                    .description(description)
+                    .barcode(barcode)
+                    .salePrice(price)
+                    .stock(stock)
                     .build();
-            salesResponses.add(response);
+            saleResponse.getProductSize().add(productResponse);
         }
-        return salesResponses;
+
+        return new ArrayList<>(salesMap.values());
     }
     public List<SalesDateResponse> findByDateRange(Date startDate, Date endDate) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedStartDate = dateFormat.format(startDate);
         String formattedEndDate = dateFormat.format(endDate);
 
-        logger.info("Formatted start date: {}", formattedStartDate);
-        logger.info("Formatted end date: {}", formattedEndDate);
-
         List<Object[]> results = salesRepository.findByDateRange(formattedStartDate, formattedEndDate);
 
         if (results.isEmpty()) {
-            logger.info("No results found for date range: {} - {}", formattedStartDate, formattedEndDate);
             return Collections.emptyList();
         }
 
         List<SalesDateResponse> salesResponses = new ArrayList<>();
         for (Object[] result : results) {
-            logger.info("Result: {}", Arrays.toString(result));
-
             Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
 
             SalesDateResponse response = SalesDateResponse.builder()
@@ -144,7 +123,6 @@ public class SalesService {
         }
         return salesResponses;
     }
-
     @Transactional
     public Sales save(SalesSavingRequest request) {
         Customer customer = customerRepository.findById(request.getId_customer())
@@ -188,10 +166,10 @@ public class SalesService {
     private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
         return products.stream()
                 .map(product -> {
-                    BigDecimal discountAmount = product.getTotalProduct()
+                    BigDecimal discountAmount = product.getProductPrice()
                             .multiply(product.getDiscount())
                             .divide(BigDecimal.valueOf(100));
-                    BigDecimal discountedPrice = product.getTotalProduct().subtract(discountAmount);
+                    BigDecimal discountedPrice = product.getProductPrice().subtract(discountAmount);
                     return discountedPrice.multiply(BigDecimal.valueOf(product.getQuantity()));
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

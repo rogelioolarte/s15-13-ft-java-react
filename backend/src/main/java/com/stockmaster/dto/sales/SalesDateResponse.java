@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @Data
 @Builder
@@ -25,5 +24,6 @@ public class SalesDateResponse {
     private BigDecimal price;
     private String tax_name;
     private BigDecimal total;
+
 
 }

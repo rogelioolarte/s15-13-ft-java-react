@@ -33,5 +33,5 @@ public class SalesSavingRequest {
     @NotNull
     private List<ProductSavingRequest> products;
     @NotNull
-    private BigDecimal totalGeneral;
+    private BigDecimal totalPrice;
 }

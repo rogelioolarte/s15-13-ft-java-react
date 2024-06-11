@@ -1,6 +1,7 @@
 package com.stockmaster.controller;
 
 import com.stockmaster.dto.sales.SalesDateResponse;
+import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,11 @@ public class SaleController {
     private final SalesRepository salesRepository;
 
     //Get Method
-
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllSales() throws ParseException {
+        List<SalesResponse> sales = salesService.findAllSales();
+        return ResponseEntity.ok(sales);
+    }
     @GetMapping("/getbydaterange/")
     public ResponseEntity<?> getSalesByDateRange(@RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date startDate,
                                                  @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date endDate) {
