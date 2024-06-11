@@ -2,6 +2,7 @@ package com.stockmaster.service.sales;
 
 import com.stockmaster.dto.product.ProductSavingRequest;
 import com.stockmaster.dto.product.ProductResponse;
+import com.stockmaster.dto.sales.AnaliticsSalesResponse;
 import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.dto.taxes.TaxesResponse;
@@ -83,11 +84,9 @@ public class SalesService {
                 saleResponse.setTax(new ArrayList<>());
             }
 
-            // Verificar si ya existe un impuesto con el mismo nombre y porcentaje
             boolean taxExists = saleResponse.getTax().stream()
                     .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
 
-            // Si no existe, agregar el impuesto a la lista de impuestos
             if (!taxExists) {
                 TaxesResponse taxesResponse = TaxesResponse.builder()
                         .name(taxName)
@@ -229,10 +228,26 @@ public class SalesService {
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
     private BigDecimal addTaxToTotal(BigDecimal total, Taxes tax) {
         BigDecimal taxAmount = total.multiply
         (tax.getPercentage()).divide(BigDecimal.valueOf(100));
         return total.add(taxAmount);
     }
+    public List<AnaliticsSalesResponse> getAnalitics() {
+        List<Object[]> results = salesRepository.getTotalSalesByMonth();
+        List<AnaliticsSalesResponse> analyticsList = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String month = (String) result[0];
+            BigDecimal amount = (BigDecimal) result[1];
+            AnaliticsSalesResponse analytics = AnaliticsSalesResponse.builder()
+                    .month(month)
+                    .amount(amount)
+                    .build();
+            analyticsList.add(analytics);
+        }
+
+        return analyticsList;
+    }
+
 }

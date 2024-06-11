@@ -1,5 +1,6 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.sales.AnaliticsSalesResponse;
 import com.stockmaster.dto.sales.SalesDateResponse;
 import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,7 +52,11 @@ public class SaleController {
         return ResponseEntity.ok(sales);
     }
 
-
+    @GetMapping("/analytics")
+    public ResponseEntity<List<AnaliticsSalesResponse>> getMonthValue(){
+        List<AnaliticsSalesResponse> analytics = salesService.getAnalitics();
+        return ResponseEntity.ok(analytics);
+    }
 
     //Post Method
     @PostMapping()
