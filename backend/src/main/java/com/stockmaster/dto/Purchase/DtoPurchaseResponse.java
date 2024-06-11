@@ -20,4 +20,6 @@ public record DtoPurchaseResponse(@NotBlank String bill,
                                   Long supplier,
                                   @NotNull
                                   List<DtoPurchaseProductResponse> productList) {
+
+
 }

@@ -1,14 +1,9 @@
 package com.stockmaster.dto.Purchase;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Purchase;
-import com.stockmaster.entity.Supplier;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,7 +24,7 @@ public record DtoResponseRequest(Long id,
 
 {
     public DtoResponseRequest(Purchase purchase){
-        this(purchase.getPurchaseId(),purchase.getBill(),purchase.getDate(),
+        this(purchase.getId(),purchase.getBill(),purchase.getDate(),
                 new dtoSupplierPurchase(purchase.getSupplier()),purchase.getProducts2().stream().map(ProductDtoResponsePUrchase::new).toList(),
                 purchase.getTotal());
     }
