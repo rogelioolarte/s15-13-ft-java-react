@@ -5,6 +5,7 @@ import com.stockmaster.dto.product.ProductResponse;
 import com.stockmaster.dto.sales.SalesDateResponse;
 import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
+import com.stockmaster.dto.taxes.TaxesResponse;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Taxes;
 import com.stockmaster.entity.customer.Customer;
@@ -62,22 +63,39 @@ public class SalesService {
             BigDecimal discount = (BigDecimal) result[5];
             BigDecimal price = (BigDecimal) result[6];
             String taxName = (String) result[7];
-            Double total = ((BigDecimal) result[8]).doubleValue();
-            String formattedSaleDate = (String) result[9];
-            String description = (String) result[10];
-            String barcode = (String) result[11];
-            int stock = (Integer) result[12];
+            BigDecimal taxPercentage = (BigDecimal) result[8]; // Se modifica el índice para el porcentaje de impuesto
+            Double total = ((BigDecimal) result[9]).doubleValue();
+            String formattedSaleDate = (String) result[10];
+            String description = (String) result[11];
+            String barcode = (String) result[12];
+            int stock = (Integer) result[13];
 
             SalesResponse saleResponse = salesMap.get(saleId);
             if (saleResponse == null) {
                 saleResponse = SalesResponse.builder()
                         .id_customer(saleId)
-                        .tax(taxName)
                         .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
-                        .productSize(new ArrayList<>())
+                        .product(new ArrayList<>())
                         .totalPrice(BigDecimal.valueOf(total))
                         .build();
                 salesMap.put(saleId, saleResponse);
+            }
+
+            if (saleResponse.getTax() == null) {
+                saleResponse.setTax(new ArrayList<>());
+            }
+
+            // Verificar si ya existe un impuesto con el mismo nombre y porcentaje
+            boolean taxExists = saleResponse.getTax().stream()
+                    .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
+
+            // Si no existe, agregar el impuesto a la lista de impuestos
+            if (!taxExists) {
+                TaxesResponse taxesResponse = TaxesResponse.builder()
+                        .name(taxName)
+                        .percentage(taxPercentage)
+                        .build();
+                saleResponse.getTax().add(taxesResponse);
             }
 
             ProductResponse productResponse = ProductResponse.builder()
@@ -87,11 +105,12 @@ public class SalesService {
                     .salePrice(price)
                     .stock(stock)
                     .build();
-            saleResponse.getProductSize().add(productResponse);
+            saleResponse.getProduct().add(productResponse);
         }
 
         return new ArrayList<>(salesMap.values());
     }
+    /*
     public List<SalesDateResponse> findByDateRange(Date startDate, Date endDate) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedStartDate = dateFormat.format(startDate);
@@ -121,7 +140,7 @@ public class SalesService {
             salesResponses.add(response);
         }
         return salesResponses;
-    }
+    }*/
     @Transactional
     public Sales save(SalesSavingRequest request) {
         Customer customer = customerRepository.findById(request.getId_customer())

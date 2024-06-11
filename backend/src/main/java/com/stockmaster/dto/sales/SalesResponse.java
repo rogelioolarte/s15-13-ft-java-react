@@ -2,8 +2,8 @@ package com.stockmaster.dto.sales;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stockmaster.dto.product.ProductResponse;
-import com.stockmaster.dto.product.ProductSavingRequest;
-import jakarta.validation.constraints.NotNull;
+import com.stockmaster.dto.taxes.TaxesResponse;
+import com.stockmaster.entity.Taxes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,9 +20,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SalesResponse {
     private Long id_customer;
-    private String tax;
+    private List<TaxesResponse> tax;
     private Date date;
-    @NotNull private List<ProductResponse> productSize;
+    private List<ProductResponse> product;
     private BigDecimal totalPrice;
 
 }

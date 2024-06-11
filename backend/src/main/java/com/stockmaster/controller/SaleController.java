@@ -36,12 +36,13 @@ public class SaleController {
         List<SalesResponse> sales = salesService.findAllSales();
         return ResponseEntity.ok(sales);
     }
+    /*
     @GetMapping("/getbydaterange/")
     public ResponseEntity<?> getSalesByDateRange(@RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date startDate,
                                                  @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date endDate) {
         List<SalesDateResponse> sales = salesService.findByDateRange(startDate, endDate);
         return ResponseEntity.ok(sales);
-    }
+    }*/
 
     //Post Method
     @PostMapping()
