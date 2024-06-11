@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SalesResponse {
+    private Long id_sale;
     private Long id_customer;
     private List<TaxesResponse> tax;
     private Date date;

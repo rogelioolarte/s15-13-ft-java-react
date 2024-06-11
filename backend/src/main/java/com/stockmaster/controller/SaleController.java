@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +37,22 @@ public class SaleController {
         List<SalesResponse> sales = salesService.findAllSales();
         return ResponseEntity.ok(sales);
     }
-    /*
+
     @GetMapping("/getbydaterange/")
-    public ResponseEntity<?> getSalesByDateRange(@RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date startDate,
-                                                 @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date endDate) {
-        List<SalesDateResponse> sales = salesService.findByDateRange(startDate, endDate);
+    public ResponseEntity<?> getSalesByDateRange(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") String startDateStr,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") String endDateStr) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String startDate = outputFormat.format(inputFormat.parse(startDateStr));
+        String endDate = outputFormat.format(inputFormat.parse(endDateStr));
+
+        List<SalesResponse> sales = salesService.findByDateRange(startDate, endDate);
         return ResponseEntity.ok(sales);
-    }*/
+    }
+
+
 
     //Post Method
     @PostMapping()
