@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,9 +64,9 @@ public class SalesService {
             String taxName = (String) result[7];
             Double total = ((BigDecimal) result[8]).doubleValue();
             String formattedSaleDate = (String) result[9];
-            String description = (String) result[10];  // Nueva columna para la descripción del producto
-            String barcode = (String) result[11];      // Nueva columna para el código de barras del producto
-            int stock = (Integer) result[12];          // Nueva columna para el stock del producto
+            String description = (String) result[10];
+            String barcode = (String) result[11];
+            int stock = (Integer) result[12];
 
             SalesResponse saleResponse = salesMap.get(saleId);
             if (saleResponse == null) {
