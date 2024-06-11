@@ -49,13 +49,7 @@ public class CustomerService {
     //Save
     
     public CustomerResponse save(CustomerSavingRequest customerSavingRequest){
-        if (customerSavingRequest.getName() == null || customerSavingRequest.getName().isEmpty()) {
-            throw new RequestException("The name is null or empty");
-        } else if (customerSavingRequest.getPersonalCode() == null || customerSavingRequest.getPersonalCode().isEmpty()) {
-            throw new RequestException("The personal code is null or empty");
-        } else if (customerSavingRequest.getCustomerType() == null ) {
-            throw new RequestException("The customer type is null or non-existent");
-        }
+        savingValidation(customerSavingRequest);
 
         Optional<Customer> customerOptional = customerRepository.findByName(customerSavingRequest.getName());
         if (!customerOptional.isPresent()) {
@@ -80,13 +74,21 @@ public class CustomerService {
             throw new RequestException("An error occurred while saving the customer");
         }
     }
+    private static void savingValidation(CustomerSavingRequest customerSavingRequest) {
+        if (customerSavingRequest.getName() == null || customerSavingRequest.getName().isEmpty()) {
+            throw new RequestException("The name is null or empty");
+        } else if (customerSavingRequest.getPersonalCode() == null || customerSavingRequest.getPersonalCode().isEmpty()) {
+            throw new RequestException("The personal code is null or empty");
+        } else if (customerSavingRequest.getCustomerType() == null ) {
+            throw new RequestException("The customer type is null or non-existent");
+        }
+    }
 
     //Update
     public CustomerResponse update(Long id, CustomerUpdateRequest customerRequest) throws BadRequestException {
         if (id == null || id <= 0) {
             throw new BadRequestException("Invalid customer ID.");
         }
-
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer id does not exist."));
 
@@ -154,9 +156,17 @@ public class CustomerService {
     }
     //SearchBy
     public List<Customer> searchCustomerByName(String searchTerm) {
+        List<Customer> customers = customerRepository.searchProjectByName(searchTerm);
+        if (customers.isEmpty()) {
+            throw new RequestException("We did not find values for your search .");
+        }
         return customerRepository.searchProjectByName(searchTerm);
     }
     public List<Customer> searchCustomerByPersonalCode(String searchTerm) {
+        List<Customer> customers = customerRepository.searchProjectByName(searchTerm);
+        if (customers.isEmpty()) {
+            throw new RequestException("We did not find values for your search .");
+        }
         return customerRepository.searchProjectByPersonalCode(searchTerm);
     }
 }

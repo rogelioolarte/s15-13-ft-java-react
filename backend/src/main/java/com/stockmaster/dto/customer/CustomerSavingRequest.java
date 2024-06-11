@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerSavingRequest {
-    @NotBlank
+    @NotBlank(message = "The name is null or empty")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "The personal code is null or empty")
     private String personalCode;
 
-    @NotNull
+    @NotNull(message = "The customer type is null or non-existent")
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 

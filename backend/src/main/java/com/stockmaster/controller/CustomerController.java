@@ -3,6 +3,8 @@ package com.stockmaster.controller;
 import com.stockmaster.dto.customer.CustomerSavingRequest;
 import com.stockmaster.dto.customer.CustomerUpdateRequest;
 import com.stockmaster.entity.customer.Customer;
+import com.stockmaster.entity.customer.CustomerType;
+import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.CustomerRepository;
 import com.stockmaster.service.customer.CustomerService;
 import jakarta.validation.Valid;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +35,6 @@ public class CustomerController {
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.findByAll());
     }
-
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findByCustomerId(id));
@@ -47,8 +49,8 @@ public class CustomerController {
         List<Customer> searchResult = customerService.searchCustomerByPersonalCode(searchTerm);
         return ResponseEntity.ok(searchResult);
     }
-    //Metodos Post
 
+    //Metodos Post
     @PostMapping
     public ResponseEntity<?> saveCustomer(@Valid @RequestBody CustomerSavingRequest customer, BindingResult result){
         if (result.hasErrors()) {
@@ -58,7 +60,19 @@ public class CustomerController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        return ResponseEntity.ok( customerService.save(customer) );
+        try {
+            return ResponseEntity.ok(customerService.save(customer));
+        } catch (IllegalArgumentException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("Invalid customer type")) {
+                // Construir un mensaje más específico
+                String acceptedValues = Arrays.stream(CustomerType.values())
+                        .map(Enum::name)
+                        .collect(Collectors.joining(", "));
+                errorMessage = String.format("Invalid value for customer type. Accepted values are: [%s]", acceptedValues);
+            }
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
     }
     //Metodos Put
     @PutMapping("/{id}")

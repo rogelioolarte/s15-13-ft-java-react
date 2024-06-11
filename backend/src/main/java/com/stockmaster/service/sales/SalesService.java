@@ -2,7 +2,6 @@ package com.stockmaster.service.sales;
 
 import com.stockmaster.dto.product.ProductSavingRequest;
 import com.stockmaster.dto.product.ProductResponse;
-import com.stockmaster.dto.sales.SalesDateResponse;
 import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.dto.taxes.TaxesResponse;
@@ -20,7 +19,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
