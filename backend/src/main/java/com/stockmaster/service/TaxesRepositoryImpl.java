@@ -39,7 +39,7 @@ public class TaxesRepositoryImpl {
     private Taxes buscarTaxes(DtoTaxesRquest dtoTaxesRquest) {
         Taxes tax = taxesRepository.findByName(dtoTaxesRquest.name());
         if(tax == null) return null;
-        if(tax.getActive().booleanValue()) throw new RuntimeException("ya existe la entidad y esta activa");
+        if(tax.getActive()) throw new RuntimeException("ya existe la entidad y esta activa");
 
         tax.setActive(true);
         return taxesRepository.save(tax);
