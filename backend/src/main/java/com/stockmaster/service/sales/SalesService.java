@@ -1,8 +1,11 @@
 package com.stockmaster.service.sales;
 
 import com.stockmaster.dto.product.ProductSavingRequest;
-import com.stockmaster.dto.sales.SalesDateResponse;
+import com.stockmaster.dto.product.ProductResponse;
+import com.stockmaster.dto.sales.AnaliticsSalesResponse;
+import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
+import com.stockmaster.dto.taxes.TaxesResponse;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Taxes;
 import com.stockmaster.entity.customer.Customer;
@@ -12,15 +15,12 @@ import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -43,108 +43,140 @@ public class SalesService {
     @Lazy
     @Autowired
     private final SalesProductRepository salesProductRepository;
-    /*
-    public List<SalesResponse>findByAll(){
-        List<Sales> customers = salesRepository.findAll();
-        return salesRepository.findAll().stream()
-                .map(salesMapper::toSalesResponse).toList();
-    }*/
-    /*
-    public List<SalesDateResponse> findByDate(Date date) {
 
-        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        String formattedDate = dateFormat.format(date);
-        List<Object[]>results = salesRepository.findByDate(formattedDate);
-
-        List<SalesDateResponse> salesResponses = new ArrayList<>();
-        for (Object[] result : results){
-            SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(((BigInteger)result[0]))
-                    .customerName((String) result[1])
-                    .personalCode((String) result[2])
-                    .product_name((String) result[3])
-                    .quantity((Integer) result[4])
-                    .discount((BigDecimal) result[5])
-                    .price((BigDecimal) result[6])
-                    .tax_name((String) result[7])
-                    .total((BigDecimal) result[8])
-                    .build();
-            salesResponses.add(response);
-        }
-        return salesResponses;
-    }*/
-    private static final Logger logger = LoggerFactory.getLogger(SalesService.class);
-    public List<SalesDateResponse> findByDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(date);
-
-        logger.info("Formatted date: {}", formattedDate); // Logging
-
-        List<Object[]> results = salesRepository.findByDate(formattedDate);
+    public List<SalesResponse> findAllSales() throws ParseException {
+        List<Object[]> results = salesRepository.findAllSales();
 
         if (results.isEmpty()) {
-            logger.info("No results found for date: {}", formattedDate); // Logging
             return Collections.emptyList();
         }
 
-        List<SalesDateResponse> salesResponses = new ArrayList<>();
+        Map<Long, SalesResponse> salesMap = new HashMap<>();
+
         for (Object[] result : results) {
-            logger.info("Result: {}", Arrays.toString(result)); // Logging each result
+            Long saleId = ((Number) result[0]).longValue();
+            String customerName = (String) result[1];
+            String personalCode = (String) result[2];
+            String productName = (String) result[3];
+            Integer quantity = (Integer) result[4];
+            BigDecimal discount = (BigDecimal) result[5];
+            BigDecimal price = (BigDecimal) result[6];
+            String taxName = (String) result[7];
+            BigDecimal taxPercentage = (BigDecimal) result[8]; // Se modifica el índice para el porcentaje de impuesto
+            Double total = ((BigDecimal) result[9]).doubleValue();
+            String formattedSaleDate = (String) result[10];
+            String description = (String) result[11];
+            String barcode = (String) result[12];
+            int stock = (Integer) result[13];
 
-            Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
+            SalesResponse saleResponse = salesMap.get(saleId);
+            if (saleResponse == null) {
+                saleResponse = SalesResponse.builder()
+                        .id_customer(saleId)
+                        .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
+                        .product(new ArrayList<>())
+                        .totalPrice(BigDecimal.valueOf(total))
+                        .build();
+                salesMap.put(saleId, saleResponse);
+            }
 
-            SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(saleId)
-                    .customerName((String) result[1])
-                    .personalCode((String) result[2])
-                    .product_name((String) result[3])
-                    .quantity((Integer) result[4])
-                    .discount((BigDecimal) result[5])
-                    .price((BigDecimal) result[6])
-                    .tax_name((String) result[7])
-                    .total((BigDecimal) result[8])
+            if (saleResponse.getTax() == null) {
+                saleResponse.setTax(new ArrayList<>());
+            }
+
+            boolean taxExists = saleResponse.getTax().stream()
+                    .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
+
+            if (!taxExists) {
+                TaxesResponse taxesResponse = TaxesResponse.builder()
+                        .name(taxName)
+                        .percentage(taxPercentage)
+                        .build();
+                saleResponse.getTax().add(taxesResponse);
+            }
+
+            ProductResponse productResponse = ProductResponse.builder()
+                    .productName(productName)
+                    .description(description)
+                    .barcode(barcode)
+                    .salePrice(price)
+                    .stock(stock)
                     .build();
-            salesResponses.add(response);
+            saleResponse.getProduct().add(productResponse);
         }
-        return salesResponses;
+
+        return new ArrayList<>(salesMap.values());
     }
-    public List<SalesDateResponse> findByDateRange(Date startDate, Date endDate) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedStartDate = dateFormat.format(startDate);
-        String formattedEndDate = dateFormat.format(endDate);
 
-        logger.info("Formatted start date: {}", formattedStartDate);
-        logger.info("Formatted end date: {}", formattedEndDate);
+    public List<SalesResponse> findByDateRange(String startDate, String endDate) throws ParseException {
+        List<Object[]> results = salesRepository.findByDateRange(startDate, endDate);
 
-        List<Object[]> results = salesRepository.findByDateRange(formattedStartDate, formattedEndDate);
+        return mapToSalesResponseList(results);
+    }
 
+    private List<SalesResponse> mapToSalesResponseList(List<Object[]> results) throws ParseException {
         if (results.isEmpty()) {
-            logger.info("No results found for date range: {} - {}", formattedStartDate, formattedEndDate);
             return Collections.emptyList();
         }
 
-        List<SalesDateResponse> salesResponses = new ArrayList<>();
+        Map<Long, SalesResponse> salesMap = new HashMap<>();
+
         for (Object[] result : results) {
-            logger.info("Result: {}", Arrays.toString(result));
+            Long saleId = ((Number) result[0]).longValue();
+            String customerName = (String) result[1];
+            String personalCode = (String) result[2];
+            String productName = (String) result[3];
+            Integer quantity = (Integer) result[4];
+            BigDecimal discount = (BigDecimal) result[5];
+            BigDecimal price = (BigDecimal) result[6];
+            String taxName = (String) result[7];
+            BigDecimal taxPercentage = (BigDecimal) result[8]; // Se modifica el índice para el porcentaje de impuesto
+            Double total = ((BigDecimal) result[9]).doubleValue();
+            String formattedSaleDate = (String) result[10];
+            String description = (String) result[11];
+            String barcode = (String) result[12];
+            int stock = (Integer) result[13];
 
-            Long saleId = result[0] instanceof Long ? (Long) result[0] : Long.parseLong(result[0].toString());
+            SalesResponse saleResponse = salesMap.get(saleId);
+            if (saleResponse == null) {
+                saleResponse = SalesResponse.builder()
+                        .id_customer(saleId)
+                        .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
+                        .product(new ArrayList<>())
+                        .totalPrice(BigDecimal.valueOf(total))
+                        .build();
+                salesMap.put(saleId, saleResponse);
+            }
 
-            SalesDateResponse response = SalesDateResponse.builder()
-                    .sale_id(saleId)
-                    .customerName((String) result[1])
-                    .personalCode((String) result[2])
-                    .product_name((String) result[3])
-                    .quantity((Integer) result[4])
-                    .discount((BigDecimal) result[5])
-                    .price((BigDecimal) result[6])
-                    .tax_name((String) result[7])
-                    .total((BigDecimal) result[8])
+            if (saleResponse.getTax() == null) {
+                saleResponse.setTax(new ArrayList<>());
+            }
+
+            // Verificar si ya existe un impuesto con el mismo nombre y porcentaje
+            boolean taxExists = saleResponse.getTax().stream()
+                    .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
+
+            // Si no existe, agregar el impuesto a la lista de impuestos
+            if (!taxExists) {
+                TaxesResponse taxesResponse = TaxesResponse.builder()
+                        .name(taxName)
+                        .percentage(taxPercentage)
+                        .build();
+                saleResponse.getTax().add(taxesResponse);
+            }
+
+            ProductResponse productResponse = ProductResponse.builder()
+                    .productName(productName)
+                    .description(description)
+                    .barcode(barcode)
+                    .salePrice(price)
+                    .stock(stock)
                     .build();
-            salesResponses.add(response);
+            saleResponse.getProduct().add(productResponse);
         }
-        return salesResponses;
-    }
 
+        return new ArrayList<>(salesMap.values());
+    }
     @Transactional
     public Sales save(SalesSavingRequest request) {
         Customer customer = customerRepository.findById(request.getId_customer())
@@ -188,18 +220,34 @@ public class SalesService {
     private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
         return products.stream()
                 .map(product -> {
-                    BigDecimal discountAmount = product.getTotalProduct()
+                    BigDecimal discountAmount = product.getProductPrice()
                             .multiply(product.getDiscount())
                             .divide(BigDecimal.valueOf(100));
-                    BigDecimal discountedPrice = product.getTotalProduct().subtract(discountAmount);
+                    BigDecimal discountedPrice = product.getProductPrice().subtract(discountAmount);
                     return discountedPrice.multiply(BigDecimal.valueOf(product.getQuantity()));
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
     private BigDecimal addTaxToTotal(BigDecimal total, Taxes tax) {
         BigDecimal taxAmount = total.multiply
         (tax.getPercentage()).divide(BigDecimal.valueOf(100));
         return total.add(taxAmount);
     }
+    public List<AnaliticsSalesResponse> getAnalitics() {
+        List<Object[]> results = salesRepository.getTotalSalesByMonth();
+        List<AnaliticsSalesResponse> analyticsList = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String month = (String) result[0];
+            BigDecimal amount = (BigDecimal) result[1];
+            AnaliticsSalesResponse analytics = AnaliticsSalesResponse.builder()
+                    .month(month)
+                    .amount(amount)
+                    .build();
+            analyticsList.add(analytics);
+        }
+
+        return analyticsList;
+    }
+
 }

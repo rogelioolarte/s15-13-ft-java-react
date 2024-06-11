@@ -20,5 +20,5 @@ public class ProductSavingRequest {
     @NotNull
     private BigDecimal discount;
     @NotNull
-    private BigDecimal totalProduct;
+    private BigDecimal productPrice;
 }

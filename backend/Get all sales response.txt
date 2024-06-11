@@ -1,0 +1,84 @@
+[
+  {
+    "id_customer": 6,
+    "tax": [
+      {
+        "name": "tax 1",
+        "percentage": 10
+      },
+      {
+        "name": "tax 1",
+        "percentage": 10
+      }
+    ],
+    "date": "2024-06-05T00:00:00.000-05:00",
+    "product": [
+      {
+        "productName": "Producto 1",
+        "description": "Descripción del producto 1",
+        "barcode": "1234567890",
+        "salePrice": 19.99,
+        "stock": 100
+      },
+      {
+        "productName": "Producto 2",
+        "description": "Descripción del producto 2",
+        "barcode": "0987654321",
+        "salePrice": 29.99,
+        "stock": 50
+      }
+    ],
+    "totalPrice": 58168
+  },
+  {
+    "id_customer": 7,
+    "tax": [
+      {
+        "name": "tax 1",
+        "percentage": 10
+      },
+      {
+        "name": "tax 1",
+        "percentage": 10
+      }
+    ],
+    "date": "2024-06-10T00:00:00.000-05:00",
+    "product": [
+      {
+        "productName": "Producto 1",
+        "description": "Descripción del producto 1",
+        "barcode": "1234567890",
+        "salePrice": 19.99,
+        "stock": 100
+      },
+      {
+        "productName": "Producto 3",
+        "description": "Descripción del producto 3",
+        "barcode": "9876543210",
+        "salePrice": 14.99,
+        "stock": 75
+      }
+    ],
+    "totalPrice": 295.72
+  },
+  {
+    "id_customer": 8,
+    "tax": [
+      {
+        "name": "tax 1",
+        "percentage": 10
+      }
+    ],
+    "date": "2024-06-10T00:00:00.000-05:00",
+    "product": [
+      {
+        "productName": "Producto 1",
+        "description": "Descripción del producto 1",
+        "barcode": "1234567890",
+        "salePrice": 19.99,
+        "stock": 100
+      }
+    ],
+    "totalPrice": 21.99
+  }
+]

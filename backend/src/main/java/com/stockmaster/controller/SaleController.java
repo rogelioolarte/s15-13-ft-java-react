@@ -1,6 +1,8 @@
 package com.stockmaster.controller;
 
+import com.stockmaster.dto.sales.AnaliticsSalesResponse;
 import com.stockmaster.dto.sales.SalesDateResponse;
+import com.stockmaster.dto.sales.SalesResponse;
 import com.stockmaster.dto.sales.SalesSavingRequest;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
@@ -14,7 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,12 +32,30 @@ public class SaleController {
     private final SalesRepository salesRepository;
 
     //Get Method
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllSales() throws ParseException {
+        List<SalesResponse> sales = salesService.findAllSales();
+        return ResponseEntity.ok(sales);
+    }
 
     @GetMapping("/getbydaterange/")
-    public ResponseEntity<?> getSalesByDateRange(@RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date startDate,
-                                                 @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") Date endDate) {
-        List<SalesDateResponse> sales = salesService.findByDateRange(startDate, endDate);
+    public ResponseEntity<?> getSalesByDateRange(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "MM-dd-yyyy") String startDateStr,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "MM-dd-yyyy") String endDateStr) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String startDate = outputFormat.format(inputFormat.parse(startDateStr));
+        String endDate = outputFormat.format(inputFormat.parse(endDateStr));
+
+        List<SalesResponse> sales = salesService.findByDateRange(startDate, endDate);
         return ResponseEntity.ok(sales);
+    }
+
+    @GetMapping("/analytics")
+    public ResponseEntity<List<AnaliticsSalesResponse>> getMonthValue(){
+        List<AnaliticsSalesResponse> analytics = salesService.getAnalitics();
+        return ResponseEntity.ok(analytics);
     }
 
     //Post Method
