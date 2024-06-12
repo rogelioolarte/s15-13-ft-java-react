@@ -1,9 +1,7 @@
 package com.stockmaster.controller;
 
-import com.stockmaster.dto.sales.AnaliticsSalesResponse;
-import com.stockmaster.dto.sales.SalesDateResponse;
-import com.stockmaster.dto.sales.SalesResponse;
-import com.stockmaster.dto.sales.SalesSavingRequest;
+import com.stockmaster.dto.sales.*;
+import com.stockmaster.entity.sales.Sales;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
 
@@ -69,8 +67,10 @@ public class SaleController {
             return ResponseEntity.badRequest().body(errorMessages);
         }
 
-        salesService.save(sale);
-        return ResponseEntity.ok(Map.of("message","Sale saved successfully"));
+        Sales savedSale = salesService.save(sale);
+        SalesResponseDTO responseDTO = salesService.convertToDto(savedSale);
+
+        return ResponseEntity.ok(responseDTO);
     }
 
 

@@ -1,10 +1,11 @@
 package com.stockmaster.service.sales;
 
+import com.stockmaster.dto.customer.CustomerResponse;
+import com.stockmaster.dto.customer.CustomerSalesSavedResponse;
+import com.stockmaster.dto.product.ProductSalesSavedResponse;
 import com.stockmaster.dto.product.ProductSavingRequest;
 import com.stockmaster.dto.product.ProductResponse;
-import com.stockmaster.dto.sales.AnaliticsSalesResponse;
-import com.stockmaster.dto.sales.SalesResponse;
-import com.stockmaster.dto.sales.SalesSavingRequest;
+import com.stockmaster.dto.sales.*;
 import com.stockmaster.dto.taxes.TaxesResponse;
 import com.stockmaster.entity.Product;
 import com.stockmaster.entity.Taxes;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -205,6 +207,10 @@ public class SalesService {
 
             }
 
+            int updatedStock = product.getStock() - productRequest.getQuantity();
+            product.setStock(updatedStock);
+            productRepository.save(product);
+
             SalesProduct salesProduct = SalesProduct.builder()
                     .sales(sales)
                     .product(product)
@@ -216,6 +222,39 @@ public class SalesService {
         sales.setSalesProducts(salesProducts);
         sales = salesRepository.save(sales);
         return sales;
+    }
+    public SalesResponseDTO convertToDto(Sales sales) {
+        SalesResponseDTO dto = new SalesResponseDTO();
+        dto.setId(sales.getId());
+        dto.setDate(sales.getDate());
+
+        TaxesResponse taxesResponse = new TaxesResponse();
+        taxesResponse.setName(sales.getTax().getName());
+        taxesResponse.setPercentage(sales.getTax().getPercentage());
+        dto.setTax(taxesResponse);
+
+        CustomerSalesSavedResponse customerResponse = new CustomerSalesSavedResponse();
+        customerResponse.setId(sales.getCustomer().getId());
+        customerResponse.setName(sales.getCustomer().getName());
+        dto.setCustomer(customerResponse);
+
+        List<ProductSalesSavedResponse> productDTOs = sales.getSalesProducts().stream()
+                .map(sp -> {
+                    ProductSalesSavedResponse productDTO = new ProductSalesSavedResponse();
+                    productDTO.setProductName(sp.getProduct().getName());
+                    productDTO.setBarcode(sp.getProduct().getBarcode());
+                    productDTO.setSalePrice(sp.getProduct().getSalePrice());
+                    productDTO.setQuantity(sp.getQuantity());
+                    productDTO.setDiscount(sp.getDiscount());
+
+                    return productDTO;
+                })
+                .collect(Collectors.toList());
+
+        dto.setProduct(productDTOs);
+        dto.setTotalPrice(sales.getTotal());
+
+        return dto;
     }
     private BigDecimal calculateTotalGeneral(List<ProductSavingRequest> products) {
         return products.stream()

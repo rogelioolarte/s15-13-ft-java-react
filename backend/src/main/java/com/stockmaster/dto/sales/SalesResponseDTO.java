@@ -1,9 +1,11 @@
 package com.stockmaster.dto.sales;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.stockmaster.dto.customer.CustomerResponse;
+import com.stockmaster.dto.customer.CustomerSalesSavedResponse;
 import com.stockmaster.dto.product.ProductResponse;
+import com.stockmaster.dto.product.ProductSalesSavedResponse;
 import com.stockmaster.dto.taxes.TaxesResponse;
-import com.stockmaster.entity.Taxes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,11 +20,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SalesResponse {
-    private Long id_sale;
-    private Long id_customer;
-    private List<TaxesResponse> tax;
+public class SalesResponseDTO {
+    private Long id;
+    private CustomerSalesSavedResponse customer;
+    private TaxesResponse tax;
     private Date date;
-    private List<ProductResponse> product;
+    private List<ProductSalesSavedResponse> product;
     private BigDecimal totalPrice;
 }
