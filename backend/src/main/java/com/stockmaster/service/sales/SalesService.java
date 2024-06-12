@@ -74,8 +74,8 @@ public class SalesService {
             SalesResponse saleResponse = salesMap.get(saleId);
             if (saleResponse == null) {
                 saleResponse = SalesResponse.builder()
-                        .id_customer(saleId)
-                        .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
+                        .id_sale(saleId)
+                        .date(new SimpleDateFormat("dd/MM/yyyy").parse(formattedSaleDate))
                         .product(new ArrayList<>())
                         .totalPrice(BigDecimal.valueOf(total))
                         .build();
@@ -83,26 +83,19 @@ public class SalesService {
             }
 
             if (saleResponse.getTax() == null) {
-                saleResponse.setTax(new ArrayList<>());
-            }
-
-            boolean taxExists = saleResponse.getTax().stream()
-                    .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
-
-            if (!taxExists) {
                 TaxesResponse taxesResponse = TaxesResponse.builder()
                         .name(taxName)
                         .percentage(taxPercentage)
                         .build();
-                saleResponse.getTax().add(taxesResponse);
+                saleResponse.setTax(taxesResponse);
             }
 
-            ProductResponse productResponse = ProductResponse.builder()
+            ProductSalesSavedResponse productResponse = ProductSalesSavedResponse.builder()
                     .productName(productName)
-                    .description(description)
                     .barcode(barcode)
                     .salePrice(price)
-                    .stock(stock)
+                    .quantity(quantity)
+                    .discount(discount)
                     .build();
             saleResponse.getProduct().add(productResponse);
         }
@@ -117,6 +110,8 @@ public class SalesService {
     }
 
     private List<SalesResponse> mapToSalesResponseList(List<Object[]> results) throws ParseException {
+        //List<Object[]> results = salesRepository.findAllSales();
+
         if (results.isEmpty()) {
             return Collections.emptyList();
         }
@@ -142,8 +137,8 @@ public class SalesService {
             SalesResponse saleResponse = salesMap.get(saleId);
             if (saleResponse == null) {
                 saleResponse = SalesResponse.builder()
-                        .id_customer(saleId)
-                        .date(new SimpleDateFormat("MM/dd/yyyy").parse(formattedSaleDate))
+                        .id_sale(saleId)
+                        .date(new SimpleDateFormat("dd/MM/yyyy").parse(formattedSaleDate))
                         .product(new ArrayList<>())
                         .totalPrice(BigDecimal.valueOf(total))
                         .build();
@@ -151,28 +146,19 @@ public class SalesService {
             }
 
             if (saleResponse.getTax() == null) {
-                saleResponse.setTax(new ArrayList<>());
-            }
-
-            // Verificar si ya existe un impuesto con el mismo nombre y porcentaje
-            boolean taxExists = saleResponse.getTax().stream()
-                    .anyMatch(tax -> tax.getName().equals(taxName) && tax.getPercentage().equals(taxPercentage));
-
-            // Si no existe, agregar el impuesto a la lista de impuestos
-            if (!taxExists) {
                 TaxesResponse taxesResponse = TaxesResponse.builder()
                         .name(taxName)
                         .percentage(taxPercentage)
                         .build();
-                saleResponse.getTax().add(taxesResponse);
+                saleResponse.setTax(taxesResponse);
             }
 
-            ProductResponse productResponse = ProductResponse.builder()
+            ProductSalesSavedResponse productResponse = ProductSalesSavedResponse.builder()
                     .productName(productName)
-                    .description(description)
                     .barcode(barcode)
                     .salePrice(price)
-                    .stock(stock)
+                    .quantity(quantity)
+                    .discount(discount)
                     .build();
             saleResponse.getProduct().add(productResponse);
         }

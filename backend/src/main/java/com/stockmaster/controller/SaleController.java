@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class SaleController {
     @Autowired
     private final SalesService salesService;
-    private final SalesRepository salesRepository;
 
     //Get Method
     @GetMapping("/all")
