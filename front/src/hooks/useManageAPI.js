@@ -28,7 +28,13 @@ export const useManageAPI = (entityName, useInitAction, data, isLoading, isSucce
         throw new Error(error)
       }
     } catch (err) {
-      toast.error(`Error while connecting: ${err.message}`, { duration: 2000, closeButton: true })
+      if (err.data) {
+        toast.error(`Error adding ${entityName}: ${err.data.message}`,
+          { duration: 2000, closeButton: true })
+      } else {
+        toast.error(`Error adding ${entityName}: ${err.message}`,
+          { duration: 2000, closeButton: true })
+      }
     }
   }
 
@@ -39,10 +45,17 @@ export const useManageAPI = (entityName, useInitAction, data, isLoading, isSucce
           const res = await useDeleteMutation(entity.id)
           if (res) {
             useDeleteAction(entity.id)
-            toast.success(`${entityName}(s) deleted successfully`, { duration: 1500, closeButton: true })
+            toast.success(`${entityName}(s) deleted successfully`,
+              { duration: 1500, closeButton: true })
           }
         } catch (err) {
-          toast.error(`Error deleting ${entityName}: ${err.message}`, { duration: 2000, closeButton: true })
+          if (err.data) {
+            toast.error(`Error deleting ${entityName}: ${err.data.message}`,
+              { duration: 2000, closeButton: true })
+          } else {
+            toast.error(`Error deleting ${entityName}: ${err.message}`,
+              { duration: 2000, closeButton: true })
+          }
         }
       }
     }

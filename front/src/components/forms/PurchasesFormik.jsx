@@ -77,7 +77,7 @@ export function PurchasesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
           toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
             { duration: 2000, closeButton: true })
         } else {
-          console.error(`Error while adding: ${JSON.stringify(error)}`)
+          toast.error(`Error while adding: ${JSON.stringify(error)}`)
         }
       })
   }

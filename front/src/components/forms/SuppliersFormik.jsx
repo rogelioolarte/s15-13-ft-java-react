@@ -53,7 +53,7 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
         toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
           { duration: 2000, closeButton: true })
       } else {
-        console.error(`Error while adding: ${JSON.stringify(error)}`)
+        toast.error(`Error while adding: ${JSON.stringify(error)}`)
       }
     }
   }
@@ -66,9 +66,9 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
       handleClose()
     } catch (error) {
       if (error.data) {
-        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+        toast.error(`Error while editing: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
       } else {
-        console.error(`Error while adding: ${JSON.stringify(error)}`)
+        toast.error(`Error while editing: ${JSON.stringify(error)}`)
       }
     }
   }

@@ -33,7 +33,12 @@ export default function SalesSection () {
       useInitPurchases(purchasesData, products)
       toast.success('Purchase Data successfully added', { duration: 1500, closeButton: true })
     } else if (isError) {
-      toast.error(`Error while connecting: ${error}`, { duration: 2000 })
+      if (error.data) {
+        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+          { duration: 2000, closeButton: true })
+      } else {
+        toast.error(`Error while adding: ${JSON.stringify(error)}`)
+      }
     }
   }, [isLoading, isSuccess])
 

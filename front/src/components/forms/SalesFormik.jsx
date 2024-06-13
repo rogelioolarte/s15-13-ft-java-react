@@ -101,14 +101,16 @@ export function SalesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
         delete response.product
       }
       useAddSale(response)
-      toast.success('Invoice created successfully',
+      toast.success('Sale created successfully',
         { duration: 1500, closeButton: true })
       handleClose()
     } catch (error) {
-      toast.error(`Error while adding: ${error.data
-        ? JSON.stringify(error.data.message)
-          : JSON.stringify(error)}`,
-      { duration: 2000, closeButton: true })
+      if (error.data) {
+        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+          { duration: 2000, closeButton: true })
+      } else {
+        toast.error(`Error while adding: ${JSON.stringify(error)}`)
+      }
     }
   }
 

@@ -55,7 +55,7 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
       .then((res) => {
         if (res) {
           useAddProduct(res)
-          toast.success('Product updated successfully',
+          toast.success('Product created successfully',
             { duration: 1500, closeButton: true })
           handleClose()
         }
@@ -64,7 +64,7 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
           toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
             { duration: 2000, closeButton: true })
         } else {
-          console.error(`Error while adding: ${JSON.stringify(error)}`)
+          toast.error(`Error while adding: ${JSON.stringify(error)}`)
         }
       })
   }
@@ -80,10 +80,10 @@ export function ProductsFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
         }
       }).catch((error) => {
         if (error.data) {
-          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+          toast.error(`Error while editing: ${JSON.stringify(error.data.message)}`,
             { duration: 2000, closeButton: true })
         } else {
-          console.error(`Error while adding: ${JSON.stringify(error)}`)
+          toast.error(`Error while editing: ${JSON.stringify(error)}`)
         }
       })
   }
