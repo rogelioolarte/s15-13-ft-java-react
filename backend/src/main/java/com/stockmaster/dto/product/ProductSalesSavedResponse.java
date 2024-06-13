@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductSalesSavedResponse {
-    private String productName;
+    private String name;
     private String barcode;
     private BigDecimal salePrice;
     @NotNull
