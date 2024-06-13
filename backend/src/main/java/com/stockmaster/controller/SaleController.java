@@ -2,6 +2,7 @@ package com.stockmaster.controller;
 
 import com.stockmaster.dto.sales.*;
 import com.stockmaster.entity.sales.Sales;
+import com.stockmaster.entity.sales.dtoSalesResponse;
 import com.stockmaster.repository.SalesRepository;
 import com.stockmaster.service.sales.SalesService;
 
@@ -33,7 +34,7 @@ public class SaleController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllSales() throws ParseException {
        //List<SalesResponse> sales =  salesService.findAllSales();
-        Set<Sales> sales = salesService.findAllSale();
+        Set<dtoSalesResponse> sales = salesService.findAllSale();
         return ResponseEntity.ok(sales);
     }
 

@@ -1,5 +1,6 @@
 package com.stockmaster.service.sales;
 
+import com.stockmaster.dto.Purchase.ProductDtoResponsePUrchase;
 import com.stockmaster.dto.customer.CustomerResponse;
 import com.stockmaster.dto.customer.CustomerSalesSavedResponse;
 import com.stockmaster.dto.product.ProductSalesSavedResponse;
@@ -12,8 +13,11 @@ import com.stockmaster.entity.Taxes;
 import com.stockmaster.entity.customer.Customer;
 import com.stockmaster.entity.sales.Sales;
 import com.stockmaster.entity.sales.SalesProduct;
+import com.stockmaster.entity.sales.dtoSalesResponse;
 import com.stockmaster.exception.RequestException;
 import com.stockmaster.repository.*;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -275,12 +279,15 @@ public class SalesService {
         return analyticsList;
     }
 
-    public Set<Sales> findAllSale() {
+    public Set<dtoSalesResponse> findAllSale() {
         List<Sales> listSales = salesRepository.findAll();
-        Set<Sales> listSalesResponse = new HashSet<>();
+        Set<dtoSalesResponse> listSalesResponse = new HashSet<>();
         for(Sales sale : listSales){
-            var s = Sales.builder().id(sale.getId()).products(sale.getProducts()).date(sale.getDate()).tax(sale.getTax())
-                    .customer(sale.getCustomer()).build();
+            List<ProductDtoResponsePUrchase> productResponse = sale.getSalesProducts().stream().map(ProductDtoResponsePUrchase::new).toList();
+            var s = new dtoSalesResponse(sale.getId(),sale.getCustomer(),sale.getTax(),sale.getDate(),
+                    sale.getTotal(),productResponse);
+
+
             listSalesResponse.add(s);
         }
         return listSalesResponse;
