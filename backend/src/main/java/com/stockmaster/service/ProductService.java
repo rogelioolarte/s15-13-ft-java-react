@@ -27,8 +27,8 @@ public class ProductService {
             throw new ProductException("El producto ya existe y está activo");
         }
         // Si el producto no existe, lo creamos
-        productRepository.save(product);
-        throw new ProductException("Producto creado con éxito");
+      return  productRepository.save(product);
+       // throw new ProductException("Producto creado con éxito");
     }
     public class ProductException extends Exception {
         public ProductException(String message) {
