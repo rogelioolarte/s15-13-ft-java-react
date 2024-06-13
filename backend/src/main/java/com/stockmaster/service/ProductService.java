@@ -20,8 +20,8 @@ public class ProductService {
             if (!existingProduct.isActive()) {
                 // Si el producto existe y está desactivado, lo activamos y actualizamos
                 existingProduct.setActive(true);
-                productRepository.save(existingProduct);
-                throw new ProductException("Producto activado con éxito");
+              return  productRepository.save(existingProduct);
+               // throw new ProductException("Producto activado con éxito");
             }
             // Si el producto ya está activo, lanzamos una excepción indicando que ya existe
             throw new ProductException("El producto ya existe y está activo");
