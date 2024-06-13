@@ -2,7 +2,7 @@
 <br />
   <div align='center'>
   <a href="" target="_blank">
-    <img width="200" height="200" style="background-Color: black" src="https://raw.githubusercontent.com/LionelStaricoff/s15-13-ft-java-react/d780f26835b243de5ff74f480886a2f0705197b0/front/src/assets/logo-md.svg" alt="Banner">
+    <img width="200" height="200" src="https://raw.githubusercontent.com/rogelioolarte/s15-13-ft-java-react/back/proyecto/logo.png" alt="Banner">
   </a>
 <h3>Stock Master - An App dedicated to a complex task </h3>
 <h3>Una App dedicada a una labor compleja</h3>
