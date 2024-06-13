@@ -5,53 +5,70 @@ import { useSuppliersActions } from '../../hooks/useSuppliersActions.js'
 import { useCreateSupplierMutation, useUpdateSupplierMutation } from '../../store/apiSlice.js'
 import { toast } from 'sonner'
 
-export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit }) {
+export function SuppliersFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
   const [supplierCreate] = useCreateSupplierMutation()
   const [supplierUpdate] = useUpdateSupplierMutation()
 
   const { useAddSupplier, useUpdateSupplierById } = useSuppliersActions()
   const handleClose = () => {
     setOpen(false)
-    setOpenMenu(false)
+    if (setOpenMenu) {
+      setOpenMenu(false)
+    }
   }
+
   const INPUT_BG = '#FFF8F8'
 
   const supplierSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    companyCode: Yup.string().required('Code is required') // Agregar validación por code -> no pueden haber dos suppliers con el mismo code
+    companyCode: Yup.string()
+      .required('Company Code is required')
+      .test('is-valid-company-code', 'Company Code must be in the format XX-XXXXXXXX-X', value => {
+        const regex = /^\d{2}-\d{8}-\d{1}$/
+        if (!regex.test(value)) {
+          return false
+        }
+        const parts = value.split('-')
+        const part1 = Number(parts[0])
+        const part2 = Number(parts[1])
+        const part3 = Number(parts[2])
+        return part1 > 0 && part2 >= 10000000 && part3 > 0
+      })
   })
 
   const initialValues = {
-    name: supplierToEdit?.name ?? '',
-    companyCode: supplierToEdit?.companyCode ?? ''
+    name: itemToEdit?.name ?? '',
+    companyCode: itemToEdit?.companyCode ?? ''
   }
 
   const createSupplier = async (values) => {
     try {
       const res = await supplierCreate(values).unwrap()
       useAddSupplier(res)
-      toast.success('Supplier created successfully', { duration: 1500 })
+      toast.success('Supplier created successfully',
+        { duration: 1500, closeButton: true })
       handleClose()
     } catch (error) {
       if (error.data) {
-        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
+        toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+          { duration: 2000, closeButton: true })
       } else {
-        console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        console.error(`Error while adding: ${JSON.stringify(error)}`)
       }
     }
   }
 
   const editSupplier = async (values) => {
     try {
-      const res = await supplierUpdate({ id: supplierToEdit.id, data: values }).unwrap()
-      useUpdateSupplierById({ id: supplierToEdit.id, newData: res })
+      const res = await supplierUpdate({ id: itemToEdit.id, data: values }).unwrap()
+      useUpdateSupplierById({ id: itemToEdit.id, newData: res })
       toast.success('Supplier updated successfully', { duration: 1500 })
       handleClose()
     } catch (error) {
       if (error.data) {
         toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`, { duration: 2000 })
       } else {
-        console.error(`Error while adding: ${JSON.stringify(error)}`, { duration: 2000 })
+        console.error(`Error while adding: ${JSON.stringify(error)}`)
       }
     }
   }
@@ -82,7 +99,7 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
             <div className='flex flex-col gap-[2px]'>
               <Field name='companyCode'>
                 {({ field }) => (
-                  <Input {...field} error={errors.companyCode && touched.companyCode && true} type='text' placeholder='Code' label='Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                  <Input {...field} error={errors.companyCode && touched.companyCode && true} type='text' placeholder='Company Code' label='Company Code' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
               {errors.companyCode && touched.companyCode
@@ -91,10 +108,10 @@ export function SuppliersFormik ({ setOpen, setOpenMenu, action, supplierToEdit 
             </div>
           </fieldset>
           <div className='flex justify-evenly gap-2'>
-            <Button onClick={() => handleClose()} color='black'>
+            <Button onClick={() => handleClose()} color='black' className='sm:w-[137px] h-[38px]'>
               Cancel
             </Button>
-            <Button type='submit' className='bg-warning text-gray-900'>
+            <Button type='submit' className='bg-warning text-gray-900 sm:w-[137px] h-[38px]'>
               Save
             </Button>
           </div>

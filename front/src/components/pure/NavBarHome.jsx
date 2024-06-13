@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 export default function NavBarHome () {
   return (
-    <Navbar className='pt-5 bg-black text-white h-max max-w-full rounded-none px-4 py-2 lg:px-5 lg:py-2'>
+    <Navbar className='pt-5 bg-black text-white h-max max-w-full border-0 rounded-none px-4 py-2 lg:px-5 lg:py-2'>
       <div className='flex items-center justify-between flex-row'>
         <Typography
           as='a'

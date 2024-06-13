@@ -10,7 +10,6 @@ import ProductsPage from '../pages/ProductsPage'
 import TaxesPage from '../pages/TaxesPage'
 import CustomersPage from '../pages/CustomersPage'
 import PurchasesPage from '../pages/PurchasesPage'
-import InquiriesPage from '../pages/InquiriesPage'
 
 const routes = [
   {
@@ -20,7 +19,6 @@ const routes = [
       { path: '/', element: <Navigate to='/home' /> },
       { path: '/dashboard', element: <DashboardPage /> },
       { path: '/sales', element: <SalesPage /> },
-      { path: '/inquiries', element: <InquiriesPage /> },
       { path: '/suppliers', element: <SuppliersPage /> },
       { path: '/purchases', element: <PurchasesPage /> },
       { path: '/products', element: <ProductsPage /> },

@@ -7,14 +7,14 @@ export default function ModalConfirmationDelete ({ handleOpen, open, message, ca
         <h3 className='uppercase text-gray-900 font-bold'>Confirmation</h3>
       </DialogHeader>
       <DialogBody className='text-gray-900 text-center p-0'>
-        <p>{message ?? 'You are about to delete a supplier'}</p>
+        <p>{message ?? 'You are about to delete a element/s'}</p>
         <p>Are you sure you want to continue?</p>
       </DialogBody>
       <DialogFooter className='justify-center gap-2 p-0'>
-        <Button onClick={handleOpen} color='gray'>
+        <Button onClick={handleOpen} color='gray' className='sm:w-[137px] h-[38px]'>
           <span>Cancel</span>
         </Button>
-        <Button onClick={callback} className='bg-[#85A7BF] text-black'>
+        <Button onClick={callback} className='bg-[#85A7BF] text-black sm:w-[137px] h-[38px] border border-black'>
           <span>Delete</span>
         </Button>
       </DialogFooter>

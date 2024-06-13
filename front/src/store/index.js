@@ -8,9 +8,9 @@ import taxesReducer from './taxesSlice'
 import suppliersReducer from './suppliersSlice'
 import { apiSlice } from './apiSlice'
 
-const persistanceSessionStorageMiddleware = (store) => (next) => (action) => {
+const persistanceLocalStorageMiddleware = (store) => (next) => (action) => {
   next(action)
-  window.sessionStorage.setItem('session_state', JSON.stringify(store.getState()))
+  window.localStorage.setItem('session_state', JSON.stringify(store.getState()))
 }
 
 export const store = configureStore({
@@ -25,5 +25,5 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(apiSlice.middleware).concat(persistanceSessionStorageMiddleware)
+    getDefaultMiddleware().concat(apiSlice.middleware).concat(persistanceLocalStorageMiddleware)
 })

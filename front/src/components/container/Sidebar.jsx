@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/logo-md.svg'
 import { AiOutlineDashboard, AiOutlineProduct } from 'react-icons/ai'
-import { BsReceipt, BsTruck, BsBoxArrowRight } from 'react-icons/bs'
+import { BsReceipt, BsTruck, BsBoxArrowRight, BsCartCheck } from 'react-icons/bs'
 import { TbReceiptTax, TbUser } from 'react-icons/tb'
 import {
   List,
@@ -26,11 +26,11 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       url: '/sales',
       icon: <BsReceipt className='h-5 w-5' />
     },
-    // {
-    //   name: 'Purchases',
-    //   url: '/purchases',
-    //   icon: <BsCartCheck className='h-5 w-5' />
-    // },
+    {
+      name: 'Purchases',
+      url: '/purchases',
+      icon: <BsCartCheck className='h-5 w-5' />
+    },
     {
       name: 'Products',
       url: '/products',
@@ -51,16 +51,6 @@ export default function Sidebar ({ isDrawerOpen, setIsDrawerOpen }) {
       url: '/taxes',
       icon: <TbReceiptTax className='h-5 w-5' />
     }
-    /* {
-      name: 'Analytics',
-      url: '/analytics',
-      icon: <TbPresentationAnalytics className='h-5 w-5' />
-    },
-    {
-      name: 'Inquiries',
-      url: '/inquiries',
-      icon: <BsCalendarDate className='h-5 w-5' />
-    } */
   ]
   const navigateRoutes = (url) => {
     navigate(url)

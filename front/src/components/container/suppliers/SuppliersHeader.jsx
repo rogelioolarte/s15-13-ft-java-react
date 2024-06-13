@@ -1,5 +1,5 @@
 import { Button, Typography } from '@material-tailwind/react'
-import SuppliersFormModal from './SuppliersFormModal'
+import FormModal from '../../pure/FormModal'
 import SearchTables from '../../pure/SearchTables'
 
 export default function SuppliersHeader ({ onSearch, selectedItems, setIsDeleteConfirmationOpen }) {
@@ -17,8 +17,8 @@ export default function SuppliersHeader ({ onSearch, selectedItems, setIsDeleteC
         </div>
         {/* Buttons */}
         <div className='flex flex-wrap items-center gap-2'>
-          <SuppliersFormModal button={<Button className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-warning-80 transition-all duration-300 ease-in-out'>Add New</Button>} action='create' />
-          <Button disabled={selectedItems.length < 1} onClick={() => setIsDeleteConfirmationOpen(true)} className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-warning-80 transition-all duration-300 ease-in-out'>Delete</Button>
+          <FormModal button={<Button className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-warning-80 transition-all duration-300 ease-in-out'>Add New</Button>} action='create' formType='Supplier' />
+          <Button disabled={selectedItems.length < 1} onClick={() => setIsDeleteConfirmationOpen(true)} className='min-w-fit flex-1 bg-warning-80 text-gray-900 shadow-none hover:shadow-none hover:bg-warning-60 transition-all duration-300 ease-in-out'>Delete</Button>
         </div>
       </div>
     </>

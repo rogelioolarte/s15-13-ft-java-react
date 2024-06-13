@@ -3,9 +3,7 @@ import {
   MAIN_API,
   FAILED_ROUTE,
   ROUTE_LOGIN,
-  ROUTE_GET_BY_DATE_PURCHASES,
   ROUTE_PURCHASE,
-  ROUTE_GET_BY_DATE_SALES,
   ROUTE_SALE,
   ROUTE_GET_ALL_PRODUCTS,
   ROUTE_PRODUCT,
@@ -13,8 +11,8 @@ import {
   ROUTE_CUSTOMER,
   ROUTE_GET_ALL_SUPPLIERS,
   ROUTE_SUPPLIER,
-  ROUTE_GET_ALL_TAXES,
-  ROUTE_TAX
+  ROUTE_TAX,
+  ROUTE_GET_ALL_SALES
 } from '../config/api_routes'
 
 export const apiSlice = createApi({
@@ -36,12 +34,8 @@ export const apiSlice = createApi({
     /**
      * * Purchases Queries
      */
-    getPurchases: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_GET_BY_DATE_PURCHASES : FAILED_ROUTE,
-        method: 'GET',
-        body: data
-      })
+    getPurchases: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_PURCHASE : FAILED_ROUTE
     }),
     createPurchase: build.mutation({
       query: (data) => ({
@@ -53,12 +47,8 @@ export const apiSlice = createApi({
     /**
      * * Sales Queries
      */
-    getSales: build.mutation({
-      query: (data) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_GET_BY_DATE_SALES : FAILED_ROUTE,
-        method: 'GET',
-        body: data
-      })
+    getSales: build.query({
+      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_SALES : FAILED_ROUTE
     }),
     createSale: build.mutation({
       query: (data) => ({
@@ -158,7 +148,7 @@ export const apiSlice = createApi({
      * Taxes Queries
      */
     getAllTaxes: build.query({
-      query: () => MAIN_API.length !== 0 ? ROUTE_GET_ALL_TAXES : FAILED_ROUTE
+      query: () => MAIN_API.length !== 0 ? ROUTE_TAX : FAILED_ROUTE
     }),
     findTaxById: build.query({
       query: id => MAIN_API.length !== 0 ? ROUTE_TAX + `/${id}` : FAILED_ROUTE
@@ -179,7 +169,7 @@ export const apiSlice = createApi({
     }),
     deleteTax: build.mutation({
       query: (id) => ({
-        url: MAIN_API.length !== 0 ? ROUTE_TAX + `/${id}` : FAILED_ROUTE,
+        url: MAIN_API.length !== 0 ? ROUTE_TAX + '/disable' + `/${id}` : FAILED_ROUTE,
         method: 'PATCH'
       })
     })
@@ -189,10 +179,10 @@ export const apiSlice = createApi({
 export const {
   useLoginMutation,
   // Purchases Queries
-  useGetPurchasesMutation,
+  useGetPurchasesQuery,
   useCreatePurchaseMutation,
   // Sales Queries
-  useGetSalesMutation,
+  useGetSalesQuery,
   useCreateSaleMutation,
   // Products Queries
   useGetAllProductsQuery,

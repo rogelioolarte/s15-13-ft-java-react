@@ -3,63 +3,94 @@ import { Button, Input } from '@material-tailwind/react'
 import * as Yup from 'yup'
 import { useTaxesActions } from '../../hooks/useTaxesActions.js'
 import { useCreateTaxMutation, useUpdateTaxMutation } from '../../store/apiSlice.js'
+import { toast } from 'sonner'
 
-export function TaxesFormik ({ setOpen, action, taxeToEdit }) {
+export function TaxesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
   const [taxeCreate] = useCreateTaxMutation()
-  const [taxeUpdate] = useUpdateTaxMutation()
+  const [updateTax] = useUpdateTaxMutation()
 
   const INPUT_BG = '#FFF8F8'
 
-  const { useAddTaxe } = useTaxesActions()
+  const { useAddTax, useUpdateTaxById } = useTaxesActions()
+
+  const handleClose = () => {
+    setOpen(false)
+    if (setOpenMenu) {
+      setOpenMenu(false)
+    }
+  }
 
   const taxeSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    percentage: Yup.string().required('Percentage is required')
-
+    percentage: Yup.number()
+      .required('Percentage is required')
+      .test('is-valid-percentage', 'Percentage must be a number and not exceed 50%', value => {
+        return !isNaN(Number(value)) && Number(value) <= 50
+      })
+      .test('is-two-decimals', 'Percentage must have at most two decimal places', value => {
+        if (value === undefined || value === null) return true
+        return /^\d+(\.\d{1,2})?$/.test(value.toString())
+      })
   })
 
   const initialValues = {
-    name: taxeToEdit?.name ?? '',
-    percentage: taxeToEdit?.percentage ?? ''
+    name: itemToEdit?.name ?? '',
+    percentage: itemToEdit?.percentage ?? ''
   }
 
-  const createTaxe = async (values) => {
+  const createTax = async (values) => {
     await taxeCreate(values).unwrap()
       .then((res) => {
-        console.log(res)
-        if (res.status === 200) {
-          useAddTaxe(res.data)
+        if (res) {
+          useAddTax(res)
+          toast.success('Product updated successfully',
+            { duration: 1500, closeButton: true })
+          handleClose()
         }
-      }).catch((error) => console.log(error))
+      }).catch((error) => {
+        if (error.data) {
+          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+            { duration: 2000, closeButton: true })
+        } else {
+          console.error(`Error while adding: ${JSON.stringify(error)}`)
+        }
+      })
   }
 
-  const editTaxe = async (values) => {
-    await taxeUpdate(values).unwrap()
+  const editTax = async (values) => {
+    await updateTax({ id: itemToEdit.id, data: values }).unwrap()
       .then((res) => {
-        console.log(res)
-        if (res.status === 201) {
-          useAddTaxe(res.data)
+        if (res) {
+          useUpdateTaxById({ id: res.id, newData: res })
+          toast.success('Product updated successfully',
+            { duration: 1500, closeButton: true })
+          handleClose()
         }
-      }).catch((error) => console.log(error))
+      }).catch((error) => {
+        if (error.data) {
+          toast.error(`Error while adding: ${JSON.stringify(error.data.message)}`,
+            { duration: 2000, closeButton: true })
+        } else {
+          console.error(`Error while adding: ${JSON.stringify(error)}`)
+        }
+      })
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    action === 'create' && await createTaxe(values)
-    action === 'edit' && await editTaxe(values)
+    action === 'create' && await createTax(values)
+    action === 'edit' && await editTax(values)
   }
 
   return (
     <Formik initialValues={initialValues} validationSchema={taxeSchema} onSubmit={handleSubmit}>
-
-      {({ values, touched, errors, isSubmitting, handleChange, handleBlur }) => (
+      {({ errors, touched }) => (
         <Form className='flex flex-col gap-2'>
           <fieldset className='flex flex-col gap-2'>
             {/* name */}
             <div className='flex flex-col gap-[2px]'>
               <Field name='name'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                {({ field }) => (
+                  <Input {...field} error={errors.name && touched.name && true} type='text' placeholder='Name' label='Name' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
               {errors.name && touched.name
@@ -69,8 +100,8 @@ export function TaxesFormik ({ setOpen, action, taxeToEdit }) {
             {/* percentage */}
             <div className='flex flex-col gap-[2px]'>
               <Field name='percentage'>
-                {({ field /* { name, value, onChange, onBlur } */ }) => (
-                  <Input {...field} type='text' placeholder='Percentage' label='Percentage' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
+                {({ field }) => (
+                  <Input {...field} error={errors.percentage && touched.percentage && true} type='number' placeholder='Percentage' label='Percentage' size='lg' className='bg-primary' style={{ backgroundColor: INPUT_BG }} />
                 )}
               </Field>
               {errors.percentage && touched.percentage
@@ -79,11 +110,11 @@ export function TaxesFormik ({ setOpen, action, taxeToEdit }) {
             </div>
           </fieldset>
           <div className='flex justify-evenly gap-2'>
-            <Button type='submit' className='bg-[#D1D4FA] text-gray-900'>
-              Save
-            </Button>
-            <Button onClick={() => setOpen(false)} color='black'>
+            <Button onClick={() => setOpen(false)} color='black' className='sm:w-[137px] h-[38px]'>
               Cancel
+            </Button>
+            <Button type='submit' className='bg-[#D1D4FA] text-gray-900 sm:w-[137px] h-[38px]'>
+              Save
             </Button>
           </div>
         </Form>

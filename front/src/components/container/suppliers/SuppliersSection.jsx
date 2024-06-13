@@ -1,39 +1,53 @@
 import { useState, useEffect } from 'react'
-import { toast } from 'sonner'
 import { Card, CardHeader, CardBody, CardFooter, Spinner } from '@material-tailwind/react'
 import PaginationGroup from '../../pure/pagination/PaginationGroup'
 import SimplePagination from '../../pure/pagination/SimplePagination'
 import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
-import SuppliersTable from './SuppliersTable'
-import SuppliersHeader from './SuppliersHeader'
 import { useSuppliersActions } from '../../../hooks/useSuppliersActions.js'
-import { useGetAllSuppliersQuery, useDeleteSupplierMutation } from '../../../store/apiSlice.js'
+import DynamicTable from '../../pure/DynamicTable.jsx'
+import SuppliersHeader from './SuppliersHeader.jsx'
+import { useDeleteSupplierMutation, useGetAllSuppliersQuery } from '../../../store/apiSlice.js'
+import { useManageAPI } from '../../../hooks/useManageAPI.js'
 
 const TABLE_HEAD = [
-  { head: 'checkbox', row: 'checkbox' },
-  { head: 'Supplier Name', row: 'name' },
-  { head: 'Company Code N°', row: 'companyCode' },
-  { head: '', row: 'actions' }
+  { key: 'select', label: '', type: 'checkbox' },
+  { key: 'name', label: 'Supplier Name', type: 'text', sortable: true },
+  { key: 'companyCode', label: 'Company Code N°', type: 'text', sortable: true },
+  { key: 'actions', label: 'Actions', type: 'actions' }
 ]
 
 export default function SuppliersSection () {
-  const [deleteSupplier] = useDeleteSupplierMutation()
   const { suppliers, useInitSuppliers, useDeleteSupplierById } = useSuppliersActions()
-  const { data: suppliersData, isLoading, isSuccess, isError, error } = useGetAllSuppliersQuery()
   const [checkedItems, setCheckedItems] = useState([])
   const selectedItems = checkedItems.filter(value => value === true)
   const [sortConfig, setSortConfig] = useState(null)
   const [page, setPage] = useState(1)
   const [searchFilter, setSearchFilter] = useState([])
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
+  const [deleteSupplier] = useDeleteSupplierMutation()
+  const {
+    data: suppliersData,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetAllSuppliersQuery()
+
+  const { initAllEntities: useInitSuppliersGetAll, deleteEntities: useDeleteSuppliers } = useManageAPI(
+    'Supplier',
+    useInitSuppliers,
+    suppliersData,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    deleteSupplier,
+    useDeleteSupplierById
+  )
 
   useEffect(() => {
-    if (isSuccess && !isLoading) {
-      useInitSuppliers(suppliersData.filter(supplier => supplier.active === true))
-    } else if (isError) {
-      toast.error(`Error while connecting: ${error}`, { duration: 2000 })
-    }
-  }, [isLoading, isSuccess])
+    useInitSuppliersGetAll()
+  }, [])
 
   useEffect(() => {
     setSearchFilter(suppliers.slice())
@@ -47,20 +61,7 @@ export default function SuppliersSection () {
   }
 
   const handleDelete = async () => {
-    const suppliersToDelete = getSelectedSuppliers()
-    if (suppliersToDelete.length) {
-      for (const supplier of suppliersToDelete) {
-        await deleteSupplier(supplier.id).then((res) => {
-          if (res.data) {
-            useDeleteSupplierById(supplier.id)
-            toast.success('Supplier/s deleted successfully', { duration: 1500 })
-            setIsDeleteConfirmationOpen(false)
-          }
-        }).catch((error) => {
-          toast.error(`Error deleting supplier: ${error}`)
-        })
-      }
-    }
+    setIsDeleteConfirmationOpen(!useDeleteSuppliers(getSelectedSuppliers()))
   }
 
   const handleSearch = (searchTerm) => {
@@ -107,7 +108,7 @@ export default function SuppliersSection () {
         <CardBody className={`tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg ${isLoading && 'flex justify-center items-center'}`}>
           {isLoading
             ? (<div className='w-full h-[200px] flex items-center justify-center bg-white'><Spinner className='h-16 w-16 text-gray-900/50' /></div>)
-            : <SuppliersTable TABLE_DATA={visibleSuppliers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />}
+            : <DynamicTable TABLE_DATA={visibleSuppliers} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} typeModalView='Supplier' />}
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />

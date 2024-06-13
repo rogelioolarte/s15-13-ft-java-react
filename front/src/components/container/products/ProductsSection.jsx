@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { toast } from 'sonner'
 import { Card, CardHeader, CardBody, CardFooter, Spinner } from '@material-tailwind/react'
 import PaginationGroup from '../../pure/pagination/PaginationGroup'
 import SimplePagination from '../../pure/pagination/SimplePagination'
@@ -7,21 +6,22 @@ import ModalConfirmationDelete from '../../pure/ModalConfirmationDelete'
 import { useDeleteProductMutation, useGetAllProductsQuery } from '../../../store/apiSlice'
 import { useProductsActions } from '../../../hooks/useProductsActions'
 import ProductsHeader from './ProductsHeader'
-import ProductsTable from './ProductsTable'
+import DynamicTable from '../../pure/DynamicTable'
+import { useManageAPI } from '../../../hooks/useManageAPI'
 
+// { head: 'Description', row: 'description' },
 const TABLE_HEAD = [
-  { head: 'checkbox', row: 'checkbox' },
-  { head: 'Product', row: 'name' },
-  { head: 'BarCode', row: 'barcode' },
-  { head: 'Description', row: 'description' },
-  { head: 'Sell Price', row: 'salePrice' },
-  { head: 'Minimal Stock', row: 'minimal' },
-  { head: 'Actual Stock', row: 'stock' },
-  { head: '', row: 'actions' }
+  { key: 'select', label: '', type: 'checkbox' },
+  { key: 'name', label: 'Product Name', type: 'text', sortable: true },
+  { key: 'barcode', label: 'BarCode', type: 'text', sortable: true },
+  { key: 'salePrice', label: 'Sell Price', type: 'number', sortable: true },
+  { key: 'minimal', label: 'Minimal Stock', type: 'number', sortable: true },
+  { key: 'stock', label: 'Actual Stock', type: 'number', sortable: true },
+  { key: 'actions', label: 'Actions', type: 'actions' }
 ]
 
 export default function ProductsSection () {
-  const [deleteProduct, { isSuccess: isSuccessDelete }] = useDeleteProductMutation()
+  const [deleteProduct] = useDeleteProductMutation()
   const { products, useInitProducts, useDeleteProductById } = useProductsActions()
   const { data: productsData, isLoading, isSuccess, isError, error } = useGetAllProductsQuery()
   const [checkedItems, setCheckedItems] = useState([])
@@ -31,12 +31,20 @@ export default function ProductsSection () {
   const [searchFilter, setSearchFilter] = useState([])
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false)
 
+  const { initAllEntities: useInitProductsGetAll, deleteEntities: useDeleteProducts } = useManageAPI(
+    'Product',
+    useInitProducts,
+    productsData,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    deleteProduct,
+    useDeleteProductById
+  )
+
   useEffect(() => {
-    if (isSuccess && !isLoading) {
-      useInitProducts(productsData.filter(product => product.active === true))
-    } else if (isError) {
-      toast.error(`Error while connecting: ${error}`)
-    }
+    useInitProductsGetAll()
   }, [isLoading, isSuccess])
 
   useEffect(() => {
@@ -51,30 +59,14 @@ export default function ProductsSection () {
   }
 
   const handleDelete = async () => {
-    const productsToDelete = getSelectedProducts()
-    if (productsToDelete.length) {
-      for (const product of productsToDelete) {
-        await deleteProduct(product.id).then((res) => {
-          console.log('sucess?: ', isSuccessDelete)
-          if (isSuccessDelete) {
-            useDeleteProductById(product.id)
-            setIsDeleteConfirmationOpen(false)
-          }
-        }).catch((error) => {
-          toast.error(`Error deleting product: ${error}`)
-        })
-      }
-    }
+    setIsDeleteConfirmationOpen(!useDeleteProducts(getSelectedProducts()))
   }
 
   const handleSearch = (searchTerm) => {
     const filteredProducts = products.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.barcode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.salePrice.toString().includes(searchTerm) ||
-      product.minimal.toString().includes(searchTerm) ||
-      product.stock.toString().includes(searchTerm)
+      product.salePrice.toString().includes(searchTerm)
     )
     setSearchFilter(filteredProducts)
   }
@@ -112,17 +104,17 @@ export default function ProductsSection () {
         <CardHeader floated={false} shadow={false} className='rounded-none bg-transparent flex flex-col gap-4 m-0 mb-4'>
           <ProductsHeader onSearch={handleSearch} selectedItems={selectedItems} setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen} />
         </CardHeader>
-        <CardBody className='tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg flex justify-center items-center'>
+        <CardBody className={`tableBody overflow-x-scroll p-0 shadow-lg rounded-t-lg ${isLoading && 'flex justify-center items-center'}`}>
           {isLoading
             ? (<div className='w-full h-[200px] flex items-center justify-center bg-white'><Spinner className='h-16 w-16 text-gray-900/50' /></div>)
-            : <ProductsTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} />}
+            : <DynamicTable TABLE_DATA={visibleProducts} TABLE_HEAD={TABLE_HEAD} checkedItems={checkedItems} setCheckedItems={setCheckedItems} handleSort={handleSort} typeModalView='Product' />}
         </CardBody>
         <CardFooter className='flex items-center bg-[#F1F3F9] rounded-b-lg justify-center sm:justify-between px-4 py-2'>
           <PaginationGroup page={page} setPage={setPage} totalPages={totalPages} />
           <SimplePagination page={page} setPage={setPage} totalPages={totalPages} />
         </CardFooter>
       </Card>
-      <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'Products' : 'Product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
+      <ModalConfirmationDelete message={`You are about to delete ${selectedItems.length} ${selectedItems.length > 1 ? 'products' : 'product'}`} callback={handleDelete} open={isDeleteConfirmationOpen} handleOpen={() => setIsDeleteConfirmationOpen(!isDeleteConfirmationOpen)} />
     </main>
   )
 }

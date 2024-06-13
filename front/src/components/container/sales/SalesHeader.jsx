@@ -1,5 +1,5 @@
 import { Button, Typography } from '@material-tailwind/react'
-import { SalesFormModal } from './SalesFormModal'
+import FormModal from '../../pure/FormModal'
 import SearchTables from '../../pure/SearchTables'
 
 export default function SalesHeader ({ onSearch }) {
@@ -17,7 +17,7 @@ export default function SalesHeader ({ onSearch }) {
         </div>
         {/* Buttons */}
         <div className='flex flex-wrap items-center gap-2'>
-          <SalesFormModal button={<Button className='min-w-fit flex-1 bg-secondary-40 text-gray-900 shadow-none hover:shadow-none hover:bg-secondary-60 transition-all duration-300 ease-in-out'>New Bill</Button>} action='create' />
+          <FormModal button={<Button className='min-w-fit flex-1 bg-warning text-gray-900 shadow-none hover:shadow-none hover:bg-warning-80 transition-all duration-300 ease-in-out'>New Bill</Button>} action='create' formType='Sale' />
         </div>
       </div>
     </>

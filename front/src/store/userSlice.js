@@ -8,7 +8,7 @@ const DEFAULT_STATE = {
 }
 
 const initialState = (() => {
-  const persistedState = window.sessionStorage.getItem('session_state')
+  const persistedState = window.localStorage.getItem('session_state')
   return persistedState ? JSON.parse(persistedState).user : DEFAULT_STATE
 })()
 

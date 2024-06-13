@@ -1,7 +1,7 @@
 /**
  * Route for the Main API
  */
-export const MAIN_API = 'https://s15-13-ft-java-react-deploy.up.railway.app'
+export const MAIN_API = 'https://stock-master.up.railway.app'
 /**
  * Login Route
  */
@@ -10,12 +10,11 @@ export const ROUTE_LOGIN = '/api/user/login'
  * Purchases Routes
  */
 export const ROUTE_PURCHASE = '/api/purchase'
-export const ROUTE_GET_BY_DATE_PURCHASES = '/api/purchase/getbydate'
 /**
  * Sales Route
  */
+export const ROUTE_GET_ALL_SALES = '/api/sale/all'
 export const ROUTE_SALE = '/api/sale'
-export const ROUTE_GET_BY_DATE_SALES = '/api/sale/getbydate'
 /**
  * Products Routes
  */
@@ -34,8 +33,8 @@ export const ROUTE_GET_ALL_SUPPLIERS = '/api/supplier/all'
 /**
  * Taxes Routes
  */
-export const ROUTE_GET_ALL_TAXES = '/api/tax/all'
-export const ROUTE_TAX = '/api/tax'
+export const ROUTE_GET_ALL_TAXES = '/api/taxes/all'
+export const ROUTE_TAX = '/api/taxes'
 /**
  * Failed Route
  */

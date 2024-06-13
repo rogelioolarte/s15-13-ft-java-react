@@ -1,8 +1,8 @@
 import SalesSection from '../components/container/sales/SalesSection'
-// import useProtectedRoutes from '../hooks/useProtectedRoutes'
+import useProtectedRoutes from '../hooks/useProtectedRoutes'
 
 export default function SalesPage () {
-  /* useProtectedRoutes() */
+  useProtectedRoutes()
 
   return (
     <SalesSection />

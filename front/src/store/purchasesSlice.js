@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const DEFAULT_STATE = []
 
 const initialState = (() => {
-  const persistedState = window.sessionStorage.getItem('session_state')
+  const persistedState = window.localStorage.getItem('session_state')
   return persistedState ? JSON.parse(persistedState).purchases : DEFAULT_STATE
 })()
 
@@ -34,7 +34,7 @@ export default purchasesSlice.reducer
 export const {
   initPurchases,
   addPurchase,
-  updatePurchaseById: updateProductById,
+  updatePurchaseById,
   deletePurchaseById,
   resetPurchases
 } = purchasesSlice.actions

@@ -34,7 +34,8 @@
     }
   }
 
-  .tableBody {
+  .tableBody,
+  .formModal {
     &::-webkit-scrollbar {
       @apply w-2 h-2; /* width: 0.5rem; height: 0.5rem; */
     }
@@ -44,7 +45,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      @apply bg-blue-600 rounded-lg; /* background: #698abe; border-radius: 10px; */
+      @apply bg-secondary rounded-lg; /* background: #698abe; border-radius: 10px; */
     }
   }
 
