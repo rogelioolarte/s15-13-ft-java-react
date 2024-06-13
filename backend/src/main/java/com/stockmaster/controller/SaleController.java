@@ -31,7 +31,8 @@ public class SaleController {
     //Get Method
     @GetMapping("/all")
     public ResponseEntity<?> getAllSales() throws ParseException {
-        List<SalesResponse> sales = salesService.findAllSales();
+       //List<SalesResponse> sales =  salesService.findAllSales();
+        List<Sales> sales = salesService.findAllSale();
         return ResponseEntity.ok(sales);
     }
 

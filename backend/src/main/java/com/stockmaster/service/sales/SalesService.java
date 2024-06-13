@@ -275,4 +275,7 @@ public class SalesService {
         return analyticsList;
     }
 
+    public List<Sales> findAllSale() {
+        return salesRepository.findAll();
+    }
 }
