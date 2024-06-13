@@ -26,5 +26,5 @@ public class SalesResponseDTO {
     private TaxesResponse tax;
     private Date date;
     private List<ProductSalesSavedResponse> products;
-    private BigDecimal totalPrice;
+    private BigDecimal total;
 }
