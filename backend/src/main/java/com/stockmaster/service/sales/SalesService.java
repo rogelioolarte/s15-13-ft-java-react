@@ -95,7 +95,7 @@ public class SalesService {
             }
 
             ProductSalesSavedResponse productResponse = ProductSalesSavedResponse.builder()
-                    .productName(productName)
+                    .name(productName)
                     .barcode(barcode)
                     .salePrice(price)
                     .quantity(quantity)
