@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,7 +33,7 @@ public class SaleController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllSales() throws ParseException {
        //List<SalesResponse> sales =  salesService.findAllSales();
-        List<Sales> sales = salesService.findAllSale();
+        Set<Sales> sales = salesService.findAllSale();
         return ResponseEntity.ok(sales);
     }
 

@@ -1,5 +1,7 @@
 package com.stockmaster.entity.sales;
 
+import com.stockmaster.entity.Product;
+import com.stockmaster.entity.PurchaseProduct;
 import com.stockmaster.entity.Taxes;
 import com.stockmaster.entity.customer.Customer;
 import jakarta.persistence.Column;
@@ -46,6 +48,15 @@ public class Sales {
 
     @Column(name = "total")
     private BigDecimal total;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "sales_products",
+            joinColumns = @JoinColumn(name = "id_sales"),
+            inverseJoinColumns = @JoinColumn(name = "id_product")
+    )
+    private List<Product> products;
+
 
 
 }

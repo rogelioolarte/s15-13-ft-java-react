@@ -48,6 +48,8 @@ public class Product {
     @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Purchase> purchases;
 
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Purchase> sales;
 
     public Product() {
         this.active = true;

@@ -275,7 +275,14 @@ public class SalesService {
         return analyticsList;
     }
 
-    public List<Sales> findAllSale() {
-        return salesRepository.findAll();
+    public Set<Sales> findAllSale() {
+        List<Sales> listSales = salesRepository.findAll();
+        Set<Sales> listSalesResponse = new HashSet<>();
+        for(Sales sale : listSales){
+            var s = Sales.builder().id(sale.getId()).products(sale.getProducts()).date(sale.getDate()).tax(sale.getTax())
+                    .customer(sale.getCustomer()).build();
+            listSalesResponse.add(s);
+        }
+        return listSalesResponse;
     }
 }
