@@ -11,10 +11,10 @@ import { useCustomersActions } from '../../../hooks/useCustomersActions.js'
 
 const TABLE_HEAD = [
   { key: 'date', label: 'Date', type: 'date', sortable: true },
-  { key: 'customer', label: 'Customer', type: 'customerObject' },
+  { key: 'customer', label: 'Customer', type: 'customerObject', sortable: true },
   { key: 'products', label: 'Products List', type: 'products' },
-  { key: 'tax', label: 'Tax', type: 'taxObject' },
-  { key: 'total', label: 'Total', type: 'number', sortable: true },
+  { key: 'tax', label: 'Tax', type: 'taxObject', sortable: true },
+  { key: 'total', label: 'Total', type: 'cash', sortable: true },
   { key: 'actions', label: 'Actions', type: 'actions' }
 ]
 
@@ -58,6 +58,11 @@ export default function SalesSection () {
   const handleSort = (key) => {
     let direction = 'ascending'
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      if (key === 'customer') {
+        key = 'customer.name'
+      } else if (key === 'tax') {
+        key = 'tax.name'
+      }
       direction = 'descending'
     }
     setSortConfig({ key, direction })
@@ -66,7 +71,6 @@ export default function SalesSection () {
   const sortedRows = [...searchFilter].sort((a, b) => {
     if (!sortConfig) return 0
     const { key, direction } = sortConfig
-    // Función para obtener el valor anidado
     const getValueByKey = (obj, key) => {
       return key.split('.').reduce((o, k) => (o ? o[k] : undefined), obj)
     }

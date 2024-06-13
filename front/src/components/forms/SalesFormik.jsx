@@ -15,7 +15,7 @@ export function SalesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
   const { customers } = useCustomersActions()
   const { products } = useProductsActions()
   const { taxes } = useTaxesActions()
-  const { useAddInvoice } = useSalesActions()
+  const { useAddSale } = useSalesActions()
 
   const handleClose = () => {
     setOpen(false)
@@ -69,7 +69,7 @@ export function SalesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
         ? parseInt(taxes.find(t => t.name === values.taxes.split(' - ')[0]).id)
         : null
       const productsData = values.products.map(product => {
-        const productData = products.find(p => p.name === product.product.split(' - ')[0])
+        const productData = products.find(p => p.name === product.product)
         const idProduct = productData ? parseInt(productData.id) : null
         const price = productData ? parseFloat(productData.salePrice) : 0
         const quantity = parseFloat(product.quantity)
@@ -95,7 +95,12 @@ export function SalesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
       }
 
       const response = await createSale(formattedValues).unwrap()
-      useAddInvoice(response)
+      if (response.product) {
+        console.log('si hay product list')
+        response.products = response.product
+        delete response.product
+      }
+      useAddSale(response)
       toast.success('Invoice created successfully',
         { duration: 1500, closeButton: true })
       handleClose()

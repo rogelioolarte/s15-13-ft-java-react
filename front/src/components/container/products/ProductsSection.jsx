@@ -14,7 +14,7 @@ const TABLE_HEAD = [
   { key: 'select', label: '', type: 'checkbox' },
   { key: 'name', label: 'Product Name', type: 'text', sortable: true },
   { key: 'barcode', label: 'BarCode', type: 'text', sortable: true },
-  { key: 'salePrice', label: 'Sell Price', type: 'number', sortable: true },
+  { key: 'salePrice', label: 'Sell Price', type: 'cash', sortable: true },
   { key: 'minimal', label: 'Minimal Stock', type: 'number', sortable: true },
   { key: 'stock', label: 'Actual Stock', type: 'number', sortable: true },
   { key: 'actions', label: 'Actions', type: 'actions' }

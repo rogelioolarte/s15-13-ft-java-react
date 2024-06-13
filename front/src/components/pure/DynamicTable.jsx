@@ -89,12 +89,20 @@ export default function DynamicTable ({ TABLE_DATA, TABLE_HEAD, checkedItems, se
             <Typography variant='small' className='font-normal'>{item[column.key]}%</Typography>
           </div>
         )
+      case 'cash':
+        return (
+          <div>
+            <Typography variant='small' className='font-normal'>
+              {(typeof item[column.key] === 'number')
+                ? '$' + Math.abs(item[column.key]).toFixed(2)
+                : item[column.key]}
+            </Typography>
+          </div>
+        )
       default:
         return (
           <Typography variant='small' className='font-normal'>
-            {(typeof item[column.key] === 'number')
-              ? '$' + Math.abs(item[column.key]).toFixed(2)
-              : item[column.key]}
+            {item[column.key]}
           </Typography>
         )
     }

@@ -12,9 +12,9 @@ import { useProductsActions } from '../../../hooks/useProductsActions.js'
 const TABLE_HEAD = [
   { key: 'bill', label: 'Bill Code', type: 'text', sortable: true },
   { key: 'date', label: 'Date', type: 'date', sortable: true },
-  { key: 'supplier', label: 'Supplier Name', type: 'supplierObject' },
+  { key: 'supplier', label: 'Supplier Name', type: 'supplierObject', sortable: true },
   { key: 'productList', label: 'Products List', type: 'productList' },
-  { key: 'total', label: 'Total', type: 'number', sortable: true },
+  { key: 'total', label: 'Total', type: 'cash', sortable: true },
   { key: 'actions', label: 'Actions', type: 'actions' }
 ]
 
@@ -59,6 +59,9 @@ export default function SalesSection () {
   const handleSort = (key) => {
     let direction = 'ascending'
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      if (key === 'supplier') {
+        key = 'supplier.name'
+      }
       direction = 'descending'
     }
     setSortConfig({ key, direction })
@@ -66,13 +69,16 @@ export default function SalesSection () {
 
   const sortedRows = [...searchFilter].sort((a, b) => {
     if (!sortConfig) return 0
-
     const { key, direction } = sortConfig
-
-    if (typeof a[key] === 'string' && typeof b[key] === 'string') {
-      return direction === 'ascending' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
+    const getValueByKey = (obj, key) => {
+      return key.split('.').reduce((o, k) => (o ? o[k] : undefined), obj)
+    }
+    const valueA = getValueByKey(a, key)
+    const valueB = getValueByKey(b, key)
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      return direction === 'ascending' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA)
     } else {
-      return direction === 'ascending' ? a[key] - b[key] : b[key] - a[key]
+      return direction === 'ascending' ? valueA - valueB : valueB - valueA
     }
   })
 

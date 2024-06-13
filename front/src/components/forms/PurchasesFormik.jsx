@@ -59,7 +59,7 @@ export function PurchasesFormik ({ setOpen, setOpenMenu, action, itemToEdit }) {
       date: values.date,
       supplier: parseInt(suppliers.find(s => s.name === values.supplier).id),
       productList: values.productList.map(product => ({
-        id: parseInt(products.find(p => p.name === product.product.split(' - ')[0]).id),
+        id: parseInt(products.find(p => p.name === product.product).id),
         quantity: parseInt(product.quantity)
       }))
     }

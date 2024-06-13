@@ -1,7 +1,9 @@
 import { forwardRef, useState, cloneElement } from 'react'
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Card, CardBody, Typography } from '@material-tailwind/react'
+import { useCustomersActions } from '../../../hooks/useCustomersActions'
 
 const SalesModalViewItem = forwardRef(({ button, itemToEdit, setOpenMenu }, ref) => {
+  const { customers } = useCustomersActions()
   const [openModal, setOpenModal] = useState(false)
   const handleOpen = () => {
     setOpenModal(!openModal)
@@ -23,7 +25,7 @@ const SalesModalViewItem = forwardRef(({ button, itemToEdit, setOpenMenu }, ref)
                   Customer:
                 </Typography>
                 <Typography variant='paragraph' color='blue-gray' className=''>
-                  {itemToEdit.customer.name} - {itemToEdit.customer.personalCode}
+                  {itemToEdit.customer.name} - {itemToEdit.customer.personalCode ? itemToEdit.customer.personalCode : customers.find(c => c.name === itemToEdit.customer.name).personalCode}
                 </Typography>
               </div>
               <div className='divide-y divide-gray-200'>
@@ -61,7 +63,7 @@ const SalesModalViewItem = forwardRef(({ button, itemToEdit, setOpenMenu }, ref)
                   Total:
                 </Typography>
                 <Typography variant='paragraph' color='blue-gray' className=''>
-                  ${Math.abs(itemToEdit.total).toFixed(2)}
+                  ${Math.abs(itemToEdit.products.reduce((acc, product) => acc + (product.salePrice * product.quantity), 0) * (1 + (itemToEdit.tax.percentage / 100))).toFixed(2)}
                 </Typography>
               </div>
             </CardBody>

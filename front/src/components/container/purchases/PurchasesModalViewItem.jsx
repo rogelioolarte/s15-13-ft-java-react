@@ -61,7 +61,7 @@ const PurchasesModalViewItem = forwardRef(({ button, itemToEdit, setOpenMenu }, 
                   Total:
                 </Typography>
                 <Typography variant='h6' color='blue-gray' className=''>
-                  ${Math.abs(itemToEdit.total).toFixed(2)}
+                  ${itemToEdit.productList.reduce((acc, product) => acc + (product.salePrice * product.quantity), 0).toFixed(2)}
                 </Typography>
               </div>
             </CardBody>
