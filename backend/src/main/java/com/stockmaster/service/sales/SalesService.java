@@ -158,7 +158,7 @@ public class SalesService {
             }
 
             ProductSalesSavedResponse productResponse = ProductSalesSavedResponse.builder()
-                    .productName(productName)
+                    .name(productName)
                     .barcode(barcode)
                     .salePrice(price)
                     .quantity(quantity)
@@ -231,7 +231,7 @@ public class SalesService {
         List<ProductSalesSavedResponse> productDTOs = sales.getSalesProducts().stream()
                 .map(sp -> {
                     ProductSalesSavedResponse productDTO = new ProductSalesSavedResponse();
-                    productDTO.setName(sp.getProduct().getName());
+                    productDTO.setProductName(sp.getProduct().getName());
                     productDTO.setBarcode(sp.getProduct().getBarcode());
                     productDTO.setSalePrice(sp.getProduct().getSalePrice());
                     productDTO.setQuantity(sp.getQuantity());
