@@ -242,7 +242,7 @@ public class SalesService {
                 .collect(Collectors.toList());
 
         dto.setProducts(productDTOs);
-        dto.setTotalPrice(sales.getTotal());
+        dto.setTotal(sales.getTotal());
 
         return dto;
     }
