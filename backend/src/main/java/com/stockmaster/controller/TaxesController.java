@@ -24,7 +24,7 @@ public class TaxesController {
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.taxRegister(dtoTaxesRquest));
         } catch (Exception e) {
-            return  ResponseEntity.status(HttpStatus.CONFLICT).body("tax already exists");
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("tax already exists");
         }
     }
 
@@ -46,7 +46,7 @@ public class TaxesController {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(taxesRepositoryImpl.updateById(id,dtoTaxesRquest));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error! Something went wrong " );
         }
 
     }
@@ -61,7 +61,7 @@ public class TaxesController {
 
     }
 
-
+/*
     @PatchMapping(value = "/enable/{id}")
     public ResponseEntity<?> activeTaxes(@PathVariable Long id) {
         try {
@@ -70,7 +70,7 @@ public class TaxesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error! Something went wrong " );
         }
 
-    }
+    }*/
     @GetMapping("/{id}")
     public ResponseEntity<DtoTaxesResponse> getTaxById(@PathVariable Long id) {
         try {
